@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const ClickButton = ({ width, height, children, onClick }) => {
+const ClickButton = ({ width, height, margin, children, onClick }) => {
     return (
-        <ClickButtonStyled width={width} height={height} onClick={onClick}>
+        <ClickButtonStyled width={width} height={height} margin={margin} onClick={onClick}>
             {children}
         </ClickButtonStyled>
     );
@@ -18,7 +18,7 @@ const ClickButtonStyled = styled.button`
     padding: 0 16px;
     width: ${(props) => props.width || '128px'};
     height: ${(props) => props.height || '40px'};
-
+    margin-right: ${(props) => props.margin || ''};
     background: linear-gradient(100deg, rgba(66, 230, 149, 0.7) 3.56%, rgba(59, 178, 184, 0.7) 96.4%);
     box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
