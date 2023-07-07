@@ -29,9 +29,9 @@ out/
 /resources/*.properties
 localhost.p12
 application.properties
-/resources/.json
+/resources/*.json
 asset-manifest.json
-/resources/.html
+/resources/*.html
 index.html
 
 ### NetBeans ###
