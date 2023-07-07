@@ -37,23 +37,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().disable();
-//                .cors() // Enable CORS configuration
-//                .and()
-//                .csrf().disable()
+        http
 //                .authorizeRequests()
-//                .antMatchers("/auth/google", "/auth/google/redirect", "/api/auth/signup", "/api/auth/signin", "/api/auth/refreshtoken").permitAll()
-//                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//                .antMatchers("/**").permitAll()
 //                .anyRequest().authenticated()
-//                .and()
-//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//
-//        http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//                .and().csrf().disable();
+                .cors() // Enable CORS configuration
+                .and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/auth/google", "/auth/google/redirect", "/api/auth/signup", "/api/auth/signin", "/api/auth/refreshtoken", "/", "/static/**", "/signup", "/signin").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

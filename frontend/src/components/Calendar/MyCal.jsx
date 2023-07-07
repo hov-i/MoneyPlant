@@ -179,6 +179,20 @@ const MYCalendar = ({ isBasic }) => {
                         formatMonthYear={(locale, value) =>
                             value.toLocaleDateString('ko', { year: 'numeric', month: 'long' })
                         }
+                        // nextLabel={<NextLabel />}
+                        // prevLabel={<PrevLabel />}
+                        // next2Label={null}
+                        // prev2Label={null}
+                        tileContent={addContent}
+                        isBasic={false}
+                        minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
+                        maxDetail="month"
+
+                        // defaultValue={new Date()}
+                        // today 값
+                        // value={date}
+                        // onChange={setDate}
+
                         // onClickDay={dayIn}
                         // returnValue="range"
                     />
