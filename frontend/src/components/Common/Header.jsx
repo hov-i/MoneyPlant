@@ -2,7 +2,7 @@ import styled from "styled-components";
 import logo from "../../assets/Logo.png";
 import { NavLink } from "react-router-dom";
 import darkMode from "../../assets/DarkMode.png";
-import AvatarButton from "../AvatarButton";
+import AvatarButton from "./AvatarButton";
 import { useContext } from "react";
 import { ThemeContext } from "../themeProvider";
 
