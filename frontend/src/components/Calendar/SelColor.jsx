@@ -3,31 +3,34 @@ import styled from "styled-components";
 import contentList from "../../styles/contentColor";
 
 const SelColor = ({ isBasic, onContentIdChange }) => {
-  const [activeScContentId, setActiveScContentId] = useState(1); // 초기값 1 으로 설정
-  const [activeWkContentId, setActiveWkContentId] = useState(1); // 초기값 5 으로 설정
+  const [scContentId, setScContentId] = useState(1); // 초기값 1 으로 설정
 
   const handleScColorClick = (contentId) => {
-    const color = contentList.schedule.find(
+    const content = contentList.schedule.find(
       (item) => item.contentId === contentId
     );
-    if (color) {
-      onContentIdChange(color.categoryId);
-      setActiveScContentId(color.categoryId);
+    if (content) {
+      onContentIdChange(content.contentId);
+      setScContentId(content.contentId);
     }
   };
 
+  const [wkContentId, setWkContentId] = useState(5); // 초기값 5 으로 설정
+
   const handleWkColorClick = (contentId) => {
-    const color = contentList.work.find((item) => item.contentId === contentId);
-    if (color) {
-      onContentIdChange(color.categoryId);
-      setActiveWkContentId(color.categoryId);
+    const content = contentList.work.find(
+      (item) => item.contentId === contentId
+    );
+    if (content) {
+      onContentIdChange(content.contentId);
+      setWkContentId(content.contentId);
     }
   };
 
   // 컨텐츠 이름을 받아오고, 콘텐츠별 설정된 색 코드를 contentList에서 해당하는 색 코드 찾아오기
   // const setColor = contentList.find((item) => item.contentId === color);
-  const colorSc = contentList.schedule.map((content) => content.Color);
-  const colorWork = contentList.work.map((content) => content.Color);
+  // const colorSc = contentList.schedule.map((content) => content.Color);
+  // const colorWork = contentList.work.map((content) => content.Color);
 
   // const ColorScId = contentList.schedule.map((content) => content.contentId);
   // const ColorWorkId = contentList.work.map((content) => content.contentId);
@@ -36,34 +39,28 @@ const SelColor = ({ isBasic, onContentIdChange }) => {
     <SelBoxContainer>
       {isBasic ? (
         <div>
-          {colorSc.map((color, index) => (
-            <div
+          {contentList.schedule.map((content, index) => (
+            <Click
               className="color-box"
               key={index}
-              style={{ backgroundColor: color }}
-            >
-              <Click
-                color={color.Color}
-                active={color.contentId === activeScContentId}
-                onClick={() => handleScColorClick(color.contentId)}
-              />
-            </div>
+              color={content.Color}
+              active={content.contentId === scContentId}
+              style={{ backgroundColor: content.Color }}
+              onClick={() => handleScColorClick(content.contentId)}
+            />
           ))}
         </div>
       ) : (
         <div>
-          {colorWork.map((color, index) => (
-            <div
+          {contentList.work.map((content, index) => (
+            <Click
               className="color-box"
               key={index}
-              style={{ backgroundColor: color }}
-            >
-              <Click
-                color={color.Color}
-                active={color.contentId === activeWkContentId}
-                onClick={() => handleWkColorClick(color.contentId)}
-              />
-            </div>
+              color={content.Color}
+              active={content.contentId === wkContentId}
+              style={{ backgroundColor: content.Color }}
+              onClick={() => handleWkColorClick(content.contentId)}
+            />
           ))}
         </div>
       )}
@@ -77,7 +74,7 @@ const SelBoxContainer = styled.div`
     width: 25px;
     height: 25px;
     background: ${(props) => props.backgroundColor};
-    border-radius: 100%;
+    border-radius: 50%;
   }
 `;
 
@@ -90,4 +87,10 @@ const Click = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  .color-box {
+    width: 25px;
+    height: 25px;
+    background: ${(props) => props.backgroundColor};
+    border-radius: 50%;
+  }
 `;

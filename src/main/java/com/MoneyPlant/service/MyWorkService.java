@@ -38,9 +38,11 @@ public class MyWorkService {
             MyWork myWork = new MyWork();
             myWork.setUser(user);
             myWork.setMyWkName(myWorkDto.getMyWkName());
+            myWork.setMyWorkStart(myWorkDto.getMyWkStart());
+            myWork.setMyWorkEnd(myWorkDto.getMyWkEnd());
+            myWork.setMyWkPayday(myWorkDto.getMyWkPayday());
             myWork.setMyColor(myWorkDto.getMyColor());
             myWork.setMyWkPay(myWorkDto.getMyWkPay());
-            myWork.setMyWkPayday(myWorkDto.getMyWkPayday());
 
             myWorkRepository.save(myWork);
             return true;

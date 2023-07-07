@@ -151,52 +151,42 @@ const MYCalendar = ({ isBasic }) => {
         ); // 각 날짜마다 해당 요소가 들어감
     };
 
-    return (
-        <CalendarContainer isMobile={isMobile}>
-            <div className="calendar_Main">
-                {isBasic ? (
-                    <Calendar
-                        calendarType="US" // 요일을 일요일부터 시작하도록 설정
-                        locale="en" // 달력 언어
-                        onChange={onChange}
-                        value={value}
-                        formatMonthYear={(locale, value) =>
-                            value.toLocaleDateString('ko', { year: 'numeric', month: 'long' })
-                        }
-                        // next2Label={null}
-                        // prev2Label={null}
-                        tileContent={addContent}
-                        isBasic={true}
-                        minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-                        maxDetail="month"
-                    />
-                ) : (
-                    <Calendar
-                        calendarType="US" // 요일을 일요일부터 시작하도록 설정
-                        locale="en" //
-                        onChange={onChange}
-                        value={value}
-                        formatMonthYear={(locale, value) =>
-                            value.toLocaleDateString('ko', { year: 'numeric', month: 'long' })
-                        }
-                        // nextLabel={<NextLabel />}
-                        // prevLabel={<PrevLabel />}
-                        // next2Label={null}
-                        // prev2Label={null}
-                        tileContent={addContent}
-                        isBasic={false}
-                        minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-                        maxDetail="month"
-
-                        // defaultValue={new Date()}
-                        // today 값
-                        // value={date}
-                        // onChange={setDate}
-
-                        // onClickDay={dayIn}
-                        // returnValue="range"
-                    />
-                )}
+  return (
+    <CalendarContainer isMobile={isMobile}>
+      <div className="calendar_Main">
+        {isBasic ? (
+          <Calendar
+            calendarType="US" // 요일을 일요일부터 시작하도록 설정
+            locale="en" // 달력 설정 언어
+            onChange={setValue}
+            value={value}
+            formatMonthYear={(locale, value) =>
+              value.toLocaleDateString("ko", { year: "numeric", month: "long" })
+            }
+            // next2Label={null}
+            // prev2Label={null}
+            tileContent={addContent}
+            isBasic={true}
+            minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
+            maxDetail="month"
+          />
+        ) : (
+          <Calendar
+            calendarType="US" // 요일을 일요일부터 시작하도록 설정
+            locale="en" // 달력 설정 언어
+            onChange={setValue}
+            value={value}
+            formatMonthYear={(locale, value) =>
+              value.toLocaleDateString("ko", { year: "numeric", month: "long" })
+            }
+            // onClickDay={dayIn}
+            // returnValue="range"
+            tileContent={addContent}
+            isBasic={false}
+            minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
+            maxDetail="month"
+          />
+        )}
 
                 {/* <Box width={'20%'}>
                     <ToggleButtonSmall
@@ -589,4 +579,34 @@ const CalendarContainer = styled.div`
     .react-calendar__month-view__days__day--neighboringMonth {
         opacity: 0.3;
     }
+`;
+
+const SelectDay = styled.div`
+  font-size: 18px;
+  margin-right: 10px;
+`;
+
+const DayContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+`;
+
+const DayButton = styled.button`
+  border-radius: 15%;
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.menuBgColor};
+  }
+  > svg {
+    fill: ${({ theme }) => theme.budgetButton};
+  }
 `;

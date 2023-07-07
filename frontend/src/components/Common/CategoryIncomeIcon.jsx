@@ -4,8 +4,6 @@ import { ReactComponent as Salary } from "../../assets/categoryIncome/급여.svg
 import { ReactComponent as Bonus } from "../../assets/categoryIncome/보너스.svg";
 import { ReactComponent as PocketMoney } from "../../assets/categoryIncome/용돈.svg";
 import { ReactComponent as ExtraIncome } from "../../assets/categoryIncome/부수입.svg";
-// import { ReactComponent as - } from '../../assets/category/.svg';
-// import { ReactComponent as -- } from '../../assets/category/.svg';
 import { ReactComponent as Etc } from "../../assets/categoryIncome/기타.svg";
 import categoryIncomeList from "../../styles/categoryIncomeColor";
 
@@ -22,10 +20,6 @@ const CategoryIncomeIcon = ({ name, onClick }) => {
         return <PocketMoney />;
       case "부수입":
         return <ExtraIncome />;
-      // case '-':
-      //     return < />;
-      // case '--':
-      //     return < />;
       case "기타":
         return <Etc />;
       default:
@@ -39,6 +33,7 @@ const CategoryIncomeIcon = ({ name, onClick }) => {
   return (
     <Icon
       color={selectedItem ? selectedItem.Color : "#FF7076"}
+      // color={selectedItem ? "white" : "#d6f693"}
       onClick={onClick}>
       {getItemSvg(name)}
     </Icon>

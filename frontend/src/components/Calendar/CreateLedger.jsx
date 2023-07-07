@@ -30,7 +30,7 @@ const CreateSchedule = () => {
           <div className="SMSBox">
             <SMS onClick={openModal} />
             {modalOpen && (
-              <Modal open={modalOpen} close={closeModal} width={"20%"}>
+              <Modal open={modalOpen} close={closeModal} width={"300px"}>
                 <SMSAdd></SMSAdd>
               </Modal>
             )}

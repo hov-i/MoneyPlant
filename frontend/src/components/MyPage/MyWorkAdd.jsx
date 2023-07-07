@@ -7,6 +7,8 @@ import SelColor from "../../components/Calendar/SelColor";
 import MyType from "../Calendar/SelType";
 
 const MyWorkAdd = (width) => {
+  const [contentId, setContentId] = useState(5);
+
   const [defaultMyWkName, setDefaultMyWkName] = useState("");
   const [defaultMyPayType, setDefaultMyPayType] = useState("");
   const [defaultMyWkMoney, setDefaultMyWkMoney] = useState("");
@@ -49,14 +51,19 @@ const MyWorkAdd = (width) => {
     setDefaultMyWkPayday(event.target.value);
   };
 
-  const handleMyColorChange = (event) => {
-    setDefaultMyColor(event.target.value);
+  const handleContentIdChange = (id) => {
+    setContentId(id);
   };
+
+  // const handleMyColorChange = (event) => {
+  //   setDefaultMyColor(event.target.value);
+  // };
 
   const onCreateMyWork = async () => {
     try {
       const MyWkName = parseInt(defaultMyWkName);
-      const createMyWork = await MyPageAxiosApi.createExpense(
+      const createMyWork = await MyPageAxiosApi.createMyWork(
+        contentId.toExponential,
         MyWkName,
         defaultMyPayType,
         defaultMyWkMoney,
@@ -140,7 +147,12 @@ const MyWorkAdd = (width) => {
             />
           </div>
           {/* <p className="label">color</p> */}
-          <SelColor value={defaultMyColor} onChange={handleMyColorChange} />
+          <SelColor
+            // value={myColor}
+            contentId={contentId}
+            onContentIdChange={handleContentIdChange}
+          />
+          {/* <SelColor value={defaultMyColor} onChange={handleMyColorChange} /> */}
         </InputContainer>
       </Container>
       <ButtonContainer>

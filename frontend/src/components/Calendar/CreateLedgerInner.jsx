@@ -66,7 +66,7 @@ const CreateScheduleInner = ({ isIncome }) => {
         content
       );
 
-      if (createIncome.data === "지출을 성공적으로 생성했습니다.") {
+      if (createIncome.data === "수입을 성공적으로 생성했습니다.") {
         console.log("입력 성공");
         window.location.reload();
       } else {
@@ -110,6 +110,8 @@ const CreateScheduleInner = ({ isIncome }) => {
               id="content"
               value={content}
               onChange={handleContentChange}
+              //defaultValue={MYCalendar.value}
+              //placeholder={MYCalendar.value}
             />
           </InputContainer>
         </Container>

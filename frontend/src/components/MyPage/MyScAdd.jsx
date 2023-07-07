@@ -7,20 +7,19 @@ import SelColor from "../../components/Calendar/SelColor";
 
 const MyScAdd = (width) => {
   const [contentId, setContentId] = useState(1);
-  const [defaultMyScName, setDefaultMyScName] = useState("");
-  const [defaultMyScBudget, setDefaultMyScBudget] = useState("");
-  // const [defaultMyColor, setDefaultMyColor] = useState("");
-
-  const handleContentIdChange = (id) => {
-    setContentId(id);
-  };
+  const [myScName, setMyScName] = useState("");
+  const [myScBudget, setMyScBudget] = useState("");
 
   const handleMyScNameChange = (event) => {
-    setDefaultMyScName(event.target.value);
+    setMyScName(event.target.value);
   };
 
   const handleMyScBudgetChange = (event) => {
-    setDefaultMyScBudget(event.target.value);
+    setMyScBudget(event.target.value);
+  };
+
+  const handleContentIdChange = (id) => {
+    setContentId(id);
   };
 
   // const handleMyColorChange = (event) => {
@@ -29,11 +28,11 @@ const MyScAdd = (width) => {
 
   const onCreateMySc = async () => {
     try {
-      const amount = parseInt(defaultMyScName);
+      const amount = parseInt(myScName);
       const createMySc = await MyPageAxiosApi.createMySchedule(
+        contentId.toExponential,
         amount,
-        defaultMyScBudget,
-        // defaultMyColor
+        myScBudget
       );
       if (createMySc.data === "일정을 성공적으로 생성했습니다.") {
         console.log("입력 성공");
@@ -55,12 +54,12 @@ const MyScAdd = (width) => {
 
         <InputContainer>
           <p className="label">일정</p>
-          <Input value={defaultMyScName} onChange={handleMyScNameChange} />
+          <Input value={myScName} onChange={handleMyScNameChange} />
           <p className="label">예산</p>
-          <Input value={defaultMyScBudget} onChange={handleMyScBudgetChange} />
+          <Input value={myScBudget} onChange={handleMyScBudgetChange} />
           {/* <p className="label">color</p> */}
           <SelColor
-            // value={defaultMyColor}
+            // value={myColor}
             contentId={contentId}
             onContentIdChange={handleContentIdChange}
             isBasic={true}
