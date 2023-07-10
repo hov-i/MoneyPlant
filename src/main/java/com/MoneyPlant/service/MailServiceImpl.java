@@ -7,26 +7,21 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.transaction.Transactional;
 import java.util.Random;
 
-
-
-
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
-     private final JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Override
     public String makeCode(int size) {
         Random ran = new Random();
-        StringBuilder sb = new StringBuilder();
-        int num;
+        StringBuffer sb = new StringBuffer();
+        int num = 0;
         do {
             num = ran.nextInt(75) + 48;
-            if ((num <= 57) || (num >= 65 && num <= 90) || (num >= 97)) {
+            if ((num >= 48 && num <= 57) || (num >= 65 && num <= 90) || (num >= 97 && num <= 122)) {
                 sb.append((char) num);
             } else {
                 continue;

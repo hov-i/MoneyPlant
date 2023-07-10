@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/mybudget")
+@RequestMapping("/api/mybudget")
 public class BudgetController {
     @Autowired
     BudgetService budgetService;

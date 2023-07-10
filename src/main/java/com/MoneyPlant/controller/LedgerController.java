@@ -18,7 +18,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/ledger")
+@RequestMapping("/api/ledger")
 public class LedgerController {
 
     @Autowired
