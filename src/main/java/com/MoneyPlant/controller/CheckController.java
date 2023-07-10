@@ -24,7 +24,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/check")
+@RequestMapping("/api/check")
 public class CheckController {
 
     @Autowired

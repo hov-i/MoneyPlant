@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @Slf4j
 @CrossOrigin(origins = "https://localhost:3000", allowedHeaders = "*")
-@RequestMapping("/mypage")
+@RequestMapping("/api/mypage")
 @RequiredArgsConstructor
 public class MyPageController {
     @Autowired
