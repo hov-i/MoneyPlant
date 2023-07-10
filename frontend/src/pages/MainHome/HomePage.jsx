@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 import Header from "../../components/Common/Header";
 import Navbar from "../../components/Common/Navbar";
@@ -8,7 +9,6 @@ import Container from "../../components/Common/Container";
 import ToggleButtonLarge from "../../components/Common/ToggleButtonLarge";
 import Button from "../../components/Common/ClickButton";
 import MyCal from "../../components/Calendar/MyCal";
-// import Modal from "../../components/Common/Modal";
 import Calculate from "../../components/Calendar/Calculate";
 // import CreateSchedule from "../../components/Calendar/CreateLedger";
 
@@ -19,17 +19,13 @@ const Home = () => {
     setIsOn((prevState) => !prevState);
   };
 
-  //   const [modalOpen, setModalOpen] = useState(false);
-  //   const openModal = () => {
-  //     setModalOpen(true);
-  //   };
+  // 컴포넌트에 Useref사용 설정
+  const calendarRef = useRef();
 
-  //   const closeModal = () => {
-  //     setModalOpen(false);
-  //   };
-
-  const handleReturnToday = () => {
-    window.location.reload();
+  const onClickTodayHandler = () => {
+    const calendar = calendarRef.current;
+    const firstDayOfTodaysMonth = moment().date(1).toDate();
+    calendar.setActiveStartDate(firstDayOfTodaysMonth);
   };
 
   return (
@@ -48,17 +44,20 @@ const Home = () => {
             />
             {/* <Plus width="25px" height="25px" onClick={openModal} /> */}
             <Button
-              onClick={handleReturnToday}
+              onClick={onClickTodayHandler}
               width={"70px"}
               height={"35px"}
-              margin={"20px"}
-            >
+              margin={"20px"}>
               Today
             </Button>
           </div>
 
           <div className="calendar">
-            {isOn ? <MyCal isBasic={false} /> : <MyCal isBasic={true} />}
+            {isOn ? (
+              <MyCal isBasic={false} ref={calendarRef} />
+            ) : (
+              <MyCal isBasic={true} ref={calendarRef} />
+            )}
           </div>
         </CalendarContainer>
         <Calculate />

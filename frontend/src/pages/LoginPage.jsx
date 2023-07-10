@@ -21,14 +21,12 @@ const LoginAndRegister = () => {
           <div className="tabs">
             <button
               onClick={() => handleButtonClick("login")}
-              className={value === "login" ? "button-active" : ""}
-            >
+              className={value === "login" ? "button-active" : ""}>
               Login
             </button>
             <button
               onClick={() => handleButtonClick("signup")}
-              className={value === "signup" ? "button-active" : ""}
-            >
+              className={value === "signup" ? "button-active" : ""}>
               Sign Up
             </button>
           </div>
@@ -59,7 +57,7 @@ const LoginContainer = styled.div`
     padding: 20px;
     border: 1px solid #87eec5;
   }
-  
+
   .tabs {
     margin-top: 10px;
     width: 100%;

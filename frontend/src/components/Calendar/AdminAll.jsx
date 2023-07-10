@@ -10,12 +10,12 @@ const AdminAll = ({ setValue }) => {
       <BlockLine />
 
       {/* 일정 */}
-      <AdminContents />
+      <AdminContents isBasic={true} />
 
       <BlockLine />
 
       {/* 근무 */}
-      <AdminContents  />
+      <AdminContents isBasic={false} />
 
       <BlockLine />
 

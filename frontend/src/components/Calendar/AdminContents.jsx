@@ -5,7 +5,7 @@ import BlinkingButton from "../Common/BlinkingButton";
 import ScAdd from "./ScAdd";
 import WorkAdd from "./WorkAdd";
 
-const AdminContents = (isBasic) => {
+const AdminContents = ({ isBasic }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {

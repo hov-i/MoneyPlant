@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import styled from "styled-components";
 import useViewport from "../../hooks/viewportHook";
 import Modal from "../Common/Modal";
 import AdminAll from "./AdminAll";
 import { ReactComponent as Right } from "../../assets/right.svg";
 import { ReactComponent as Left } from "../../assets/left.svg";
-
-// import { ReactComponent as SMS } from '../../assets/SMS.svg';
-// import { ReactComponent as Plus } from "../../assets/plus.svg";
+import CalenderAPI from "../../api/CalendarAPI";
 
 // 캘린더 API 적용
 import Calendar from "react-calendar";
@@ -17,7 +15,7 @@ import moment from "moment";
 // import SMSAdd from "./SMSAdd";
 // import Box from '../Common/Box';
 
-const MYCalendar = ({ isBasic }) => {
+const MYCalendar = forwardRef(({ isBasic }, ref) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const { isMobile } = useViewport();
@@ -41,6 +39,24 @@ const MYCalendar = ({ isBasic }) => {
     }
   }, [value]);
 
+  // //투데이 버튼... value값 자체가 옮겨가진 않음
+  // const handleReturnToday = () => {
+  //   const today = new Date();
+  //   setValue(today);
+  // };
+
+  // // 컴포넌트에 Useref사용 설정
+  // const calendarRef = useRef();
+
+  // //캘린더 라이브러리 컴포넌트에서 ref 등록
+  // <Calendar ref={calendarRef} />;
+
+  // const onClickTodayHandler = () => {
+  //   const calendar = calendarRef.current;
+  //   const firstDayOfTodaysMonth = moment().date(1).toDate();
+  //   calendar.setActiveStartDate(firstDayOfTodaysMonth);
+  // };
+
   const handleNextDay = () => {
     const nextDay = moment(value).add(1, "day").toDate();
     setValue(nextDay);
@@ -49,26 +65,48 @@ const MYCalendar = ({ isBasic }) => {
     const beforeDay = moment(value).add(-1, "day").toDate();
     setValue(beforeDay);
   };
+  // api 연결
+  const [expenseDates, setExpenseDates] = useState([]);
+  const [expenseAmounts, setExpenseAmounts] = useState([]);
+  const [incomeDates, setIncomeDates] = useState([]);
+  const [incomeAmounts, setIncomeAmounts] = useState([]);
+
+  //리스트 사용 확인
+  // const [dailyExpenseList, setDailyExpenseList] = useState([]);
+  // const [dailyIncomeList, setDailyIncomeList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await CalenderAPI.getCalendarView();
+        const { expenseDates, expenseAmounts, incomeDates, incomeAmounts } =
+          // const { expenseDates, expenseAmounts, incomeDates, incomeAmounts, dailyExpenseList, dailyIncomeList } =
+          response;
+        setExpenseDates(expenseDates);
+        setExpenseAmounts(expenseAmounts);
+        setIncomeDates(incomeDates);
+        setIncomeAmounts(incomeAmounts);
+        // setDailyExpenseList(dailyExpenseList);
+        // setDailyIncomeList(dailyIncomeList);
+
+        // expenseDates, expenseAmounts, incomeDates, incomeAmounts 사용
+        console.log("지출 날짜", expenseDates);
+        console.log("지출 금액", expenseAmounts);
+        console.log("수입 날짜", incomeDates);
+        console.log("수입 금액", incomeAmounts);
+        // console.log("지출 리스트", dailyExpenseList);
+        // console.log("수입 리스트", dailyIncomeList);
+
+        // 필요한 작업 수행
+      } catch (error) {
+        console.error("조회 실패", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // 컨텐츠 날짜 리스트
-  const incomeList = [
-    "2023-06-02",
-    "2023-06-04",
-    "2023-06-07",
-    "2023-06-15",
-    "2023-06-20",
-    "2023-06-27",
-  ];
-
-  const expenseList = [
-    "2023-06-04",
-    "2023-06-07",
-    "2023-06-11",
-    "2023-06-12",
-    "2023-06-17",
-    "2023-06-20",
-    "2023-06-26",
-  ];
 
   const scList = [
     "2023-06-04",
@@ -100,34 +138,38 @@ const MYCalendar = ({ isBasic }) => {
     // date가 리스트의 날짜와 일치하면 해당 컨텐츠 추가
 
     // 수입
-    if (incomeList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
-      contentBasic.push(
-        <>
-          {isBasic ? (
-            <>
-              <p className="income-text">+0원</p>
-            </>
-          ) : (
-            <div className="dot-income"></div>
-          )}
-        </>
-      );
-    }
+    incomeDates.forEach((day, index) => {
+      if (day === moment(date).format("YYYY-MM-DD")) {
+        const amount = incomeAmounts[index];
+
+        contentBasic.push(
+          <React.Fragment key={index}>
+            {isBasic ? (
+              <p className="income-text">+{amount}원</p>
+            ) : (
+              <div className="dot-income"></div>
+            )}
+          </React.Fragment>
+        );
+      }
+    });
 
     // 지출
-    if (expenseList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
-      contentBasic.push(
-        <>
-          {isBasic ? (
-            <>
-              <p className="expense-text">-0원</p>
-            </>
-          ) : (
-            <div className="dot-expense"></div>
-          )}
-        </>
-      );
-    }
+    expenseDates.forEach((day, index) => {
+      if (day === moment(date).format("YYYY-MM-DD")) {
+        const amount = expenseAmounts[index];
+
+        contentBasic.push(
+          <React.Fragment key={index}>
+            {isBasic ? (
+              <p className="expense-text">-{amount}원</p>
+            ) : (
+              <div className="dot-expense"></div>
+            )}
+          </React.Fragment>
+        );
+      }
+    });
 
     // 일정
     if (scList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
@@ -186,6 +228,7 @@ const MYCalendar = ({ isBasic }) => {
       <div className="calendar_Main">
         {isBasic ? (
           <Calendar
+            ref={ref}
             calendarType="US" // 요일을 일요일부터 시작하도록 설정
             locale="en" // 달력 설정 언어
             onChange={setValue}
@@ -202,6 +245,7 @@ const MYCalendar = ({ isBasic }) => {
           />
         ) : (
           <Calendar
+            ref={ref}
             calendarType="US" // 요일을 일요일부터 시작하도록 설정
             locale="en" // 달력 설정 언어
             onChange={setValue}
@@ -233,20 +277,21 @@ const MYCalendar = ({ isBasic }) => {
                       <Right />
                     </DayButton>
                   </DayContainer>
-                  <AdminAll />
+                  <AdminAll value={setValue} />
                 </Modal>
               )
             : modalOpen && (
                 <Modal
                   open={modalOpen}
                   close={closeModal}
-                  width={"300px"}></Modal>
+                  width={"300px"}
+                ></Modal>
               )}
         </div>
       </div>
     </CalendarContainer>
   );
-};
+});
 export default MYCalendar;
 
 const CalendarContainer = styled.div`
@@ -325,11 +370,6 @@ const CalendarContainer = styled.div`
     color: #ff005c;
   }
 
-  .income-text,
-  .expense-text {
-    font-size: 0.8em;
-  }
-
   .dot-income {
     background-color: #3fcea5;
   }
@@ -338,11 +378,18 @@ const CalendarContainer = styled.div`
     background-color: #ff005c;
   }
 
-  .dot-schedule {
+  .income-text,
+  .expense-text {
+    font-size: 0.8em;
+  }
+
+  .dot-schedule,
+  .box-schedule {
     background-color: #329d9c;
   }
 
-  .dot-work {
+  .dot-work,
+  .box-work {
     background-color: #bdbdbd;
   }
 
@@ -360,14 +407,6 @@ const CalendarContainer = styled.div`
       font-size: 0.6em;
       padding-bottom: 1px;
     }
-  }
-
-  .box-schedule {
-    background-color: #329d9c;
-  }
-
-  .box-work {
-    background-color: #bdbdbd;
   }
 
   // react-calendar.css
@@ -623,7 +662,7 @@ const DayButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   cursor: pointer;
   &:hover {
     background-color: ${({ theme }) => theme.menuBgColor};
