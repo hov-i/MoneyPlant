@@ -1,13 +1,17 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import BudgetCalendar from "./BudgetCalendar";
 import CategoryIcon from "./CategoryIcon";
 import BlockLine from "../Common/BlockLine";
 import ClickButton from "../Common/ClickButton";
 import categoryList from "../../styles/categoryExpenseColor";
-import { useState } from "react";
 import BudgetAxiosApi from "../../api/BudgetAxiosAPI";
 
 const BudgetAdd = ({ categoryData }) => {
+  const navigate = useNavigate();
+
   const [selectedDate, setSelectedDate] = useState("");
 
   const handleDateChange = (date) => {
@@ -28,10 +32,10 @@ const BudgetAdd = ({ categoryData }) => {
       const createMyBudget = await BudgetAxiosApi.createMyBudget(inputValues);
       if (createMyBudget.data === "예산을 성공적으로 생성했습니다.") {
         console.log("입력 성공");
-        window.location.reload();
+        navigate("/mybudget");
       } else {
         console.log("입력 실패");
-        window.location.reload();
+        navigate("/mybudget");
       }
     } catch (error) {
       console.log("에러:", error);
