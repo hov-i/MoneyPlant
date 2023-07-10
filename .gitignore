@@ -4,6 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+application.properties
 gradlew
 
 ### STS ###
@@ -28,11 +29,6 @@ out/
 !**/src/test/**/out/
 /resources/*.properties
 localhost.p12
-application.properties
-/resources/*.json
-asset-manifest.json
-/resources/*.html
-index.html
 
 ### NetBeans ###
 /nbproject/private/
@@ -69,4 +65,6 @@ frontend/yarn-error.log*
 frontend/mkcert
 
 # Resources
-src/main/resources/static/static
+src/main/resources/static/*
+src/main/resources/static/asset-manifest.json
+src/main/resources/static/index.html
