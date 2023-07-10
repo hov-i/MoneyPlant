@@ -68,5 +68,3 @@ frontend/mkcert
 src/main/resources/static/*
 src/main/resources/static/asset-manifest.json
 src/main/resources/static/index.html
-
-
