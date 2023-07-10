@@ -4,7 +4,6 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-application.properties
 gradlew
 
 ### STS ###
@@ -28,6 +27,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 /resources/*.properties
+application.propertiess
 localhost.p12
 
 ### NetBeans ###
@@ -68,3 +68,5 @@ frontend/mkcert
 src/main/resources/static/*
 src/main/resources/static/asset-manifest.json
 src/main/resources/static/index.html
+
+
