@@ -37,6 +37,9 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @Column(name = "calendar_id", unique = true, nullable = true)
+    private String googleCalendarId;
+
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;

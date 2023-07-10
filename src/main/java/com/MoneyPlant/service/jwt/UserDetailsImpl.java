@@ -6,13 +6,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -35,17 +32,20 @@ public class UserDetailsImpl implements UserDetails {
 
     private String email;
 
+    private String googleCalendarId;
+
     @JsonIgnore
     private String password;
 
     private GrantedAuthority authority;
 
-    public UserDetailsImpl(Long id, String name, String email, String password,
+    public UserDetailsImpl(Long id, String name, String email, String password, String googleCalendarId,
                            GrantedAuthority authority) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.googleCalendarId = googleCalendarId;
         this.authority = authority;
     }
 
@@ -58,6 +58,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getGoogleCalendarId(),
                 authority
         );
     }
@@ -77,6 +78,8 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getName() { return name; }
 
+    public String getGoogleCalendarId() { return googleCalendarId; }
+
     @Override
     public String getPassword() {
         return password;
@@ -86,6 +89,7 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return email;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
