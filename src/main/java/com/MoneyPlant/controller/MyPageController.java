@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @Slf4j
+@CrossOrigin(origins = "https://localhost:3000", allowedHeaders = "*")
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
 public class MyPageController {
@@ -34,6 +35,7 @@ public class MyPageController {
             @RequestBody MyScheduleDto myScheduleDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
+        try {
             boolean isSuccess = myScheduleService.createMySchedule(myScheduleDto, userDetails);
 
             if (isSuccess) {
@@ -41,26 +43,32 @@ public class MyPageController {
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("근무 생성을 실패했습니다.");
             }
+        } catch (Exception e) {
+            log.error("Error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일정 생성 중에 오류가 발생했습니다.");
+        }
     }
-
 
     // 마이페이지 나의 근무 등록
     @PostMapping("/create/work")
     public ResponseEntity<String> createMyWork (
             @RequestBody MyWorkDto myWorkDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
-
-        boolean isSuccess = myWorkService.createMyWork(myWorkDto, userDetails);
-
-        if (isSuccess) {
-            return ResponseEntity.ok("근무가 생성되었습니다.");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("근무 생성을 실패했습니다.");
+        try {
+            boolean isSuccess = myWorkService.createMyWork(myWorkDto, userDetails);
+            if (isSuccess) {
+                return ResponseEntity.ok("근무가 생성되었습니다.");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("근무 생성을 실패했습니다.");
+            }
+        } catch (Exception e) {
+            log.error("Error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("근무 생성 중에 오류가 발생했습니다.");
         }
     }
 
 
-// ===========================================================================
+    // ===========================================================================
     // 마이페이지 전체 조회
     @GetMapping("")
     public ResponseEntity<MyPageDto> myPageView (@AuthenticationPrincipal UserDetailsImpl userDetails) throws IllegalAccessException {

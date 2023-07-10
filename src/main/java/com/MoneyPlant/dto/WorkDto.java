@@ -15,6 +15,7 @@ public class WorkDto {
     private double workEnd; // 근무 종료 시간
     private int workRest; // 근무 휴식 시간
     private double workTax; // 급여 세금
+    private int myWorkCase; // 근무 건별 횟수
     private String workPayday; // 급여 지급일
     private int color; // 근무 등록 color
     private double workPay; // 마이페이지 1일 (또는 연봉) 급여 금액

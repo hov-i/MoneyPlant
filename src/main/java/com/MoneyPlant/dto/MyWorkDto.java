@@ -13,6 +13,7 @@ public class MyWorkDto {
     private double myWkStart; // 나의 근무 시작 시간
     private double myWkEnd; // 나의 근무 종료 시간
     private int myWorkRest; // 나의 근무 휴식 시간
+    private int myWorkCase; // 나의 근무 건별 횟수
     private double myWkTax; // 나의 근무 세금
     private String myWkPayday; // 나의 급여일
     private int myColor; // 나의 근무 color
