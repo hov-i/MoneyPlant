@@ -1,34 +1,35 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import CreateLedger from "../../components/Calendar/CreateLedger";
-import Modal from "../Common/Modal";
-import BlinkingButton from "../Common/BlinkingButton";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import CreateLedger from '../../components/Calendar/CreateLedger';
+import Modal from '../Common/Modal';
+import BlinkingButton from '../Common/BlinkingButton';
 
 const AdminLedger = ({ setValue }) => {
-  const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
+    const openModal = () => {
+        setModalOpen(true);
+    };
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+    const closeModal = () => {
+        setModalOpen(false);
+    };
 
-  return (
-    <>
-      {/* 가계부 */}
-      <Title>수입/지출</Title>
-      <BlinkingButton clickOn={openModal} />
+    return (
+        <>
+            {/* 가계부 */}
+            <Button>
+                <BlinkingButton clickOn={openModal} />
+            </Button>
 
-      {/* 모달 */}
-      {modalOpen && (
-        <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          <CreateLedger value={setValue} />
-        </Modal>
-      )}
-    </>
-  );
+            {/* 모달 */}
+            {modalOpen && (
+                <Modal open={modalOpen} close={closeModal} width={'300px'}>
+                    <CreateLedger setValue={setValue} />
+                </Modal>
+            )}
+        </>
+    );
 };
 
 export default AdminLedger;
@@ -39,7 +40,7 @@ export default AdminLedger;
 //   width: 100%;
 // `;
 
-const Title = styled.div`
-  display: flex;
-  width: 100%;
+const Button = styled.div`
+    padding-top: 10px;
+    width: 100%;
 `;

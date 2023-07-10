@@ -258,7 +258,7 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
                                           <Right />
                                       </DayButton>
                                   </DayContainer>
-                                  <AdminAll value={setValue} />
+                                <AdminAll setValue={value} />
                               </Modal>
                           )
                         : modalOpen && <Modal open={modalOpen} close={closeModal} width={'300px'}></Modal>}

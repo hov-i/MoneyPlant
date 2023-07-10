@@ -1,35 +1,48 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 //import styled from "styled-components";
-import Modal from "../Common/Modal";
-import BlinkingButton from "../Common/BlinkingButton";
-import ScAdd from "./ScAdd";
-import WorkAdd from "./WorkAdd";
+import Modal from '../Common/Modal';
+import BlinkingButton from '../Common/BlinkingButton';
+import ScAdd from './ScAdd';
+import WorkAdd from './WorkAdd';
+import styled from 'styled-components';
 
-const AdminContents = ({ isBasic }) => {
-  const [modalOpen, setModalOpen] = useState(false);
+const AdminContents = ({ isBasic, setValue }) => {
+    const [modalOpen, setModalOpen] = useState(false);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
+    const openModal = () => {
+        setModalOpen(true);
+    };
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+    const closeModal = () => {
+        setModalOpen(false);
+    };
 
-  return (
-    <>
-      {/* 일정 */}
-      <BlinkingButton clickOn={openModal} />
+    return (
+        <>
+            {/* 일정 */}
+            <CenterButton>
+                <BlinkingButton clickOn={openModal} />
+            </CenterButton>
 
-      {/* 모달 */}
-      {modalOpen && (
-        <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          {isBasic ? <ScAdd isMypage={false} /> : <WorkAdd isMypage={false} />}
-        </Modal>
-      )}
-    </>
-  );
+            {/* 모달 */}
+            {modalOpen && (
+                <Modal open={modalOpen} close={closeModal} width={'300px'}>
+                    {isBasic ? (
+                        <ScAdd isMypage={false} value={setValue} />
+                    ) : (
+                        <WorkAdd isMypage={false} value={setValue} />
+                    )}
+                </Modal>
+            )}
+        </>
+    );
 };
+const CenterButton = styled.div`
+    align-items: center;
+    display: flex;
+    width: 100%;
+    padding-top: 10px;
+`;
 
 export default AdminContents;
 
