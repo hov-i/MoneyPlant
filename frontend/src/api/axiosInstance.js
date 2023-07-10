@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const DOMAIN = "https://localhost:8888";
+const DOMAIN = "https://localhost:8888/api";
 
 let isLoginAlertShown = false; // 로그인 경고창 1번만 뜨게끔
 
@@ -17,7 +17,7 @@ axiosInstance.interceptors.response.use(
 
         if (error.response.status === 401 && !originalRequest._retry) {
             try {
-                await axiosInstance.post(`${DOMAIN}/api/auth/refreshtoken`);
+                await axios.post(`${DOMAIN}/auth/refreshtoken`, null, { withCredentials: true });
                 console.log("쿠키 업데이트 성공");
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
