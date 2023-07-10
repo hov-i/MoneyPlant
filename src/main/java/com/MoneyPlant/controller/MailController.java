@@ -1,11 +1,15 @@
 package com.MoneyPlant.controller;
 import com.MoneyPlant.service.MailService;
+import com.MoneyPlant.service.UserService;
+import com.MoneyPlant.service.jwt.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -41,5 +45,18 @@ public class MailController {
         }
 
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    // 전송한 코드를 비밀번호로 변경
+    private final UserDetailsService userDetailsService;
+    private final UserService userService;
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        System.out.println("userDetails : " + userDetails);
+        System.out.println("userDetails.getName :" + userDetails.getName());
+        System.out.println("userDetails.getId : " + userDetails.getId());
+        System.out.println("userDetails.getEmail : " + userDetails.getEmail());
+        return userService.getUserInfo(userDetails);
     }
 }

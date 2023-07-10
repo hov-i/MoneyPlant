@@ -64,8 +64,8 @@ const Chart = () => {
         return {
           x: lineItem.x,
           l: lineItem.l,
-          v: barIncomeItem ? barIncomeItem.v : 0,
-          v1: barExpenseItem ? barExpenseItem.v1 : 0,
+          v: barIncomeItem ? barIncomeItem.v : "0",
+          v1: barExpenseItem ? barExpenseItem.v1 : "0",
         };
       });
 

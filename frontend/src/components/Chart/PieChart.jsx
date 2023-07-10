@@ -112,7 +112,7 @@ const PieChart = () => {
   if (!data.length) {
     return (
       <>
-        <NotUse>이번 달 사용 금액이 없습니다.😢</NotUse>
+        <NotUse>이번 달 지출 내역이 존재하지 않습니다.😢</NotUse>
       </>
     );
   }

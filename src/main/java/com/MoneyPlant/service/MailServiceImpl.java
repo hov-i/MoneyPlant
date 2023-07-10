@@ -1,5 +1,7 @@
 package com.MoneyPlant.service;
 
+import com.MoneyPlant.entity.User;
+import com.MoneyPlant.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,8 @@ import java.util.Random;
 @Transactional
 @RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
-     private final JavaMailSender mailSender;
+    private final UserRepository userRepository;
+    private final JavaMailSender mailSender;
 
     @Override
     public String makeCode(int size) {
@@ -73,6 +76,23 @@ public class MailServiceImpl implements MailService {
         }
 
         return code;
+    }
+
+    // 이메일이랑 생성 코드를 일치시킨 후 PW를 주입
+    public boolean updatePwd(String email, String code) {
+        try {
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+            // 비밀번호 수정
+            user.setPassword(code);
+
+            userRepository.save(user); // 수정된 사용자 정보 저장
+            return true;
+        } catch (Exception e) {
+            System.err.println("비밀번호 변경 실패: " + e.getMessage());
+            return false;
+        }
     }
 
 }
