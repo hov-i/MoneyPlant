@@ -15,4 +15,10 @@ public class CalendarDto {
     private List<WorkDto> workDtoList;
     private Map<String, Integer> dailyExpenseList;
     private Map<String, Integer> dailyIncomeList;
+
+    public CalendarDto(List<ScheduleDto> scheduleDtoList, List<WorkDto> workDtoList) {
+        this.scheduleDtoList = scheduleDtoList;
+        this.workDtoList = workDtoList;
+    }
 }
+

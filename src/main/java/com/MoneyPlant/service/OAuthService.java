@@ -37,6 +37,7 @@ public class OAuthService {
     private final RoleRepository roleRepository;
     private final OAuthTokenRepository oAuthTokenRepository;
     private final JwtUtils jwtUtils;
+    private final GoogleCalendarService googleCalendarService;
     private final RefreshTokenService refreshTokenService;
 
     public String request() throws IOException {
@@ -58,7 +59,7 @@ public class OAuthService {
         GoogleUser googleUser = socialOAuth.getUserInfo(userInfoResponse);
         // 이미 가입된 이메일인지 확인
         // 가입되어있으면 로그인 처리
-        Optional<User> optionalUser = userRepository.findByEmail(googleUser.getEmail());
+        Optional<User> optionalUser = userRepository.findBySocialEmail(googleUser.getEmail());
         // 새로운 사용자면 등록 후 로그인 처리
         if (!optionalUser.isPresent()) {
             User user = new User();
@@ -69,6 +70,7 @@ public class OAuthService {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             user.setRole(userRole);
+            user.setGoogleCalendarId(googleCalendarService.getDefaultCalendarId(googleOAuthToken));
             userRepository.save(user);
             optionalUser = Optional.of(user);
         }
@@ -94,7 +96,7 @@ public class OAuthService {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
-                .header(HttpHeaders.LOCATION, "https://localhost:8888")
+                .header(HttpHeaders.LOCATION, "https://localhost:3000")
                 .build();
     }
 }

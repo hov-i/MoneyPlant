@@ -15,10 +15,10 @@ const AuthAxiosAPI = {
             password: password,
         };
         console.log(loginUser);
-        return await AuthAPI.post("/api/auth/signin", loginUser);
+        return await AuthAPI.post("/auth/signin", loginUser);
     },
     logout: async () => {
-        return await AuthAPI.post("/api/auth/signout");
+        return await AuthAPI.post("api/auth/signout");
     },
     signup: async (email, name, password, role) => {
         const SignupUser = {
@@ -28,7 +28,7 @@ const AuthAxiosAPI = {
             role: role !== undefined ? role : null,
         };
         try {
-            return await axios.post(`${DOMAIN}/api/auth/signup`, SignupUser);
+            return await axios.post(`${DOMAIN}/auth/signup`, SignupUser);
         } catch (error) {
             throw error;
         }
@@ -41,7 +41,7 @@ const AuthAxiosAPI = {
             password,
             role: "admin",
         };
-        return await axios.post(DOMAIN + "/api/auth/signup", SignupAdmin);
+        return await axios.post(DOMAIN + "/auth/signup", SignupAdmin);
     },
 
     // 구글 로그인 주소 리다이렉트

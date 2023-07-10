@@ -1,8 +1,6 @@
 package com.MoneyPlant.controller;
 
-import com.MoneyPlant.dto.CalendarDto;
-import com.MoneyPlant.dto.ScheduleDto;
-import com.MoneyPlant.dto.WorkDto;
+
 import com.MoneyPlant.repository.OAuthTokenRepository;
 import com.MoneyPlant.repository.UserRepository;
 import com.MoneyPlant.service.GoogleCalendarService;
@@ -23,17 +21,27 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/google/calendar")
+// CalendarController 와 통합예정
 public class GoogleCalendarController {
 
     private final GoogleCalendarService googleCalendarService;
     private final OAuthTokenRepository oAuthTokenRepository;
     private final UserRepository userRepository;
 
-    @GetMapping("")
-    public ResponseEntity<?> getCalendarID(@AuthenticationPrincipal UserDetailsImpl userDetails) throws IllegalAccessException {
-        String calendarId = googleCalendarService.getDefaultCalendarId(userDetails);
-        System.out.println("calendarId : " + calendarId);
-        return ResponseEntity.ok().body(calendarId);
-    }
 
+
+
+
+//    @GetMapping("")
+//    public ResponseEntity<?> getCalendarID(@AuthenticationPrincipal UserDetailsImpl userDetails) throws IllegalAccessException {
+//        String calendarId = googleCalendarService.getDefaultCalendarId(userDetails);
+//        System.out.println("calendarId : " + calendarId);
+//        return ResponseEntity.ok().body(calendarId);
+//    }
+
+//    @GetMapping("/events")
+//    public ResponseEntity<?> getEvents(@AuthenticationPrincipal UserDetailsImpl userDetails) throws IllegalAccessException {
+//        System.out.println("getEvents실행 ");
+//        return googleCalendarService.getGoogleCalendarEvents(userDetails);
+//    }
 }
