@@ -189,7 +189,17 @@ const LineBarChart = ({ data }) => {
 
   // scale 최댓값 입력
   const maxValue = Math.max(...data.map((item) => Math.max(item.v, item.v1)));
-  const minValue = Math.min(...data.map((item) => Math.min(item.l, item.v, item.v1, 0)));
+  const minValue = Math.min(
+    ...data.map((item) => Math.min(item.l, item.v, item.v1, 0))
+  );
+
+  if (!data.length) {
+    return (
+      <>
+        <NotUse> 해당 년도에 내역이 없습니다.😢</NotUse>
+      </>
+    );
+  }
 
   return (
     <LineBarChartContainer>
@@ -214,7 +224,6 @@ const LineBarChart = ({ data }) => {
           axisLeft={false} // 왼쪽 y좌표
           axisBottom={false} // x축 숨기기
           enableGridY={false}
-          
           layers={["grid", "axes", "bars", Line, "markers", "legends"]}
           //범례
           legends={[
@@ -264,4 +273,11 @@ const LineBarChartContainer = styled.div`
     width: 100%;
     height: 90%;
   }
+`;
+
+const NotUse = styled.div`
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  font-size: 20px;
 `;

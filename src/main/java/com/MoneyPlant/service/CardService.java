@@ -44,7 +44,7 @@ public class CardService {
     private void executeCardCrawler() {
         try {
             cardRepository.deleteAll(); // card_list의 모든 데이터를 삭제합니다.
-            String pythonScriptPath = "src/main/resources/python/CardCrolling.py";
+            String pythonScriptPath = "../../src/main/resources/python/CardCrolling.py";
             ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScriptPath);
             Process process = processBuilder.start();
             int exitCode = process.waitFor();
@@ -59,6 +59,7 @@ public class CardService {
             throw new RuntimeException(e);
         }
     }
+
 
     public List<Map<?,?>> manyTop3CardList(UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
