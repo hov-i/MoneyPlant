@@ -37,24 +37,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().disable();
-//                .cors() // Enable CORS configuration
-//                .and()
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/auth/google", "/auth/google/redirect", "/api/auth/signup", "/api/auth/signin", "/api/auth/refreshtoken").permitAll()
-//                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//
-//        http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http
+                .cors()
+                .and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/auth/refreshtoken").permitAll()
+                .antMatchers("/api/**").authenticated() // Require authentication for backend URLs starting with "/api/"
+                .antMatchers("/auth/signout").authenticated()
+                .anyRequest().permitAll() // Allow access to all other URLs without authentication
+                .and()
+                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
+
 
     @Bean
     public AuthTokenFilter authTokenFilter() {
