@@ -96,7 +96,7 @@ public class OAuthService {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
-                .header(HttpHeaders.LOCATION, "https://localhost:3000")
+                .header(HttpHeaders.LOCATION, "https://localhost:8888")
                 .build();
     }
 }
