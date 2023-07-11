@@ -4,6 +4,7 @@ import com.MoneyPlant.dto.BudgetDto;
 import com.MoneyPlant.service.BudgetService;
 import com.MoneyPlant.service.jwt.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,9 +33,13 @@ public class BudgetController {
                 break; // 하나라도 실패하면 루프 중단
             }
         }
+        HttpHeaders headers = new HttpHeaders();
+
 
         if (allSuccess) {
-            return ResponseEntity.ok("예산을 성공적으로 생성했습니다.");
+            headers.add("Refresh", "0"); // Refresh the page after 0 seconds
+
+            return new ResponseEntity<>("Success", headers, HttpStatus.OK);
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예산 생성에 실패했습니다.");
         }

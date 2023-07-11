@@ -8,6 +8,7 @@ import Work from './Work';
 import Account from './Account';
 
 const AdminAll = ({ setValue }) => {
+
     return (
         <AdminAllContainer>
             <BlockLine />
