@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Work {
     @Id
     @Column(name = "work_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long workId; // 근무 Id
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,10 +28,10 @@ public class Work {
     private String workDate; // 근무 날짜
 
     @Column(name = "work_start")
-    private double workStart; // 근무 시작 시간
+    private String workStart; // 근무 시작 시간
 
     @Column(name = "work_end")
-    private double workEnd; // 근무 종료 시간
+    private String workEnd; // 근무 종료 시간
 
     @Column(name = "work_payday", nullable = false)
     private String workPayday; // 급여 지급일
@@ -40,5 +40,5 @@ public class Work {
     private int color; // 근무 color
 
     @Column(name = "work_pay")
-    private double workPay; // 총 급여 ( money * tax * date)
+    private int workPay; // 총 급여 ( money * tax * date)
 }
