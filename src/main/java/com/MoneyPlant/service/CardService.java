@@ -50,8 +50,6 @@ public class CardService {
             int exitCode = process.waitFor();
             if (exitCode == 0) {
                 log.info("CardCrolling.py 실행이 성공했습니다.");
-                cardRepository.deleteByCardName("신용카드");
-                cardRepository.deleteByCardName("이벤트카드");
             } else {
                 log.error("CardCrolling.py 실행이 실패했습니다. 종료 코드: " + exitCode);
             }

@@ -60,25 +60,25 @@ public class MyWorkService {
 //
 //        return Duration.between(startTime, endTime);
 //    }
-    public int calMyHourlySalary(MyWorkDto myWorkDto) {
-        int type = myWorkDto.getMyPayType();
-        String stTime = myWorkDto.getMyWkStart();
-        String endTime = myWorkDto.getMyWkEnd();
-        int caseCnt = myWorkDto.getMyWorkCase();
-        double tax = myWorkDto.getMyWkTax();
-        int pay;
-
-
-            switch (type) {
-                case 1:
-
-                    break;
-                case 2:
-                    break;
-
-                default:
-
-        }
+//    public int calMyHourlySalary(MyWorkDto myWorkDto) {
+//        int type = myWorkDto.getMyPayType();
+//        String stTime = myWorkDto.getMyWkStart();
+//        String endTime = myWorkDto.getMyWkEnd();
+//        int caseCnt = myWorkDto.getMyWorkCase();
+//        double tax = myWorkDto.getMyWkTax();
+//        int pay;
+//
+//
+//            switch (type) {
+//                case 1:
+//
+//                    break;
+//                case 2:
+//                    break;
+//
+//                default:
+//
+//        }
 
 //        MyWork myWork = new MyWork();
 //
@@ -86,7 +86,7 @@ public class MyWorkService {
 //        myWork.setMyWorkStart(myWorkDto.getMyWkStart());
 //        myWork.setMyWorkEnd(myWorkDto.getMyWkEnd());
 
-    }
+//    }
 
 
 
