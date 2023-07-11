@@ -7,17 +7,16 @@ import ClickButton from "../Common/ClickButton";
 import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
 import SelColor from "./SelColor";
 
-const ScAdd = ({ isMypage }) => {
+const ScAdd = ({ isMypage, value }) => {
   const navigate = useNavigate();
 
   const [contentId, setContentId] = useState(1);
-  const [date, setDate] = useState("");
   const [myScName, setMyScName] = useState("");
   const [myScBudget, setMyScBudget] = useState("");
 
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
-  };
+  const setvalue = new Date(value);
+  setvalue.setDate(setvalue.getDate() + 1);
+  const date = setvalue.toISOString().split('T')[0];
 
   const handleMyScNameChange = (event) => {
     setMyScName(event.target.value);
@@ -27,8 +26,8 @@ const ScAdd = ({ isMypage }) => {
     setMyScBudget(event.target.value);
   };
 
-  const handleContentIdChange = (id) => {
-    setContentId(id);
+  const handleContentIdChange = (event) => {
+    setContentId(event.target.contentId);
   };
 
   const onCreateMySc = async () => {
@@ -37,7 +36,7 @@ const ScAdd = ({ isMypage }) => {
         date,
         myScName,
         myScBudget,
-        contentId: contentId.toString(),
+        myColor: contentId,
       });
 
       if (createMySc.data === "일정을 성공적으로 생성했습니다.") {
@@ -64,12 +63,7 @@ const ScAdd = ({ isMypage }) => {
           ) : (
             <>
               <p className="label">날짜</p>
-              <Input
-                type="date"
-                id="date"
-                value={date}
-                onChange={handleDateChange}
-              />
+              <Input type="date" id="date" value={date} />
             </>
           )}
           <p className="label">일정</p>

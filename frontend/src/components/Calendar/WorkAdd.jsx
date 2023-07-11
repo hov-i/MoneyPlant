@@ -8,11 +8,10 @@ import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
 import SelColor from "./SelColor";
 import MyType from "./SelType";
 
-const WorkAdd = ({ isMypage }) => {
+const WorkAdd = ({ isMypage, value }) => {
   const navigate = useNavigate();
 
   const [contentId, setContentId] = useState(5);
-  const [date, setDate] = useState("");
   const [myWkName, setMyWkName] = useState("");
   const [myPayType, setMyPayType] = useState(1);
   const [isHourly, setIsHourly] = useState(true);
@@ -25,9 +24,9 @@ const WorkAdd = ({ isMypage }) => {
   const [myWkTax, setMyWkTax] = useState("");
   const [myWkPayday, setMyWkPayday] = useState("");
 
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
-  };
+  const setvalue = new Date(value);
+  setvalue.setDate(setvalue.getDate() + 1);
+  const date = setvalue.toISOString().split('T')[0];
 
   const handleMyWkNameChange = (event) => {
     setMyWkName(event.target.value);
@@ -139,12 +138,7 @@ const WorkAdd = ({ isMypage }) => {
             ) : (
               <>
                 <p className="label">날짜</p>
-                <Input
-                  type="date"
-                  id="date"
-                  value={date}
-                  onChange={handleDateChange}
-                />
+                <Input type="date" id="date" value={date} />
               </>
             )}
           </div>
@@ -231,73 +225,73 @@ const WorkAdd = ({ isMypage }) => {
 export default WorkAdd;
 
 const Title = styled.div`
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const Input = styled.input`
-    width: 55%;
-    border-top: none;
-    border-left: none;
-    color: lightgray;
-    border-right: none;
-    border-bottom: 1px solid lightgray;
-    text-align: right;
-    outline: none;
-    background-color: rgba(255, 255, 255, 0);
+  width: 55%;
+  border-top: none;
+  border-left: none;
+  color: lightgray;
+  border-right: none;
+  border-bottom: 1px solid lightgray;
+  text-align: right;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0);
 
-    :focus {
-        border-bottom: 1px solid ${({ theme }) => theme.menuColor};
-        color: ${({ theme }) => theme.menuColor};
-    }
+  :focus {
+    border-bottom: 1px solid ${({ theme }) => theme.menuColor};
+    color: ${({ theme }) => theme.menuColor};
+  }
 `;
 
 const Container = styled.div`
-    display: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  .label {
+    width: ${({ width }) => width || "auto"};
+    margin: 5px;
+    margin-top: 10px;
+    font-size: 15px;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    .label {
-        width: ${({ width }) => width || 'auto'};
-        margin: 5px;
-        margin-top: 10px;
-        font-size: 15px;
-        align-items: center;
-        justify-content: center;
-    }
-    .text {
-        font-size: 12px;
-        align-items: center;
-        justify-content: center;
-        margin: 3px;
-        margin-top: 9px;
-        color: gray;
-    }
+  }
+  .text {
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    margin: 3px;
+    margin-top: 9px;
+    color: gray;
+  }
 `;
 
 const InputContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: center;
-    flex-wrap: wrap;
-    width: 200px;
-    margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
+  flex-wrap: wrap;
+  width: 200px;
+  margin: 20px;
 
-    div {
-        display: flex;
-        width: auto;
-        flex-direction: row;
-        margin: 5px;
-    }
+  div {
+    display: flex;
+    width: auto;
+    flex-direction: row;
+    margin: 5px;
+  }
 `;
 
 const ButtonContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
 `;
