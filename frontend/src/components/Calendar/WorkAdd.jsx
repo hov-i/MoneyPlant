@@ -8,10 +8,11 @@ import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
 import SelColor from "./SelColor";
 import MyType from "./SelType";
 
-const WorkAdd = ({ isMypage, value }) => {
+const WorkAdd = ({ isMypage }) => {
   const navigate = useNavigate();
 
   const [contentId, setContentId] = useState(5);
+  const [date, setDate] = useState("");
   const [myWkName, setMyWkName] = useState("");
   const [myPayType, setMyPayType] = useState(1);
   const [isHourly, setIsHourly] = useState(true);
@@ -24,9 +25,9 @@ const WorkAdd = ({ isMypage, value }) => {
   const [myWkTax, setMyWkTax] = useState("");
   const [myWkPayday, setMyWkPayday] = useState("");
 
-  const setvalue = new Date(value);
-  setvalue.setDate(setvalue.getDate() + 1);
-  const date = setvalue.toISOString().split('T')[0];
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+  };
 
   const handleMyWkNameChange = (event) => {
     setMyWkName(event.target.value);
@@ -58,10 +59,6 @@ const WorkAdd = ({ isMypage, value }) => {
         break;
 
       default:
-        setIsHourly(false);
-        setIsCase(false);
-        break;
-
     }
   };
 
@@ -70,11 +67,11 @@ const WorkAdd = ({ isMypage, value }) => {
   };
 
   const handleMyWkStartChange = (event) => {
-    setMyWkStart(event.target.value.toString());
+    setMyWkStart(event.target.value);
   };
 
   const handleMyWkEndChange = (event) => {
-    setMyWkEnd(event.target.value.toString());
+    setMyWkEnd(event.target.value);
   };
 
   const handleMyWkRestChange = (event) => {
@@ -93,14 +90,14 @@ const WorkAdd = ({ isMypage, value }) => {
     setMyWkPayday(event.target.value);
   };
 
-  const handleContentIdChange = (event) => {
-    setContentId(event.target.contentId);
+  const handleContentIdChange = (id) => {
+    setContentId(id);
+    // setContentId(event.target.contentId);
   };
 
   const onCreateMyWork = async () => {
     try {
       const createMyWork = await MyPageAxiosApi.createMyWork({
-        myColor: contentId,
         date,
         myWkName,
         myPayType,
@@ -111,6 +108,8 @@ const WorkAdd = ({ isMypage, value }) => {
         myWkCase,
         myWkTax,
         myWkPayday,
+        // myColor: contentId,
+        contentId: contentId.toString(),
       });
 
       if (createMyWork.data === "근무를 성공적으로 생성했습니다.") {
@@ -138,7 +137,12 @@ const WorkAdd = ({ isMypage, value }) => {
             ) : (
               <>
                 <p className="label">날짜</p>
-                <Input type="date" id="date" value={date} />
+                <Input
+                  type="date"
+                  id="date"
+                  value={date}
+                  onChange={handleDateChange}
+                />
               </>
             )}
           </div>
