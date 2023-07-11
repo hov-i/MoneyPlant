@@ -15,7 +15,7 @@ public class MySchedule { // 약어로 sc를 사용합니다.
 
     @Id
     @Column(name = "my_sc_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long myScId; // 나의 일정 Id
 
     @ManyToOne(fetch = FetchType.LAZY)

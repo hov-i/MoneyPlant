@@ -38,8 +38,8 @@ public class MyWorkService {
             MyWork myWork = new MyWork();
             myWork.setUser(user);
             myWork.setMyWkName(myWorkDto.getMyWkName());
-            myWork.setMyWorkStart(myWorkDto.getMyWkStart());
-            myWork.setMyWorkEnd(myWorkDto.getMyWkEnd());
+            myWork.setMyWkStart(myWorkDto.getMyWkStart());
+            myWork.setMyWkEnd(myWorkDto.getMyWkEnd());
             myWork.setMyWkPayday(myWorkDto.getMyWkPayday());
             myWork.setMyColor(myWorkDto.getMyColor());
             myWork.setMyWkPay(myWorkDto.getMyWkPay());
@@ -52,6 +52,43 @@ public class MyWorkService {
             return false;
         }
     }
+
+//     마이페이지 나의 급여 계산 - 시급 / 일급&월급 / 건별
+//    public static Duration calculateTimeDifference(String time1, String time2) {
+//        LocalTime startTime = LocalTime.parse(time1);
+//        LocalTime endTime = LocalTime.parse(time2);
+//
+//        return Duration.between(startTime, endTime);
+//    }
+    public int calMyHourlySalary(MyWorkDto myWorkDto) {
+        int type = myWorkDto.getMyPayType();
+        String stTime = myWorkDto.getMyWkStart();
+        String endTime = myWorkDto.getMyWkEnd();
+        int caseCnt = myWorkDto.getMyWorkCase();
+        double tax = myWorkDto.getMyWkTax();
+        int pay;
+
+
+            switch (type) {
+                case 1:
+
+                    break;
+                case 2:
+                    break;
+
+                default:
+
+        }
+
+//        MyWork myWork = new MyWork();
+//
+//        myWork.setMyWkId(myWorkDto.getMyWkId());
+//        myWork.setMyWorkStart(myWorkDto.getMyWkStart());
+//        myWork.setMyWorkEnd(myWorkDto.getMyWkEnd());
+
+    }
+
+
 
     // 마이페이지 나의 근무 수정
 
@@ -69,8 +106,8 @@ public class MyWorkService {
 
             // 조회 내용 : 근무 이름, 근무 색
             myWorkDto.setMyWkName(myWork.getMyWkName());
-            myWorkDto.setMyWkStart(myWork.getMyWorkStart());
-            myWorkDto.setMyWkEnd(myWork.getMyWorkEnd());
+            myWorkDto.setMyWkStart(myWork.getMyWkStart());
+            myWorkDto.setMyWkEnd(myWork.getMyWkEnd());
             myWorkDto.setMyWkPayday(myWork.getMyWkPayday());
             myWorkDto.setMyColor(myWork.getMyColor());
             myWorkDto.setMyWkPay(myWork.getMyWkPay());

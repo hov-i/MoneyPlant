@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Schedule { // 약어로 sc를 사용합니다.
     @Id
     @Column(name = "sc_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scId; // 일정 Id
 
     @ManyToOne(fetch = FetchType.LAZY)
