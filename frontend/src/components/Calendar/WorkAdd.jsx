@@ -43,21 +43,26 @@ const WorkAdd = ({ isMypage }) => {
         setIsCase(false);
         break;
 
-      case 2: // 일급
-        setIsHourly(false);
-        setIsCase(false);
-        break;
-
-      case 3: // 월급
-        setIsHourly(false);
-        setIsCase(false);
-        break;
-
-      case 4: // 건별
+      case 2: // 건별
         setIsHourly(false);
         setIsCase(true);
         break;
+
+      case 3: // 일급
+        setIsHourly(false);
+        setIsCase(false);
+        break;
+
+      case 4: // 월급
+        setIsHourly(false);
+        setIsCase(false);
+        break;
+
       default:
+        setIsHourly(false);
+        setIsCase(false);
+        break;
+
     }
   };
 
@@ -66,11 +71,11 @@ const WorkAdd = ({ isMypage }) => {
   };
 
   const handleMyWkStartChange = (event) => {
-    setMyWkStart(event.target.value);
+    setMyWkStart(event.target.value.toString());
   };
 
   const handleMyWkEndChange = (event) => {
-    setMyWkEnd(event.target.value);
+    setMyWkEnd(event.target.value.toString());
   };
 
   const handleMyWkRestChange = (event) => {
@@ -89,14 +94,14 @@ const WorkAdd = ({ isMypage }) => {
     setMyWkPayday(event.target.value);
   };
 
-  const handleContentIdChange = (id) => {
-    setContentId(id);
+  const handleContentIdChange = (event) => {
+    setContentId(event.target.contentId);
   };
 
   const onCreateMyWork = async () => {
     try {
       const createMyWork = await MyPageAxiosApi.createMyWork({
-        contentId: contentId.toString(),
+        myColor: contentId,
         date,
         myWkName,
         myPayType,
