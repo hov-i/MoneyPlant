@@ -7,8 +7,9 @@ import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
 import SelColor from "./SelColor";
 import SelType from "./SelType";
 
-const WorkAdd = ({ isMypage }) => {
+import { ReactComponent as Post } from "../../assets/Post.svg";
 
+const WorkAdd = () => {
   const [contentId, setContentId] = useState(5);
   const [date, setDate] = useState("");
   const [myWkName, setMyWkName] = useState("");
@@ -22,6 +23,17 @@ const WorkAdd = ({ isMypage }) => {
   const [myWkCase, setMyWkCase] = useState("");
   const [myWkTax, setMyWkTax] = useState("");
   const [myWkPayday, setMyWkPayday] = useState("");
+
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const handleDateChange = (event) => {
     setDate(event.target.value);
@@ -124,19 +136,18 @@ const WorkAdd = ({ isMypage }) => {
 
         <InputContainer>
           <div>
-            {isMypage ? (
-              <></>
-            ) : (
-              <>
-                <p className="label">날짜</p>
-                <Input
-                  type="date"
-                  id="date"
-                  value={date}
-                  onChange={handleDateChange}
-                />
-              </>
-            )}
+            <div className="quick" onClick={openModal}>
+              <Post width="15" height="15" fill="#575757" />
+              <p className="label">간편 등록</p>
+            </div>
+
+            <p className="label">날짜</p>
+            <Input
+              type="date"
+              id="date"
+              value={date}
+              onChange={handleDateChange}
+            />
           </div>
           <div>
             <p className="label">근무이름</p>
@@ -281,8 +292,11 @@ const InputContainer = styled.div`
 
   div {
     display: flex;
-    width: auto;
     flex-direction: row;
+    margin: 5px;
+    align-items: center;
+  }
+  .quick {
     margin: 5px;
   }
 `;
