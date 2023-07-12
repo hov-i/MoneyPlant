@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
+import Modal from "../Common/Modal";
 import ClickButton from "../Common/ClickButton";
 import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
 import SelColor from "./SelColor";
@@ -135,12 +136,13 @@ const WorkAdd = () => {
         <BlockLine />
 
         <InputContainer>
-          <div>
+
             <div className="quick" onClick={openModal}>
               <Post width="15" height="15" fill="#575757" />
               <p className="label">간편 등록</p>
             </div>
 
+<div>
             <p className="label">날짜</p>
             <Input
               type="date"
@@ -221,7 +223,10 @@ const WorkAdd = () => {
             contentId={contentId}
             onContentIdChange={handleContentIdChange}
           />
-          {/* <SelColor value={defaultMyColor} onChange={handleMyColorChange} /> */}
+
+        {modalOpen && (
+          <Modal open={modalOpen} close={closeModal} width={"300px"}></Modal>
+        )}
         </InputContainer>
       </Container>
       <ButtonContainer>
@@ -285,7 +290,6 @@ const InputContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  vertical-align: center;
   flex-wrap: wrap;
   width: 200px;
   margin: 20px;
@@ -295,9 +299,15 @@ const InputContainer = styled.div`
     flex-direction: row;
     margin: 5px;
     align-items: center;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
   }
+
   .quick {
     margin: 5px;
+    align-items: center;
   }
 `;
 
@@ -307,3 +317,4 @@ const ButtonContainer = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
+

@@ -113,6 +113,7 @@ const Title = styled.div`
   font-size: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
+
 `;
 
 const Input = styled.input`
@@ -150,14 +151,23 @@ const InputContainer = styled.div`
   flex-wrap: wrap;
   width: 200px;
   margin: 20px;
+
+
   div {
     display: flex;
     flex-direction: row;
     margin: 5px;
     align-items: center;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
   }
+
   .quick {
     margin: 5px;
+    align-items: center;
+
   }
 `;
 
@@ -167,3 +177,4 @@ const ButtonContainer = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
+
