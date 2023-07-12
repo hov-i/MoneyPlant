@@ -5,14 +5,13 @@ import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import ClickButton from "../Common/ClickButton";
 import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
-import SelColor from "./SelColor";
-import SelType from "./SelType";
+import SelColor from "../Calendar/SelColor";
+import SelType from "../Calendar/SelType";
 
-const WorkAdd = ({ isMypage }) => {
+const WorkAdd = () => {
   const navigate = useNavigate();
 
   const [contentId, setContentId] = useState(5);
-  const [date, setDate] = useState("");
   const [myWkName, setMyWkName] = useState("");
   const [myPayType, setMyPayType] = useState(1);
   const [isHourly, setIsHourly] = useState(true);
@@ -24,10 +23,6 @@ const WorkAdd = ({ isMypage }) => {
   const [myWkCase, setMyWkCase] = useState("");
   const [myWkTax, setMyWkTax] = useState("");
   const [myWkPayday, setMyWkPayday] = useState("");
-
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
-  };
 
   const handleMyWkNameChange = (event) => {
     setMyWkName(event.target.value);
@@ -97,7 +92,6 @@ const WorkAdd = ({ isMypage }) => {
   const onCreateMyWork = async () => {
     try {
       const createMyWork = await MyPageAxiosApi.createMyWork({
-        date,
         myWkName,
         myPayType,
         myWkStart,
@@ -125,21 +119,6 @@ const WorkAdd = ({ isMypage }) => {
         <BlockLine />
 
         <InputContainer>
-          <div>
-            {isMypage ? (
-              <></>
-            ) : (
-              <>
-                <p className="label">날짜</p>
-                <Input
-                  type="date"
-                  id="date"
-                  value={date}
-                  onChange={handleDateChange}
-                />
-              </>
-            )}
-          </div>
           <div>
             <p className="label">근무이름</p>
             <Input value={myWkName} onChange={handleMyWkNameChange} />
