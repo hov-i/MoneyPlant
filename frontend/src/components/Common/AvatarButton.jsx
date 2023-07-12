@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import AuthAxiosAPI from "../../api/AuthAxiosAPI";
 import UserAxiosAPI from "../../api/UserAxiosAPI";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
@@ -26,24 +25,10 @@ const AvatarButton = () => {
         fetchUserName();
     }, []);
 
-    const onClickLogOut = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await AuthAxiosAPI.logout();
-            if (response.status === 200) {
-                console.log("logout successful");
-                navigate("/");
-                setName(null);
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
     return (
         <>
             {name ? (
-                <Avatar {...stringAvatar(name)} onClick={onClickLogOut} />
+                <Avatar {...stringAvatar(name)}/>
             ) : (
                 <Avatar
                     sx={{
