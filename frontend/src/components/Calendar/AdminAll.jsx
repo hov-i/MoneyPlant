@@ -13,8 +13,7 @@ const AdminAll = ({ setValue }) => {
     const [selectTodayIncome, setSelectTodayIncome] = useState([]);
 
     useEffect(() => {
-        const expenseDate = formatDate(setValue);
-        const incomeDate = formatDate(setValue);
+        const nowDate = formatDate(setValue);
 
          function formatDate(date) {
              const formattedDate = new Date(date);
@@ -24,7 +23,7 @@ const AdminAll = ({ setValue }) => {
 
         const getTodayExpense = async () => {
             try {
-                const rsp = await LedgerAxiosApi.getTodayExpense(expenseDate);
+                const rsp = await LedgerAxiosApi.getTodayExpense(nowDate);
                 if (rsp.status === 200) setSelectTodayExpense(rsp.data);
                 console.log(rsp.data);
             } catch (e) {
@@ -35,7 +34,7 @@ const AdminAll = ({ setValue }) => {
 
         const getTodayIncome = async () => {
             try {
-                const rsp = await LedgerAxiosApi.getTodayIncome(incomeDate);
+                const rsp = await LedgerAxiosApi.getTodayIncome(nowDate);
                 if (rsp.status === 200) setSelectTodayIncome(rsp.data);
                 console.log(rsp.data);
             } catch (e) {
@@ -77,26 +76,28 @@ const AdminAll = ({ setValue }) => {
                 <AdminLedger setValue={setValue} />
             </div>
             <div className="accountBox">
-                {selectTodayExpense.map((data, index) => {
-                    return (
-                        <Account
-                            account={'지출'}
-                            key={index}
-                            amount={data.expenseAmount}
-                            content={data.expenseContent}
-                        />
-                        );
-                })}
-                {selectTodayIncome.map((data, index) => {
-                    return(
-                        <Account
-                            account={'수입'}
-                            key={index}
-                            amount={data.incomeAmount}
-                            content={data.incomeAmount}
-                        />
-                    );
-                })}
+                {selectTodayExpense.length === 0 && selectTodayIncome.length === 0 ? (
+                    <p className="none">수입/지출 내역이 없습니다.</p>
+                ) : (
+                    <>
+                        {selectTodayExpense.map((data, index) => (
+                            <Account
+                                account={'지출'}
+                                key={index}
+                                amount={data.expenseAmount}
+                                content={data.expenseContent}
+                            />
+                        ))}
+                        {selectTodayIncome.map((data, index) => (
+                            <Account
+                                account={'수입'}
+                                key={index}
+                                amount={data.incomeAmount}
+                                content={data.incomeContent}
+                            />
+                        ))}
+                    </>
+                )}
             </div>
         </AdminAllContainer>
     );
@@ -108,6 +109,10 @@ const AdminAllContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+
+    .none {
+        margin-left: 10px;
+    }
 
     .block {
         display: flex;

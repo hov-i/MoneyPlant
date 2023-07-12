@@ -407,9 +407,9 @@ public class LedgerService {
     }
 
     // 캘린더 하루별 수입 조회
-    public List<IncomeDto> getIncomeListWithTodayDate(UserDetailsImpl userDetails, String IncomeDate) {
+    public List<IncomeDto> getIncomeListWithTodayDate(UserDetailsImpl userDetails, String incomeDate) {
         Long userId = userDetails.getId();
-        List<Income> IncomeList = incomeRepository.findByUserIdAndIncomeDate(userId, IncomeDate);
+        List<Income> IncomeList = incomeRepository.findByUserIdAndIncomeDate(userId, incomeDate);
 
         List<IncomeDto> IncomeDtoList = new ArrayList<>();
         for(Income income : IncomeList) {

@@ -70,7 +70,7 @@ const LedgerAxiosApi = {
 
   getTodayIncome: async (IncomeDate) => {
     try {
-        return await axiosInstance.get(`/ledger/get/today/expense/${IncomeDate}`);
+        return await axiosInstance.get(`/ledger/get/today/income/${IncomeDate}`);
     } catch (e) {
         throw e;
     }
