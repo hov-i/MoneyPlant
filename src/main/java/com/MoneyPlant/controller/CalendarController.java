@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -93,17 +94,15 @@ public class CalendarController {
 
 // ===========================================================================
     // 캘린더 컨텐츠 전체 조회 (수입, 지출 추가 예정)
-//    @GetMapping("")
-//    public ResponseEntity<CalendarDto> CalendarView (@AuthenticationPrincipal UserDetailsImpl userDetails) throws IllegalAccessException {
-//        List<ScheduleDto> scheduleDtoList = calendarService.getScheduleForCal(userDetails);
-//        List<WorkDto> workDtoList = calendarService.getWorkForCal(userDetails);
-//        Map<String, Integer> dailyExpenseList =  ledgerService.getDailyExpense(userDetails);
-//        Map<String, Integer> dailyIncomeList =  ledgerService.getDailyIncome(userDetails);
-//
-//        CalendarDto calendarDto = new CalendarDto(scheduleDtoList, workDtoList, dailyExpenseList, dailyIncomeList);
-//
-//        return ResponseEntity.ok(calendarDto);
-//    }
+    @GetMapping("")
+    public ResponseEntity<CalendarDto> CalendarView (@AuthenticationPrincipal UserDetailsImpl userDetails) throws IllegalAccessException {
+        List<ScheduleDto> scheduleDtoList = calendarService.getScheduleForCal(userDetails);
+        List<WorkDto> workDtoList = calendarService.getWorkForCal(userDetails);
+        Map<String, Integer> dailyExpenseList =  ledgerService.getDailyExpense(userDetails);
+        Map<String, Integer> dailyIncomeList =  ledgerService.getDailyIncome(userDetails);
 
+        CalendarDto calendarDto = new CalendarDto(scheduleDtoList, workDtoList, dailyExpenseList, dailyIncomeList);
 
+        return ResponseEntity.ok(calendarDto);
+    }
 }

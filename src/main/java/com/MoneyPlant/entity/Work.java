@@ -21,11 +21,18 @@ public class Work {
     @JoinColumn(name = "id")
     private User user; // userId
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_type")
+    private Role role;
+
+    @Column(name = "work_date")
+    private String workDate; // 근무 날짜
+
     @Column(name = "work_name", nullable = false)
     private String workName; // 근무 이름
 
-    @Column(name = "work_date", nullable = false)
-    private String workDate; // 근무 날짜
+    @Column(name = "pay_type", nullable = false)
+    private int PayType; // 시급, 건별, 일급, 월급
 
     @Column(name = "work_start")
     private String workStart; // 근무 시작 시간
@@ -39,6 +46,6 @@ public class Work {
     @Column(name = "color", nullable = false)
     private int color; // 근무 color
 
-    @Column(name = "work_pay")
-    private int workPay; // 총 급여 ( money * tax * date)
+    @Column(name = "work_pay", nullable = false)
+    private int workPay; // 급여 ( money * time * tax )
 }

@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Check {
     @Id
     @Column(name = "check_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long checkId;
 
     @ManyToOne(fetch = FetchType.LAZY)

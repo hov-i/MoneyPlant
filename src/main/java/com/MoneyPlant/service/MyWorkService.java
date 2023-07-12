@@ -38,6 +38,7 @@ public class MyWorkService {
             MyWork myWork = new MyWork();
             myWork.setUser(user);
             myWork.setMyWkName(myWorkDto.getMyWkName());
+            myWork.setMyPayType(myWorkDto.getMyPayType());
             myWork.setMyWkStart(myWorkDto.getMyWkStart());
             myWork.setMyWkEnd(myWorkDto.getMyWkEnd());
             myWork.setMyWkPayday(myWorkDto.getMyWkPayday());

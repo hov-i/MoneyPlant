@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Income {
     @Id
     @Column(name = "income_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long incomeId; // 수입 Id
 
     @ManyToOne(fetch = FetchType.LAZY)

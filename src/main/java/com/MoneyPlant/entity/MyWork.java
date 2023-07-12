@@ -24,6 +24,9 @@ public class MyWork {
     @Column(name = "my_wk_name", nullable = false)
     private String myWkName; // 나의 근무 이름
 
+    @Column(name = "my_pay_type", nullable = false)
+    private int myPayType;
+
     @Column(name = "my_work_start")
     private String myWkStart; // 나의 근무 시작 시간
 
