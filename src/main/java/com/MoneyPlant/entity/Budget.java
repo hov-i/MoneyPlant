@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Budget {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long budgetId; // 예산 Id
 
     @ManyToOne(fetch = FetchType.LAZY)

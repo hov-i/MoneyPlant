@@ -9,12 +9,22 @@ import Account from './Account';
 import LedgerAxiosApi from '../../api/LedgerAxiosAPI';
 
 const AdminAll = ({ setValue }) => {
-    const [selectTodayExpense, setSelectTodayExpense] = useState('');
+    const [selectTodayExpense, setSelectTodayExpense] = useState([]);
+    const [selectTodayIncome, setSelectTodayIncome] = useState([]);
 
     useEffect(() => {
+        const expenseDate = formatDate(setValue);
+        const incomeDate = formatDate(setValue);
+
+         function formatDate(date) {
+             const formattedDate = new Date(date);
+             formattedDate.setDate(formattedDate.getDate() + 1);
+             return formattedDate.toISOString().split('T')[0];
+         }
+
         const getTodayExpense = async () => {
             try {
-                const rsp = await LedgerAxiosApi.getTodayExpense();
+                const rsp = await LedgerAxiosApi.getTodayExpense(expenseDate);
                 if (rsp.status === 200) setSelectTodayExpense(rsp.data);
                 console.log(rsp.data);
             } catch (e) {
@@ -22,7 +32,18 @@ const AdminAll = ({ setValue }) => {
             }
         };
         getTodayExpense();
-    }, []);
+
+        const getTodayIncome = async () => {
+            try {
+                const rsp = await LedgerAxiosApi.getTodayIncome(incomeDate);
+                if (rsp.status === 200) setSelectTodayIncome(rsp.data);
+                console.log(rsp.data);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        getTodayIncome();
+    }, [setValue]);
 
     return (
         <AdminAllContainer>
@@ -56,11 +77,26 @@ const AdminAll = ({ setValue }) => {
                 <AdminLedger setValue={setValue} />
             </div>
             <div className="accountBox">
-                {' '}
-                <Account account={'수입'} />
-                <Account account={'지출'} />
-                <Account account={'지출'} />
-                <Account account={'지출'} />
+                {selectTodayExpense.map((data, index) => {
+                    return (
+                        <Account
+                            account={'지출'}
+                            key={index}
+                            amount={data.expenseAmount}
+                            content={data.expenseContent}
+                        />
+                        );
+                })}
+                {selectTodayIncome.map((data, index) => {
+                    return(
+                        <Account
+                            account={'수입'}
+                            key={index}
+                            amount={data.incomeAmount}
+                            content={data.incomeAmount}
+                        />
+                    );
+                })}
             </div>
         </AdminAllContainer>
     );

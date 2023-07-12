@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-const Account = ({ account }) => {
+const Account = ({ account, content, amount }) => {
     const color = account === '지출' ? '#ff005c' : '#3fcea5';
 
     return (
         <>
             <AccountContainer color={color}>
-                <p className="item">스타벅스</p>
-                <p>10000</p>
+                <p className="item">{content}</p>
+                <p>{amount}</p>
             </AccountContainer>
         </>
     );

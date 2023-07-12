@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class CategoryIncome {
     @Id
     @Column(name = "category_income_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryIncomeId; // category Id
     @Column(nullable = false)
     private String categoryIncomeName; // category 이름
