@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
+import Modal from "../Common/Modal";
 import ClickButton from "../Common/ClickButton";
 import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
 import SelColor from "./SelColor";
 import SelType from "./SelType";
 
-const WorkAdd = ({ isMypage }) => {
-  const navigate = useNavigate();
+import { ReactComponent as Post } from "../../assets/Post.svg";
 
+const WorkAdd = () => {
   const [contentId, setContentId] = useState(5);
   const [date, setDate] = useState("");
   const [myWkName, setMyWkName] = useState("");
@@ -24,6 +24,17 @@ const WorkAdd = ({ isMypage }) => {
   const [myWkCase, setMyWkCase] = useState("");
   const [myWkTax, setMyWkTax] = useState("");
   const [myWkPayday, setMyWkPayday] = useState("");
+
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const handleDateChange = (event) => {
     setDate(event.target.value);
@@ -108,10 +119,10 @@ const WorkAdd = ({ isMypage }) => {
 
       if (createMyWork.data === "근무를 성공적으로 생성했습니다.") {
         console.log("입력 성공");
-        navigate("/mypage");
+        window.location.reload();
       } else {
         console.log("입력 실패");
-        navigate("/mypage");
+        window.location.reload();
       }
     } catch (error) {
       console.log("에러:", error);
@@ -125,20 +136,20 @@ const WorkAdd = ({ isMypage }) => {
         <BlockLine />
 
         <InputContainer>
-          <div>
-            {isMypage ? (
-              <></>
-            ) : (
-              <>
-                <p className="label">날짜</p>
-                <Input
-                  type="date"
-                  id="date"
-                  value={date}
-                  onChange={handleDateChange}
-                />
-              </>
-            )}
+
+            <div className="quick" onClick={openModal}>
+              <Post width="15" height="15" fill="#575757" />
+              <p className="label">간편 등록</p>
+            </div>
+
+<div>
+            <p className="label">날짜</p>
+            <Input
+              type="date"
+              id="date"
+              value={date}
+              onChange={handleDateChange}
+            />
           </div>
           <div>
             <p className="label">근무이름</p>
@@ -212,7 +223,10 @@ const WorkAdd = ({ isMypage }) => {
             contentId={contentId}
             onContentIdChange={handleContentIdChange}
           />
-          {/* <SelColor value={defaultMyColor} onChange={handleMyColorChange} /> */}
+
+        {modalOpen && (
+          <Modal open={modalOpen} close={closeModal} width={"300px"}></Modal>
+        )}
         </InputContainer>
       </Container>
       <ButtonContainer>
@@ -276,16 +290,24 @@ const InputContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  vertical-align: center;
   flex-wrap: wrap;
   width: 200px;
   margin: 20px;
 
   div {
     display: flex;
-    width: auto;
     flex-direction: row;
     margin: 5px;
+    align-items: center;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
+  }
+
+  .quick {
+    margin: 5px;
+    align-items: center;
   }
 `;
 
@@ -295,3 +317,4 @@ const ButtonContainer = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
+

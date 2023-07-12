@@ -66,7 +66,9 @@ public class LedgerService {
         try {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
             Long categoryIncomeId = Long.valueOf(incomeDto.getCategoryIncomeId());
+            System.out.println("categoryIncomeId: " + categoryIncomeId);
             CategoryIncome categoryIncome = categoryIncomeRepository.findById(categoryIncomeId)
                     .orElseThrow(() -> new RuntimeException("카테고리를 찾을 수 없습니다."));
 

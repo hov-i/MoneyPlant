@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import BudgetCalendar from "./BudgetCalendar";
@@ -10,7 +9,6 @@ import categoryList from "../../styles/categoryExpenseColor";
 import BudgetAxiosApi from "../../api/BudgetAxiosAPI";
 
 const BudgetAdd = ({ categoryData }) => {
-  const navigate = useNavigate();
 
   const [selectedDate, setSelectedDate] = useState("");
 

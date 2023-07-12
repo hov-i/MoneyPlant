@@ -39,18 +39,16 @@ const Chart = () => {
         .filter(Boolean); // null인 요소 제거
 
       const barIncomeChartData = await ListAxiosAPI.getBarIncomeChart();
-      const transformedBarIncomeChartData = barIncomeChartData.map((item) => ({
-        x: item.x,
-        v: item.v,
-      }));
+                  const transformedBarIncomeChartData = barIncomeChartData.map((item) => ({
+                      x: item.x,
+                      v: item.v || 0,
+                  }));
 
-      const barExpenseChartData = await ListAxiosAPI.getBarExpenseChart();
-      const transformedBarExpenseChartData = barExpenseChartData.map(
-        (item) => ({
-          x: item.x,
-          v1: item.v1,
-        })
-      );
+                  const barExpenseChartData = await ListAxiosAPI.getBarExpenseChart();
+                  const transformedBarExpenseChartData = barExpenseChartData.map((item) => ({
+                      x: item.x,
+                      v1: item.v1 || 0,
+                  }));
 
       // 데이터 결합
       const combinedChartData = transformedLineChartData.map((lineItem) => {

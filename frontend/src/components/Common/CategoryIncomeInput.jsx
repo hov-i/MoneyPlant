@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 const CategoryIncomeInput = ({ categoryIncomeList, categoryIncomeId, onCategoryIncomeIdChange }) => {
     const { isMobile } = useViewport();
-    const [activeCategoryIncomeId, setActiveCategoryIncomeId] = useState(15); // 초기값으로 categoryId 15 설정
+    const [activeCategoryIncomeId, setActiveCategoryIncomeId] = useState(1); // 초기값으로 categoryId 1 설정
 
     const handleIconClick = (categoryIncomeId) => {
         const category = categoryIncomeList.find((item) => item.categoryIncomeId === categoryIncomeId);
