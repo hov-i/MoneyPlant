@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
@@ -9,7 +8,6 @@ import SelColor from "./SelColor";
 import SelType from "./SelType";
 
 const WorkAdd = ({ isMypage }) => {
-  const navigate = useNavigate();
 
   const [contentId, setContentId] = useState(5);
   const [date, setDate] = useState("");
@@ -108,10 +106,10 @@ const WorkAdd = ({ isMypage }) => {
 
       if (createMyWork.data === "근무를 성공적으로 생성했습니다.") {
         console.log("입력 성공");
-        navigate("/mypage");
+        window.location.reload();
       } else {
         console.log("입력 실패");
-        navigate("/mypage");
+        window.location.reload();
       }
     } catch (error) {
       console.log("에러:", error);
