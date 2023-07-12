@@ -8,10 +8,11 @@ import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
 import SelColor from "./SelColor";
 import MyType from "./SelType";
 
-const WorkAdd = ({ isMypage, value }) => {
+const WorkAdd = ({ isMypage }) => {
   const navigate = useNavigate();
 
   const [contentId, setContentId] = useState(5);
+  const [date, setDate] = useState("");
   const [myWkName, setMyWkName] = useState("");
   const [myPayType, setMyPayType] = useState(1);
   const [isHourly, setIsHourly] = useState(true);
@@ -24,9 +25,9 @@ const WorkAdd = ({ isMypage, value }) => {
   const [myWkTax, setMyWkTax] = useState("");
   const [myWkPayday, setMyWkPayday] = useState("");
 
-  const setvalue = new Date(value);
-  setvalue.setDate(setvalue.getDate() + 1);
-  const date = setvalue.toISOString().split('T')[0];
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+  };
 
   const handleMyWkNameChange = (event) => {
     setMyWkName(event.target.value);
@@ -138,7 +139,12 @@ const WorkAdd = ({ isMypage, value }) => {
             ) : (
               <>
                 <p className="label">날짜</p>
-                <Input type="date" id="date" value={date} />
+                <Input
+                  type="date"
+                  id="date"
+                  value={date}
+                  onChange={handleDateChange}
+                />
               </>
             )}
           </div>

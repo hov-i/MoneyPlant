@@ -181,6 +181,12 @@ public class LedgerController {
         return ResponseEntity.ok(monthlyStatistics);
     }
 
+    // 캘린더 하루별 지출 조회
+    @GetMapping("/get/today/expense/{expenseDate}")
+    public ResponseEntity<List<ExpenseDto>> getTodayExpense(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String expenseDate) {
+        List<ExpenseDto> todayExpenseList = ledgerService.getExpenseListWithTodayDate(userDetails, expenseDate);
+        return ResponseEntity.ok(todayExpenseList);
+    }
 
 
 }

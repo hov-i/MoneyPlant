@@ -386,6 +386,24 @@ public class LedgerService {
         return monthlyStatistics;
     }
 
+    // 캘린더 하루별 지출 조회
+    public List<ExpenseDto> getExpenseListWithTodayDate(UserDetailsImpl userDetails, String expenseDate) {
+        Long userId = userDetails.getId();
+        List<Expense> ExpenseList = expenseRepository.findByUserIdAndExpenseDate(userId, expenseDate);
+
+        List<ExpenseDto> expenseDtoList = new ArrayList<>();
+        for(Expense expense : ExpenseList) {
+            ExpenseDto expenseDto = new ExpenseDto();
+            expenseDto.setExpenseAmount(expense.getExpenseAmount());
+            expenseDto.setExpenseContent(expense.getExpenseContent());
+            expenseDto.setExpenseDate(expense.getExpenseDate());
+
+            expenseDtoList.add(expenseDto);
+        }
+
+        return expenseDtoList;
+    }
+
 
 }
 

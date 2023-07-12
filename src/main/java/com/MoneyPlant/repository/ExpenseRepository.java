@@ -14,6 +14,8 @@ import java.util.Map;
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     List<Expense> findByUserId(Long userId);
 
+    List<Expense> findByUserIdAndExpenseDate(Long userId, String expenseDate);
+
     @Query(value = "SELECT c.category_id AS categoryId, c.category_name AS categoryName " +
             "FROM expense e " +
             "JOIN category c ON e.category_id = c.category_id " +
