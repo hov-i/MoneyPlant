@@ -8,6 +8,15 @@ const UserAxiosAPI = {
         } catch (e) {
             console.log("getUserInfo : " + e)
         }
+    },
+
+    postEmailSend : async(inputEmail) => {
+        try {
+            const response = await axios.post(DOMAIN + "/mail/sendmail", inputEmail, {withCredentials: true});
+            return response.data;
+        } catch (e) {
+            console.log("postEmailSend : " + e)
+        }
     }
 }
 

@@ -4,12 +4,33 @@ import logo1 from "../../assets/logo1.png";
 import Button from "@mui/material/Button";
 import { TextField, InputAdornment, Box, Grid } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import UserAxiosAPI from "../../api/UserAxiosAPI";
 
 const FindPassword = () => {
   const [inputEmail, setInputEmail] = useState("");
 
   const onChangeEmail = (e) => {
     setInputEmail(e.target.value);
+  }
+
+  const onClickEmailSend = () => {
+    postEmailSend(inputEmail);
+  };
+
+  const postEmailSend = async () => {
+    try {
+      const postEmailSend = await UserAxiosAPI.postEmailSend(inputEmail);
+      if (postEmailSend.data === "메일 전송 완료.") {
+        console.log("전송 성공");
+        window.location.reload();
+      } else {
+        console.log("전송 실패");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("에러:", error);
+      alert("가입하지 않은 이메일입니다.");
+    }
   };
 
   return (
@@ -75,8 +96,9 @@ const FindPassword = () => {
         </Grid>
 
         <Button
-          type="submit"
+          type="button"
           variant="contained"
+          onClick={onClickEmailSend}
           size="medium"
           sx={{
             backgroundColor: "#8BD4D3",
