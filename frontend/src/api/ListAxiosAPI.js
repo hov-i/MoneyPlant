@@ -1,14 +1,10 @@
-import axios from "axios";
-// import moment from "moment/moment";
-const MPT_DOMAIN = "https://localhost:8888";
+import axiosInstance from "./axiosInstance";
 
 const ListAxiosAPI = {
   // ListPage
   getListIncome: async () => {
     try {
-      const response = await axios.get(MPT_DOMAIN + "/check/income/category", {
-        withCredentials: true,
-      });
+      const response = await axiosInstance.get("/check/income/category");
       const data = response.data.map((item) => ({
         money: item.incomeAmount,
         date: item.incomeDate,
@@ -25,9 +21,7 @@ const ListAxiosAPI = {
 
   getListExpense: async () => {
     try {
-      const response = await axios.get(MPT_DOMAIN + "/check/expense/category", {
-        withCredentials: true,
-      });
+      const response = await axiosInstance.get("/check/expense/category");
       const data = response.data.map((item) => ({
         money: item.expenseAmount,
         date: item.expenseDate,
@@ -45,12 +39,7 @@ const ListAxiosAPI = {
   // ChartPage
   getLineChart: async () => {
     try {
-      const response = await axios.get(
-        MPT_DOMAIN + "/ledger/statistics/monthly",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axiosInstance.get("/ledger/statistics/monthly");
       const transformedData = Object.entries(response.data).map(
         ([date, value]) => ({
           x: date,
@@ -66,9 +55,7 @@ const ListAxiosAPI = {
 
   getBarIncomeChart: async () => {
     try {
-      const response = await axios.get(MPT_DOMAIN + "/ledger/income/monthly", {
-        withCredentials: true,
-      });
+      const response = await axiosInstance.get("/ledger/income/monthly");
 
       const transformedData = Object.entries(response.data).map(
         ([date, value]) => ({
@@ -86,9 +73,7 @@ const ListAxiosAPI = {
 
   getBarExpenseChart: async () => {
     try {
-      const response = await axios.get(MPT_DOMAIN + "/ledger/expense/monthly", {
-        withCredentials: true,
-      });
+      const response = await axiosInstance.get("/ledger/expense/monthly");
       const transformedData = Object.entries(response.data).map(
         ([date, value]) => ({
           v1: value !== null ? value : 0, // value 값이 null인 경우 0으로 처리
@@ -104,11 +89,8 @@ const ListAxiosAPI = {
 
   getPieChart: async () => {
     try {
-      const response = await axios.get(
-        MPT_DOMAIN + "/check/expense/sum-by-category",
-        {
-          withCredentials: true,
-        }
+      const response = await axiosInstance.get(
+        "/check/expense/sum-by-category"
       );
       const data = Object.entries(response.data).map(([key, value]) => ({
         value: value,

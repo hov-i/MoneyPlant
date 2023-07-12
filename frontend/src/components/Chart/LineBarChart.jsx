@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
-//import { createRoot } from "react-dom/client";
 import { ResponsiveBar } from "@nivo/bar";
 import { Axes } from "@nivo/axes";
 import { line } from "d3-shape";
@@ -12,6 +11,12 @@ const lineColor = "#ffa947";
 
 // `v` and `v1` are used for bars
 // `l` is used for line
+
+// 내가 처리해야하는 undefined의 문제점...
+// 지출 값'만' 들어오는 경우 -> 강제로 수입 값을 0으로 만들어줘야 함
+// 수입도 마찬가지
+// 이걸 어떻게 함...?
+// 그러면 애초에 undefined 값을 전부 0으로 처리하면 될 거 같기도 하고...?
 
 const LineBarChart = ({ data }) => {
   const Line = ({ bars, xScale, yScale, innerWidth, innerHeight }) => {
@@ -74,7 +79,7 @@ const LineBarChart = ({ data }) => {
 
     return (
       <Fragment>
-        {/* y좌표 전부 안 보이게! 
+        {/* y좌표 전부 안 보이게!
       <div className="AxesWrapper" style={{ display: "none" }}>
   <Axes
     yScale={yScale}
@@ -196,7 +201,9 @@ const LineBarChart = ({ data }) => {
   if (!data.length) {
     return (
       <>
-        <NotUse> 해당 년도에 내역이 없습니다.😢</NotUse>
+        <NotUseContainer>
+          <NotUse>현재 수입, 지출 내역이 존재하지 않습니다.😢</NotUse>
+        </NotUseContainer>
       </>
     );
   }
@@ -273,6 +280,14 @@ const LineBarChartContainer = styled.div`
     width: 100%;
     height: 90%;
   }
+`;
+
+const NotUseContainer = styled.div`
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  height: 100%;
+  padding-bottom: 10%;
 `;
 
 const NotUse = styled.div`

@@ -93,7 +93,7 @@ const SignupForm = ({ setValue}) => {
                         onChange={onChangeFirstName}
                         required
                         fullWidth
-                        placeholder="First Name"
+                        placeholder="이름"
                         autoFocus
                         InputProps={{
                             style: {fontSize: '1.3rem',},
@@ -124,7 +124,7 @@ const SignupForm = ({ setValue}) => {
                         onChange={onChangeLastName}
                         required
                         fullWidth
-                        placeholder="Last Name"
+                        placeholder="성"
                         InputProps={{
                             style: { fontSize: '1.3rem' },
                         }}
@@ -154,7 +154,7 @@ const SignupForm = ({ setValue}) => {
                         onChange={onChangeEmail}
                         required
                         fullWidth
-                        placeholder="Email Address"
+                        placeholder="이메일을 입력해주세요."
                         helperText={inputEmail ? (isEmail ? '올바른 형식입니다.' : '이메일 주소를 확인해 주세요.') : ''}
                         InputProps={{
                             style: { fontSize: '1.3rem' },
@@ -185,7 +185,7 @@ const SignupForm = ({ setValue}) => {
                         onChange={onChangePwd}
                         required
                         fullWidth
-                        placeholder="Password"
+                        placeholder="비밀번호를 입력해주세요."
                         type="password"
                         helperText={inputPwd ? (isPwd ? '올바른 형식입니다.' : '숫자+영문자+특수문자 조합으로 8자리 이상 입력해 주세요.') : ''}
                         InputProps={{
@@ -217,7 +217,7 @@ const SignupForm = ({ setValue}) => {
                         onChange={onChangeConPwd}
                         required
                         fullWidth
-                        placeholder="Confirm Password"
+                        placeholder="비밀번호를 재입력해주세요."
                         type="password"
                         helperText={inputConPwd ? (isConPwd ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.') : ''}
                         InputProps={{
@@ -256,7 +256,7 @@ const SignupForm = ({ setValue}) => {
                             backgroundColor: "#87EEC5"
                         },
                     }}
-                >Sign Up
+                >회원가입
                 </Button>:
                 <Button
                     variant='contained'
@@ -271,7 +271,7 @@ const SignupForm = ({ setValue}) => {
                             color: "white"
                         }
                     }}
-                >Sign Up
+                >회원가입
                 </Button>
             }
         </Box>
@@ -279,3 +279,4 @@ const SignupForm = ({ setValue}) => {
 };
 
 export default SignupForm;
+
