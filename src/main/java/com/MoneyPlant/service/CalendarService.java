@@ -25,9 +25,9 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class CalendarService {
     private static final String GOOGLE_CALENDAR_API_URL = "https://www.googleapis.com/calendar/v3";
+    private final UserRepository userRepository;
     private final ScheduleRepository scheduleRepository;
     private final WorkRepository workRepository;
-    private final UserRepository userRepository;
     private final IncomeRepository incomeRepository;
     private final ExpenseRepository expenseRepository;
     private final CategoryRepository categoryRepository;
@@ -178,6 +178,7 @@ public class CalendarService {
             return false;
         }
     }
+
     // 캘린더 일정 삭제
     public boolean deleteSchedule(Long scId, UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();

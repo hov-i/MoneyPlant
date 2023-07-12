@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
@@ -9,7 +8,6 @@ import SelColor from "../Calendar/SelColor";
 import SelType from "../Calendar/SelType";
 
 const WorkAdd = () => {
-  const navigate = useNavigate();
 
   const [contentId, setContentId] = useState(5);
   const [myWkName, setMyWkName] = useState("");

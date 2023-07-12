@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
@@ -8,7 +7,6 @@ import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
 import SelColor from "../Calendar/SelColor";
 
 const ScAdd = () => {
-  const navigate = useNavigate();
 
   const [contentId, setContentId] = useState(1);
   const [myScName, setMyScName] = useState("");
