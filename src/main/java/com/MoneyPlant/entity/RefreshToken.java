@@ -16,7 +16,7 @@ import javax.persistence.*;
 // Refresh Token은 DB에 저장해놓습니다
 public class RefreshToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne
