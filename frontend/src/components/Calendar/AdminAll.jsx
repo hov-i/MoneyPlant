@@ -113,22 +113,25 @@ const AdminAllContainer = styled.div`
     .none {
         margin-left: 10px;
     }
-
     .block {
         display: flex;
         align-items: center;
+        padding-left: 10px;
     }
 
     .title {
         font-size: 15px;
         width: 100px;
+
         margin-left: 10px;
     }
     .tagBox {
         display: flex;
+        padding-left: 10px;
     }
 
     .accountBox {
         margin-bottom: 20px;
+        padding-left: 10px;
     }
 `;

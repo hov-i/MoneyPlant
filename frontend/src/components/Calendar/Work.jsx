@@ -20,6 +20,7 @@ const WorkContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
+    padding-left: 10px;
 
     .time {
         margin-left: 30%;

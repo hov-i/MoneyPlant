@@ -64,6 +64,7 @@ const CreateScheduleBox = styled.div`
     align-items: center;
     width: 100%;
     margin-bottom: 10px;
+    padding: 10px;
 
     .SMSBox {
         width: 10%;

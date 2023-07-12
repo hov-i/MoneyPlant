@@ -612,8 +612,10 @@ const CalendarContainer = styled.div`
 `;
 
 const SelectDay = styled.div`
-    font-size: 18px;
+    font-size: 17px;
     margin-right: 10px;
+    width: 140px;
+    margin: 0 auto;
 `;
 
 const DayContainer = styled.div`
@@ -621,6 +623,8 @@ const DayContainer = styled.div`
     justify-content: center;
     align-items: center;
     margin: 10px;
+    padding: 10px;
+    font-weight: 600;
 `;
 
 const DayButton = styled.button`
