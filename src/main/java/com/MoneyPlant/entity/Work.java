@@ -24,6 +24,9 @@ public class Work {
     @Column(name = "work_name", nullable = false)
     private String workName; // 근무 이름
 
+    @Column(name = "pay_type", nullable = false)
+    private int PayType;
+
     @Column(name = "work_date", nullable = false)
     private String workDate; // 근무 날짜
 

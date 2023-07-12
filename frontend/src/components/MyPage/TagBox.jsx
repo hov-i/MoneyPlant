@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import useViewport from "../../hooks/viewportHook";
 import Modal from "../Common/Modal";
-import ScAdd from "../Calendar/ScAdd";
-import WorkAdd from "../Calendar/WorkAdd";
+import MyScAdd from "../MyPage/MyScAdd";
+import MyWorkAdd from "../MyPage/MyWorkAdd";
 
 import { ReactComponent as Plus } from "../../assets/plus.svg";
 
@@ -42,11 +42,11 @@ const TagBox = ({ tag, children }) => {
         <>
           {tag === "일정" ? (
             <Modal open={modalOpen} close={closeModal} width={"300px"}>
-              <ScAdd isMypage={true} />
+              <MyScAdd/>
             </Modal>
           ) : (
             <Modal open={modalOpen} close={closeModal} width={"300px"}>
-              <WorkAdd isMypage={true} />
+              <MyWorkAdd />
             </Modal>
           )}
         </>
