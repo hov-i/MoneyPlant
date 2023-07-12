@@ -7,16 +7,11 @@ import { ReactComponent as Right } from "../../assets/right.svg";
 import { ReactComponent as Left } from "../../assets/left.svg";
 import CalenderAPI from "../../api/CalendarAPI";
 
-// import { ReactComponent as SMS } from '../../assets/SMS.svg';
-// import { ReactComponent as Plus } from "../../assets/plus.svg";
 
 // 캘린더 API 적용
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
-
-// import SMSAdd from "./SMSAdd";
-// import Box from '../Common/Box';
 
 const MYCalendar = forwardRef(({ isBasic }, ref) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -30,7 +25,6 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
     setModalOpen(false);
   };
 
-  // const apiKey = process.env.REACT_APP_CAL_API_KEY;
 
   const curDate = new Date();
   const [value, setValue] = useState(curDate);
@@ -41,24 +35,6 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
       openModal();
     }
   }, [value]);
-
-  // //투데이 버튼... value값 자체가 옮겨가진 않음
-  // const handleReturnToday = () => {
-  //   const today = new Date();
-  //   setValue(today);
-  // };
-
-  // // 컴포넌트에 Useref사용 설정
-  // const calendarRef = useRef();
-
-  // //캘린더 라이브러리 컴포넌트에서 ref 등록
-  // <Calendar ref={calendarRef} />;
-
-  // const onClickTodayHandler = () => {
-  //   const calendar = calendarRef.current;
-  //   const firstDayOfTodaysMonth = moment().date(1).toDate();
-  //   calendar.setActiveStartDate(firstDayOfTodaysMonth);
-  // };
 
   const handleNextDay = () => {
     const nextDay = moment(value).add(1, "day").toDate();
@@ -265,28 +241,27 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
         )}
 
         <div>
-          {modalOpen && (
-            <Modal open={modalOpen} close={closeModal} width={"500px"}>
-              <DayContainer>
-                <DayButton onClick={handleBeforeDay}>
-                  <Left />
-                </DayButton>
-                <SelectDay>
-                  {moment(value).format("YYYY년 MM월 DD일")}
-                </SelectDay>
-                <DayButton onClick={handleNextDay}>
-                  <Right />
-                </DayButton>
-              </DayContainer>
-              <AdminAll setValue={value} />
-            </Modal>
-          )}
-        </div>
+                           {modalOpen && (
+                                <Modal open={modalOpen} close={closeModal} width={'500px'}>
+                                    <DayContainer>
+                                        <DayButton onClick={handleBeforeDay}>
+                                            <Left />
+                                        </DayButton>
+                                        <SelectDay>{moment(value).format('YYYY년 MM월 DD일')}</SelectDay>
+                                        <DayButton onClick={handleNextDay}>
+                                        <Right />
+                                        </DayButton>
+                                    </DayContainer>
+                                <AdminAll setValue={value} />
+                                </Modal>
+                           )}
+                        </div>
       </div>
     </CalendarContainer>
   );
 });
 export default MYCalendar;
+
 
 const CalendarContainer = styled.div`
   padding-bottom: 30px;
