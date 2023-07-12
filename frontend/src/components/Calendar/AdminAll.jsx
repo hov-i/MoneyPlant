@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import styled from 'styled-components';
 import BlockLine from '../Common/BlockLine';
 import AdminContents from './AdminContents';
@@ -6,8 +6,23 @@ import AdminLedger from './AdminLedger';
 import Tag from '../MyPage/Tag';
 import Work from './Work';
 import Account from './Account';
+import LedgerAxiosApi from '../../api/LedgerAxiosAPI';
 
 const AdminAll = ({ setValue }) => {
+    const [selectTodayExpense, setSelectTodayExpense] = useState('');
+
+    useEffect(() => {
+        const getTodayExpense = async () => {
+            try {
+                const rsp = await LedgerAxiosApi.getTodayExpense();
+                if (rsp.status === 200) setSelectTodayExpense(rsp.data);
+                console.log(rsp.data);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        getTodayExpense();
+    }, []);
 
     return (
         <AdminAllContainer>

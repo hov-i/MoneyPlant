@@ -59,6 +59,15 @@ const LedgerAxiosApi = {
       throw e;
     }
   },
+
+  getTodayExpense: async (expenseDate) => {
+    try {
+      return await axiosInstance.get(`/api/ledger/get/today/expense/${expenseDate}`);
+    } catch (e) {
+      throw e;
+    }
+  }
+
 };
 
 export default LedgerAxiosApi;
