@@ -1,16 +1,10 @@
-import axios from "axios";
-const MPT_DOMAIN = "https://localhost:8888";
+import axiosInstance from "./axiosInstance";
 
 const AxiosApi = {
   createSchedule: async (inputValues) => {
     try {
-      const response = await axios.post(
-        MPT_DOMAIN + "/calendar/create/schedule",
-        inputValues,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axiosInstance.post("/calendar/create/schedule", inputValues);
+
       return response.data;
     } catch (error) {
       console.error("Request Error:", error);
@@ -20,13 +14,7 @@ const AxiosApi = {
 
   createWork: async (inputValues) => {
     try {
-      const response = await axios.post(
-        MPT_DOMAIN + "/calendar/create/work",
-        inputValues,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axiosInstance.post("/calendar/create/work", inputValues);
       return response.data;
     } catch (error) {
       console.error("Request Error:", error);
@@ -36,9 +24,7 @@ const AxiosApi = {
 
   getCalendarView: async () => {
     try {
-      const response = await axios.get(MPT_DOMAIN + "/calendar", {
-        withCredentials: true,
-      });
+      const response = await axiosInstance.get("/calendar");
       const { dailyExpenseList, dailyIncomeList } = response.data || {};
 
       // dailyExpenseList에서 date와 amount 값 가져오기
