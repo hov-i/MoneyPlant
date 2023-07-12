@@ -7,16 +7,17 @@ import ClickButton from "../Common/ClickButton";
 import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
 import SelColor from "./SelColor";
 
-const ScAdd = ({ isMypage, value }) => {
+const ScAdd = ({ isMypage }) => {
   const navigate = useNavigate();
 
   const [contentId, setContentId] = useState(1);
+  const [date, setDate] = useState("");
   const [myScName, setMyScName] = useState("");
   const [myScBudget, setMyScBudget] = useState("");
 
-  const setvalue = new Date(value);
-  setvalue.setDate(setvalue.getDate() + 1);
-  const date = setvalue.toISOString().split('T')[0];
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+  };
 
   const handleMyScNameChange = (event) => {
     setMyScName(event.target.value);
@@ -27,7 +28,8 @@ const ScAdd = ({ isMypage, value }) => {
   };
 
   const handleContentIdChange = (event) => {
-    setContentId(event.target.contentId);
+    setContentId(event);
+    // setContentId(event.target.contentId);
   };
 
   const onCreateMySc = async () => {
@@ -63,7 +65,12 @@ const ScAdd = ({ isMypage, value }) => {
           ) : (
             <>
               <p className="label">날짜</p>
-              <Input type="date" id="date" value={date} />
+              <Input
+                type="date"
+                id="date"
+                value={date}
+                onChange={handleDateChange}
+              />
             </>
           )}
           <p className="label">일정</p>

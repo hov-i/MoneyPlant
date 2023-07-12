@@ -51,7 +51,7 @@ const Mypage = () => {
             <TagBox tag={"근무"}>
               {myPageList.myWorkDtoList &&
                 myPageList.myWorkDtoList.map((data2) => (
-                  <Tag color={data2.myColor} detail={data2.myWorkName} />
+                  <Tag color={data2.myColor} detail={data2.myWkName} />
                 ))}
             </TagBox>
           </Display>

@@ -22,12 +22,12 @@ const LoginAndRegister = () => {
             <button
               onClick={() => handleButtonClick("login")}
               className={value === "login" ? "button-active" : ""}>
-              Login
+              로그인
             </button>
             <button
               onClick={() => handleButtonClick("signup")}
               className={value === "signup" ? "button-active" : ""}>
-              Sign Up
+              회원가입
             </button>
           </div>
         </div>
@@ -54,6 +54,7 @@ const LoginContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 20px;
     border: 1px solid #87eec5;
   }

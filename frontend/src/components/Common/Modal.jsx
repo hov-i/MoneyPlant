@@ -50,7 +50,7 @@ const ModalStyle = styled.div`
 
     .modal > section {
         width: ${(props) => (props.isMobile ? '100%' : props.width || '60%')};
-        height: ${(props) => (props.isMobile ? '100%' : '500px')};
+        height: ${(props) => (props.isMobile ? '100%': props.height || '500px')};
         padding: 10px;
         margin: 0 auto;
         border-radius: 10px;

@@ -36,7 +36,7 @@ const Navbar = () => {
 
             <CustomLink to={'/mypage'} isMobile={isMobile}>
                 <Person width="17" height="17" />
-                <p className="navText">마이 페이지</p>
+                <p className="navText">간편 등록</p>
             </CustomLink>
 
             {!isMobile && (
