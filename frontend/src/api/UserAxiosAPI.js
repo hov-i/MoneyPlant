@@ -11,20 +11,22 @@ const UserAxiosAPI = {
   },
 
   postEmailSend: async (inputEmail) => {
-    try {
+      try {
         const response = await axios.post(
-            DOMAIN + "/mail/sendmail",
-            {
-                type: "findPw",
-                email: inputEmail,
-            },
-            { withCredentials: true }
+          DOMAIN + "/mail/sendmail",
+          {
+            type: "findPw",
+            email: inputEmail,
+          },
+          { withCredentials: true }
         );
+        console.log(response.data);
         return response.data;
-    } catch (error) {
+      } catch (error) {
         console.log("postEmailSend: " + error);
         throw error;
-    }
+      }
+
 },
 };
 
