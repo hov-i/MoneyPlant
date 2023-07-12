@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-//import styled from "styled-components";
+import styled from "styled-components";
+
 import Modal from '../Common/Modal';
 import BlinkingButton from '../Common/BlinkingButton';
 import ScAdd from './ScAdd';
 import WorkAdd from './WorkAdd';
-import styled from 'styled-components';
 
 const AdminContents = ({ isBasic, setValue }) => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -28,9 +28,9 @@ const AdminContents = ({ isBasic, setValue }) => {
             {modalOpen && (
                 <Modal open={modalOpen} close={closeModal} width={'300px'}>
                     {isBasic ? (
-                        <ScAdd isMypage={false} value={setValue} />
+                        <ScAdd value={setValue} />
                     ) : (
-                        <WorkAdd isMypage={false} value={setValue} />
+                        <WorkAdd value={setValue} />
                     )}
                 </Modal>
             )}
