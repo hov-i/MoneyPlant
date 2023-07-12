@@ -1,6 +1,6 @@
 package com.MoneyPlant.constant;
 
-public enum EType {
+public enum EAddType {
     TYPE_CAL,
-    TYPE_MYPAGE
+    TYPE_QUICK
 }
