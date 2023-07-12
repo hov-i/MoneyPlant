@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { ReactComponent as CreditCard } from '../../assets/CreditCard.svg';
 import { ReactComponent as List } from '../../assets/List.svg';
 import { ReactComponent as Stats } from '../../assets/Stats.svg';
-import { ReactComponent as Person } from '../../assets/Person.svg';
+import { ReactComponent as Post } from '../../assets/Post.svg';
 import { ReactComponent as Calendar } from '../../assets/Calendar.svg';
 import { ReactComponent as Logout } from '../../assets/Logout.svg';
 import useViewport from '../../hooks/viewportHook';
@@ -35,7 +35,7 @@ const Navbar = () => {
             </CustomLink>
 
             <CustomLink to={'/mypage'} isMobile={isMobile}>
-                <Person width="17" height="17" />
+                <Post width="17" height="17" />
                 <p className="navText">간편 등록</p>
             </CustomLink>
 
