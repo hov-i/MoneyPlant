@@ -404,6 +404,24 @@ public class LedgerService {
         return expenseDtoList;
     }
 
+    // 캘린더 하루별 수입 조회
+    public List<IncomeDto> getIncomeListWithTodayDate(UserDetailsImpl userDetails, String IncomeDate) {
+        Long userId = userDetails.getId();
+        List<Income> IncomeList = incomeRepository.findByUserIdAndIncomeDate(userId, IncomeDate);
+
+        List<IncomeDto> IncomeDtoList = new ArrayList<>();
+        for(Income income : IncomeList) {
+            IncomeDto incomeDto = new IncomeDto();
+            incomeDto.setIncomeAmount(income.getIncomeAmount());
+            incomeDto.setIncomeContent(income.getIncomeContent());
+            incomeDto.setIncomeDate(income.getIncomeDate());
+
+            IncomeDtoList.add(incomeDto);
+        }
+
+        return IncomeDtoList;
+    }
+
 
 }
 

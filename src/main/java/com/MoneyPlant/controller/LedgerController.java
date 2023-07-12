@@ -188,6 +188,12 @@ public class LedgerController {
         return ResponseEntity.ok(todayExpenseList);
     }
 
+    // 캘린더 하루별 수입 조회
+    @GetMapping("/get/today/income/{incomeDate}")
+    public ResponseEntity<List<IncomeDto>> getTodayIncome(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String IncomeDate) {
+        List<IncomeDto> todayIncomeList = ledgerService.getIncomeListWithTodayDate(userDetails, IncomeDate);
+        return ResponseEntity.ok(todayIncomeList);
+    }
 
 }
 
