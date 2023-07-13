@@ -54,28 +54,29 @@ const LedgerAxiosApi = {
   },
   getDailyExpense: async () => {
     try {
-        return await axiosInstance.get("/ledger/expense/monthly");
+      return await axiosInstance.get("/ledger/expense/monthly");
     } catch (e) {
-        throw e;
+      throw e;
     }
   },
 
   getTodayExpense: async (expenseDate) => {
     try {
-        return await axiosInstance.get(`/ledger/get/today/expense/${expenseDate}`);
+      return await axiosInstance.get(
+        `/ledger/get/today/expense/${expenseDate}`
+      );
     } catch (e) {
-        throw e;
+      throw e;
     }
   },
 
   getTodayIncome: async (IncomeDate) => {
     try {
-        return await axiosInstance.get(`/ledger/get/today/income/${IncomeDate}`);
+      return await axiosInstance.get(`/ledger/get/today/income/${IncomeDate}`);
     } catch (e) {
-        throw e;
+      throw e;
     }
   },
-
 };
 
 export default LedgerAxiosApi;

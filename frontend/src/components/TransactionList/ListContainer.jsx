@@ -123,7 +123,8 @@ const ListRow = ({ show, index, listData }) => {
       <td
         className={
           listData.deal === "지출" ? "table-cell red" : "table-cell blue"
-        }>
+        }
+      >
         ￦{listData.money}
       </td>
     </StyledRow>

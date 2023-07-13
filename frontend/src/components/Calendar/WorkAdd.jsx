@@ -25,7 +25,6 @@ const WorkAdd = () => {
   const [myWkTax, setMyWkTax] = useState("");
   const [myWkPayday, setMyWkPayday] = useState("");
 
-
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -114,7 +113,7 @@ const WorkAdd = () => {
         myWkStart,
         myWkEnd,
         myWkPayday,
-        myColor : contentId,
+        myColor: contentId,
       });
 
       if (createMyWork.data === "근무를 성공적으로 생성했습니다.") {
@@ -136,13 +135,12 @@ const WorkAdd = () => {
         <BlockLine />
 
         <InputContainer>
+          <div className="quick" onClick={openModal}>
+            <Post width="15" height="15" fill="#575757" />
+            <p className="label">간편 등록</p>
+          </div>
 
-            <div className="quick" onClick={openModal}>
-              <Post width="15" height="15" fill="#575757" />
-              <p className="label">간편 등록</p>
-            </div>
-
-<div>
+          <div>
             <p className="label">날짜</p>
             <Input
               type="date"
@@ -159,7 +157,11 @@ const WorkAdd = () => {
           <p className="label">급여</p>
           <div>
             {/* <MyType value={myPayType.toString()} onChange={onChangeMyPayType} /> */}
-            <SelType value={myPayType} myPayType={myPayType} onChange={onChangeMyPayType} />
+            <SelType
+              value={myPayType}
+              myPayType={myPayType}
+              onChange={onChangeMyPayType}
+            />
             <Input value={myWkMoney} onChange={handleMyWkMoneyChange} />
 
             <p className="text">원</p>
@@ -224,9 +226,9 @@ const WorkAdd = () => {
             onContentIdChange={handleContentIdChange}
           />
 
-        {modalOpen && (
-          <Modal open={modalOpen} close={closeModal} width={"300px"}></Modal>
-        )}
+          {modalOpen && (
+            <Modal open={modalOpen} close={closeModal} width={"300px"}></Modal>
+          )}
         </InputContainer>
       </Container>
       <ButtonContainer>
@@ -317,4 +319,3 @@ const ButtonContainer = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
-

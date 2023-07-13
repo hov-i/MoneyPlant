@@ -42,9 +42,6 @@ const ScAdd = () => {
     // setContentId(event.target.contentId);
   };
 
-
-
-
   const onCreateMySc = async () => {
     try {
       const createMySc = await MyPageAxiosApi.createMySchedule({
@@ -113,7 +110,6 @@ const Title = styled.div`
   font-size: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
-
 `;
 
 const Input = styled.input`
@@ -152,7 +148,6 @@ const InputContainer = styled.div`
   width: 200px;
   margin: 20px;
 
-
   div {
     display: flex;
     flex-direction: row;
@@ -167,7 +162,6 @@ const InputContainer = styled.div`
   .quick {
     margin: 5px;
     align-items: center;
-
   }
 `;
 
@@ -177,4 +171,3 @@ const ButtonContainer = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
-

@@ -9,7 +9,6 @@ import categoryList from "../../styles/categoryExpenseColor";
 import BudgetAxiosApi from "../../api/BudgetAxiosAPI";
 
 const BudgetAdd = ({ categoryData }) => {
-
   const [selectedDate, setSelectedDate] = useState("");
 
   const handleDateChange = (date) => {
