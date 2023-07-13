@@ -21,10 +21,6 @@ public class Work {
     @JoinColumn(name = "id")
     private User user; // userId
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_type")
-    private Role role;
-
     @Column(name = "work_date")
     private String workDate; // 근무 날짜
 
@@ -40,8 +36,8 @@ public class Work {
     @Column(name = "work_end")
     private String workEnd; // 근무 종료 시간
 
-    @Column(name = "work_payday", nullable = false)
-    private String workPayday; // 급여 지급일
+    @Column(name = "payday", nullable = false)
+    private String payday; // 급여 지급일
 
     @Column(name = "color", nullable = false)
     private int color; // 근무 color
