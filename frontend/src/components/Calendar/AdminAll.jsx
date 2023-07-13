@@ -113,7 +113,7 @@ const AdminAllContainer = styled.div`
     width: 100%;
 
     .none {
-        margin-left: 30px;
+        margin-left: 20px;
         font-size: 12px;
     }
     .border {
