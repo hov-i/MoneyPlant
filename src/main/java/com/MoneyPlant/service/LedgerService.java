@@ -399,7 +399,8 @@ public class LedgerService {
             expenseDto.setExpenseAmount(expense.getExpenseAmount());
             expenseDto.setExpenseContent(expense.getExpenseContent());
             expenseDto.setExpenseDate(expense.getExpenseDate());
-
+            String categoryName = categoryRepository.findByCategoryId(expense.getCategory().getCategoryId()).getCategoryName();
+            expenseDto.setCategoryName(categoryName);
             expenseDtoList.add(expenseDto);
         }
 
@@ -417,7 +418,8 @@ public class LedgerService {
             incomeDto.setIncomeAmount(income.getIncomeAmount());
             incomeDto.setIncomeContent(income.getIncomeContent());
             incomeDto.setIncomeDate(income.getIncomeDate());
-
+            String categoryName = categoryIncomeRepository.findByCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId()).getCategoryIncomeName();
+            incomeDto.setCategoryIncomeName(categoryName);
             IncomeDtoList.add(incomeDto);
         }
 

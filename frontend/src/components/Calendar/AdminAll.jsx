@@ -86,6 +86,7 @@ const AdminAll = ({ setValue }) => {
                                 key={index}
                                 amount={data.expenseAmount}
                                 content={data.expenseContent}
+                                categoryName={data.categoryName}
                             />
                         ))}
                         {selectTodayIncome.map((data, index) => (
@@ -94,6 +95,7 @@ const AdminAll = ({ setValue }) => {
                                 key={index}
                                 amount={data.incomeAmount}
                                 content={data.incomeContent}
+                                categoryName={data.categoryIncomeName}
                             />
                         ))}
                     </>
@@ -134,5 +136,6 @@ const AdminAllContainer = styled.div`
     .accountBox {
         margin-bottom: 20px;
         padding-left: 10px;
+        padding-right: 13px;
     }
 `;
