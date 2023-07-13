@@ -25,7 +25,7 @@ const WorkAdd = () => {
 
   const [isHourly, setIsHourly] = useState(true);
   const [isCase, setIsCase] = useState(false);
-  
+
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -36,7 +36,7 @@ const WorkAdd = () => {
     setModalOpen(false);
   };
 
-  const handleDateChange = (event) => {
+  const handleWkDateChange = (event) => {
     setDate(event.target.value);
   };
 
@@ -147,9 +147,25 @@ const WorkAdd = () => {
               type="date"
               id="date"
               value={workDate}
-              onChange={handleDateChange}
+              onChange={handleWkDateChange}
             />
           </div>
+
+          {/* <div>
+            {isMypage ? (
+              <></>
+            ) : (
+              <>
+                <p className="label">날짜</p>
+                <Input
+                  type="date"
+                  id="date"
+                  value={workDate}
+                  onChange={handleWkDateChange}
+                />
+              </>
+            )}
+          </div> */}
 
           <div>
             <p className="label">근무이름</p>
@@ -185,6 +201,7 @@ const WorkAdd = () => {
                   onChange={handleWorkEndChange}
                 />
               </div>
+
               <div>
                 <p className="label">휴게시간</p>
                 <Input

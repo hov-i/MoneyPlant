@@ -85,6 +85,22 @@ const ScAdd = () => {
             />
           </div>
 
+          {/* <div>
+            {isMypage ? (
+              <></>
+            ) : (
+              <>
+                <p className="label">날짜</p>
+                <Input
+                  type="date"
+                  id="date"
+                  value={scDate}
+                  onChange={handleScDateChange}
+                />
+              </>
+            )}
+          </div> */}
+
           <div>
             <p className="label">일정</p>
             <Input value={scName} onChange={handleScNameChange} />
