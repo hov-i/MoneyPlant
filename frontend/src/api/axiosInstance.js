@@ -23,12 +23,8 @@ axiosInstance.interceptors.response.use(
         console.log("쿠키 업데이트 성공");
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        if (!isLoginAlertShown) {
-          isLoginAlertShown = true;
-          alert("로그인이 필요합니다");
-          console.log("Failed to refresh token:", refreshError);
-          window.location.href = "/login";
-        }
+        window.location.href = "/help";
+        console.log("Failed to refresh token:", refreshError);
       }
     }
 
