@@ -114,7 +114,7 @@ const WorkAdd = () => {
         workStart,
         workEnd,
         payday,
-        myColor: contentId,
+        colorId: contentId,
       });
 
       if (createWork.data === "근무를 성공적으로 생성했습니다.") {

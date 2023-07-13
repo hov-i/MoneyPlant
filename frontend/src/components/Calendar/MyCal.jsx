@@ -444,7 +444,7 @@ const CalendarContainer = styled.div`
 
     .react-calendar__tile--hasActive:enabled:hover,
     .react-calendar__tile--hasActive:enabled:focus {
-        background: ${({ theme }) => theme.todayColor};
+        background: ${({ theme }) => theme.seldayColor};
     }
 
     .react-calendar--selectRange .react-calendar__tile--hover {
@@ -452,7 +452,7 @@ const CalendarContainer = styled.div`
     }
 
     .react-calendar__tile--range {
-        background: ${({ theme }) => theme.todayColor};
+        background: ${({ theme }) => theme.seldayColor};
         color: #fff;
         border-radius: 6px;
     }

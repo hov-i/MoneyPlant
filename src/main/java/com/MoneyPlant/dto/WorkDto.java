@@ -18,6 +18,6 @@ public class WorkDto {
     private int WorkCase; // 근무 건별 횟수
     private double workTax; // 급여 세금
     private String payday; // 급여 지급일
-    private int color; // 근무 등록 color
+    private int colorId; // 근무 등록 color
     private int workPay; // 1일 & 연봉 급여 총 금액
 }
