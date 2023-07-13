@@ -39,8 +39,8 @@ public class Work {
     @Column(name = "payday", nullable = false)
     private String payday; // 급여 지급일
 
-    @Column(name = "color", nullable = false)
-    private int color; // 근무 color
+    @Column(name = "color_id", nullable = false)
+    private int colorId; // 근무 color
 
     @Column(name = "work_pay", nullable = false)
     private int workPay; // 급여 ( money * time * tax )

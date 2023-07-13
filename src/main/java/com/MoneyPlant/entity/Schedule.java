@@ -36,6 +36,6 @@ public class Schedule { // 약어로 sc를 사용합니다.
     @Column(name = "sc_budget")
     private int scBudget; // 일정 예산
 
-    @Column(name = "color", nullable = false)
-    private int color; // 일정 color
+    @Column(name = "color_id", nullable = false)
+    private int colorId; // 일정 color
 }

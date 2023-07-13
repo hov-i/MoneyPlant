@@ -22,8 +22,6 @@ public class CalendarController {
     private final CalendarService calendarService;
     private final LedgerService ledgerService;
 
-
-
     // 캘린더 일정 추가, 삭제, 수정 ( 구글 연동 되어있으면 즉시 구글 캘린더에도 적용시켜주기 (금액쓰는 것도 있음) )
     @GetMapping("/get/schedule")
     public ResponseEntity<List<ScheduleDto>> getSchedule(
@@ -32,6 +30,7 @@ public class CalendarController {
         List<ScheduleDto> scheduleDtos = calendarService.getScheduleForCal(userDetails);
         return ResponseEntity.ok(scheduleDtos);
     }
+
     // 캘린더 일정 등록
     @PostMapping("/create/schedule")
     public ResponseEntity<String> createSchedule(
@@ -44,6 +43,8 @@ public class CalendarController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일정 생성 실패");
         }
     }
+
+    // 일정 수정 완료
     @PostMapping("/update/schedule")
     public ResponseEntity<String> updateSchedule(
             @RequestBody ScheduleDto scheduleDto,
@@ -55,6 +56,7 @@ public class CalendarController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일정 수정 실패");
         }
     }
+
     @DeleteMapping("/delete/schedule")
     public ResponseEntity<String> deleteSchedule(
             @RequestBody Long scId,
@@ -70,36 +72,32 @@ public class CalendarController {
     // 캘린더 근무 등록
     @PostMapping("/create/work")
     public ResponseEntity<String> createWork(
-            @RequestBody List<WorkDto> workDtoList,
+            @RequestBody WorkDto workDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        boolean allSuccess = true;
-
-        for (WorkDto workDto : workDtoList) {
+        try {
             boolean isSuccess = calendarService.createWork(workDto, userDetails);
-
-            if(!isSuccess) {
-                allSuccess = false;
-                break;
+            if (isSuccess) {
+                return ResponseEntity.ok("근무가 생성되었습니다.");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("근무 생성을 실패했습니다.");
             }
-        }
-
-        if (allSuccess) {
-            return ResponseEntity.ok("근무 생성 완료");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("근무 생성을 실패");
+        } catch (Exception e) {
+            log.error("Error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("근무 생성 중에 오류가 발생했습니다.");
         }
     }
+
     // 캘린더 가계부 추가, 삭제, 수정 ( )
 
 
-// ===========================================================================
+    // ===========================================================================
     // 캘린더 컨텐츠 전체 조회 (수입, 지출 추가 예정)
     @GetMapping("")
-    public ResponseEntity<CalendarDto> CalendarView (@AuthenticationPrincipal UserDetailsImpl userDetails) throws IllegalAccessException {
+    public ResponseEntity<CalendarDto> CalendarView(@AuthenticationPrincipal UserDetailsImpl userDetails) throws IllegalAccessException {
         List<ScheduleDto> scheduleDtoList = calendarService.getScheduleForCal(userDetails);
         List<WorkDto> workDtoList = calendarService.getWorkForCal(userDetails);
-        Map<String, Integer> dailyExpenseList =  ledgerService.getDailyExpense(userDetails);
-        Map<String, Integer> dailyIncomeList =  ledgerService.getDailyIncome(userDetails);
+        Map<String, Integer> dailyExpenseList = ledgerService.getDailyExpense(userDetails);
+        Map<String, Integer> dailyIncomeList = ledgerService.getDailyIncome(userDetails);
 
         CalendarDto calendarDto = new CalendarDto(scheduleDtoList, workDtoList, dailyExpenseList, dailyIncomeList);
 

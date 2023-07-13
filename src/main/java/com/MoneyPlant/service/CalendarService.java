@@ -106,7 +106,7 @@ public class CalendarService {
             schedule.setUser(user);
             schedule.setGoogleCalendarId(calendarId);
             schedule.setScName(scheduleDto.getName());
-            schedule.setColor(scheduleDto.getColorId());
+            schedule.setColorId(scheduleDto.getColorId());
             schedule.setScDate(scheduleDto.getDate());
             schedule.setScBudget(scheduleDto.getBudget());
 
@@ -165,7 +165,7 @@ public class CalendarService {
                 }
             }
 
-            schedule.setColor(scheduleDto.getColorId());
+            schedule.setColorId(scheduleDto.getColorId());
             schedule.setScName(scheduleDto.getName());
             schedule.setScBudget(scheduleDto.getBudget());
             schedule.setScDate(scheduleDto.getDate());
@@ -294,7 +294,7 @@ public class CalendarService {
             schedule = new Schedule();
             schedule.setUser(user);
             schedule.setGoogleCalendarId(calendarId);
-            schedule.setColor(1);
+            schedule.setColorId(1);
             schedule.setEventId(eventId);
         }
         return schedule;
@@ -323,13 +323,12 @@ public class CalendarService {
             Work work = new Work();
             work.setUser(user);
             work.setWorkName(workDto.getWorkName());
-            work.setColor(workDto.getColor());
+            work.setColorId(workDto.getColorId());
             work.setWorkDate(workDto.getWorkDate());
             work.setWorkPay(workDto.getWorkPay());
             work.setPayday(workDto.getPayday());
 
             workRepository.save(work);
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -356,7 +355,7 @@ public class CalendarService {
             scheduleDto.setName(schedule.getScName());
             scheduleDto.setDate(schedule.getScDate());
             scheduleDto.setBudget(schedule.getScBudget());
-            scheduleDto.setColorId(schedule.getColor());
+            scheduleDto.setColorId(schedule.getColorId());
 
             scheduleDtos.add(scheduleDto);
         }
@@ -375,7 +374,7 @@ public class CalendarService {
 
             // 조회 내용 :  근무 날짜, 근무 이름, 급여일, 근무 color, 급여
             work.setWorkName(workDto.getWorkName());
-            work.setColor(workDto.getColor());
+            work.setColorId(workDto.getColorId());
             work.setWorkDate(workDto.getWorkDate());
             work.setWorkPay(workDto.getWorkPay());
             work.setPayday(workDto.getPayday());
@@ -446,7 +445,7 @@ public class CalendarService {
             // 조회 내용 : 일정 날짜, 일정 이름, 일정 색, 일정 예산
             scheduleDto.setDate(schedule.getScDate());
             scheduleDto.setName(schedule.getScName());
-            scheduleDto.setColorId(schedule.getColor());
+            scheduleDto.setColorId(schedule.getColorId());
             scheduleDto.setBudget(schedule.getScBudget());
 
             scheduleDtoList.add(scheduleDto);
@@ -465,7 +464,7 @@ public class CalendarService {
 
             // 조회 내용 :  근무 날짜, 근무 이름, 근무 시간(시작, 종료), 급여일, 근무 color, 급여
             workDto.setWorkName(work.getWorkName());
-            workDto.setColor(work.getColor());
+            workDto.setColorId(work.getColorId());
             workDto.setWorkDate(work.getWorkDate());
             workDto.setWorkStart(work.getWorkStart());
             workDto.setWorkEnd(work.getWorkEnd());
