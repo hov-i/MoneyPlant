@@ -1,5 +1,6 @@
 package com.MoneyPlant.service;
 
+import com.MoneyPlant.dto.WorkDto;
 import com.MoneyPlant.dto.MyWorkDto;
 import com.MoneyPlant.entity.*;
 import com.MoneyPlant.repository.*;
@@ -28,22 +29,21 @@ public class MyWorkService {
     private final UserRepository userRepository;
 
     // 마이페이지 나의 근무 생성
-    public boolean createMyWork(MyWorkDto myWorkDto, UserDetailsImpl userDetails) {
+    public boolean createMyWork(WorkDto workDto, UserDetailsImpl userDetails) {
         try {
             Long userId = userDetails.getId();
-            myWorkDto.setUserId(userId);
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
             MyWork myWork = new MyWork();
             myWork.setUser(user);
-            myWork.setMyWkName(myWorkDto.getMyWkName());
-            myWork.setMyPayType(myWorkDto.getMyPayType());
-            myWork.setMyWkStart(myWorkDto.getMyWkStart());
-            myWork.setMyWkEnd(myWorkDto.getMyWkEnd());
-            myWork.setMyPayday(myWorkDto.getMyPayday());
-            myWork.setMyColor(myWorkDto.getMyColor());
-            myWork.setMyWkPay(myWorkDto.getMyWkPay());
+            myWork.setMyWkName(workDto.getWorkName());
+            myWork.setMyPayType(workDto.getPayType());
+            myWork.setMyWkStart(workDto.getWorkStart());
+            myWork.setMyWkEnd(workDto.getWorkEnd());
+            myWork.setMyPayday(workDto.getPayday());
+            myWork.setMyColor(workDto.getColorId());
+            myWork.setMyWkPay(calMyHourlySalary(workDto));
 
             myWorkRepository.save(myWork);
             return true;
@@ -54,40 +54,33 @@ public class MyWorkService {
         }
     }
 
-//     마이페이지 나의 급여 계산 - 시급 / 일급&월급 / 건별
-//    public static Duration calculateTimeDifference(String time1, String time2) {
-//        LocalTime startTime = LocalTime.parse(time1);
-//        LocalTime endTime = LocalTime.parse(time2);
-//
-//        return Duration.between(startTime, endTime);
-//    }
-//    public int calMyHourlySalary(MyWorkDto myWorkDto) {
-//        int type = myWorkDto.getMyPayType();
-//        String stTime = myWorkDto.getMyWkStart();
-//        String endTime = myWorkDto.getMyWkEnd();
-//        int caseCnt = myWorkDto.getMyWorkCase();
-//        double tax = myWorkDto.getMyWkTax();
-//        int pay;
-//
-//
-//            switch (type) {
-//                case 1:
-//
-//                    break;
-//                case 2:
-//                    break;
-//
-//                default:
-//
-//        }
+    //     마이페이지 나의 급여 계산 - 시급 / 일급&월급 / 건별
+    public int calMyHourlySalary(WorkDto workDto) {
+        int type = workDto.getPayType();
+        int money = workDto.getWorkMoney();
+//        String stTime = workDto.getWorkStart();
+//        String endTime = workDto.getWorkEnd();
+//        int caseCnt = workDto.getWorkCase();
+//        int restTime = workDto.getWorkRest();
+//        double tax = workDto.getWorkTax();
+        int pay;
 
-//        MyWork myWork = new MyWork();
-//
-//        myWork.setMyWkId(myWorkDto.getMyWkId());
-//        myWork.setMyWorkStart(myWorkDto.getMyWkStart());
-//        myWork.setMyWorkEnd(myWorkDto.getMyWkEnd());
-
-//    }
+        switch (type) {
+            case 1:
+                pay = 10000;
+                break;
+            case 2:
+                pay = money;
+                break;
+            case 3:
+                pay = 20000;
+                break;
+            default:
+                pay = 0;
+                break;
+        }
+        return pay;
+    }
 
 
     // 마이페이지 나의 근무 수정

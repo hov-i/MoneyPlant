@@ -20,6 +20,8 @@ import java.util.Map;
 @RequestMapping("/api/calendar")
 public class CalendarController {
     private final CalendarService calendarService;
+    private final MyScheduleService myScheduleService;
+    private final MyWorkService myWorkService;
     private final LedgerService ledgerService;
 
     // 캘린더 일정 추가, 삭제, 수정 ( 구글 연동 되어있으면 즉시 구글 캘린더에도 적용시켜주기 (금액쓰는 것도 있음) )
@@ -32,12 +34,18 @@ public class CalendarController {
     }
 
     // 캘린더 일정 등록
-    @PostMapping("/create/schedule")
+    @PostMapping("/create/schedule/{type}")
     public ResponseEntity<String> createSchedule(
             @RequestBody ScheduleDto scheduleDto,
+            @PathVariable("type") String type,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
-            boolean isSuccess = calendarService.createSchedule(scheduleDto, userDetails);
+            boolean isSuccess = false;
+            if (type.equalsIgnoreCase("schedule")) {
+                isSuccess = calendarService.createSchedule(scheduleDto, userDetails);
+            } else {
+                isSuccess = myScheduleService.createMySchedule(scheduleDto, userDetails);
+            }
             if (isSuccess) {
                 return ResponseEntity.ok("일정이 생성되었습니다.");
             } else {
@@ -75,12 +83,18 @@ public class CalendarController {
     }
 
     // 캘린더 근무 등록
-    @PostMapping("/create/work")
+    @PostMapping("/create/work/{type}")
     public ResponseEntity<String> createWork(
             @RequestBody WorkDto workDto,
+            @PathVariable("type") String type,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
-            boolean isSuccess = calendarService.createWork(workDto, userDetails);
+            boolean isSuccess = false;
+            if (type.equalsIgnoreCase("work")) {
+                isSuccess = calendarService.createWork(workDto, userDetails);
+            } else {
+                isSuccess = myWorkService.createMyWork(workDto, userDetails);
+            }
             if (isSuccess) {
                 return ResponseEntity.ok("근무가 생성되었습니다.");
             } else {

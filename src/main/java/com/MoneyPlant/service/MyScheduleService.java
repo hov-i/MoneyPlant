@@ -1,5 +1,6 @@
 package com.MoneyPlant.service;
 
+import com.MoneyPlant.dto.ScheduleDto;
 import com.MoneyPlant.dto.MyScheduleDto;
 import com.MoneyPlant.entity.*;
 import com.MoneyPlant.repository.*;
@@ -28,18 +29,17 @@ public class MyScheduleService {
     private final UserRepository userRepository;
 
     // 마이페이지 나의 일정 생성
-    public boolean createMySchedule(MyScheduleDto myScheduleDto, UserDetailsImpl userDetails) {
+    public boolean createMySchedule(ScheduleDto scheduleDto, UserDetailsImpl userDetails) {
         try {
             Long userId = userDetails.getId();
-            myScheduleDto.setUserId(userId);
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
             MySchedule mySchedule = new MySchedule();
             mySchedule.setUser(user);
-            mySchedule.setMyScName(myScheduleDto.getMyScName());
-            mySchedule.setMyScBudget(myScheduleDto.getMyScBudget());
-            mySchedule.setMyColor(myScheduleDto.getMyColor());
+            mySchedule.setMyScName(scheduleDto.getScName());
+            mySchedule.setMyScBudget(scheduleDto.getScBudget());
+            mySchedule.setMyColor(scheduleDto.getColorId());
 
             myScheduleRepository.save(mySchedule);
             return true;
@@ -53,9 +53,8 @@ public class MyScheduleService {
     // 마이페이지 나의 일정 수정
 
     // 마이페이지 나의 일정 삭제
-
-
-// ===========================================================================
+    
+    // ===========================================================================
     // 마이페이지 전체 나의 일정 조회
     public List<MyScheduleDto> getScheduleForMyPage(UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();

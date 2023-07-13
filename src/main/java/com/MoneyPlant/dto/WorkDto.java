@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class WorkDto {
     private Long workId;
-    private Long userId;
     private String workDate; // 근무 날짜
     private String workName; // 근무 이름
     private int payType; // 시급, 건별, 일급, 월급

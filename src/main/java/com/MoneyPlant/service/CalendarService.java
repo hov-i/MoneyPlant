@@ -316,7 +316,6 @@ public class CalendarService {
     public boolean createWork(WorkDto workDto, UserDetailsImpl userDetails) {
         try {
             Long userId = userDetails.getId();
-            workDto.setUserId(userId);
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
@@ -325,6 +324,8 @@ public class CalendarService {
             work.setWorkName(workDto.getWorkName());
             work.setColorId(workDto.getColorId());
             work.setWorkDate(workDto.getWorkDate());
+            work.setWorkStart(workDto.getWorkStart());
+            work.setWorkEnd(workDto.getWorkEnd());
             work.setWorkPay(workDto.getWorkPay());
             work.setPayday(workDto.getPayday());
 
