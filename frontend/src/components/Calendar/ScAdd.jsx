@@ -121,7 +121,9 @@ const ScAdd = ({ isQuick }) => {
       </ButtonContainer>
 
       {modalOpen && (
-        <Modal open={modalOpen} close={closeModal} width={"300px"}></Modal>
+        <Modal open={modalOpen} close={closeModal} width={"300px"}>
+          <QuickAdd />
+        </Modal>
       )}
     </>
   );
