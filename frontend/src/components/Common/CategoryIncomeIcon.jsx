@@ -34,7 +34,8 @@ const CategoryIncomeIcon = ({ name, onClick }) => {
     <Icon
       color={selectedItem ? selectedItem.Color : "#FF7076"}
       // color={selectedItem ? "white" : "#d6f693"}
-      onClick={onClick}>
+      onClick={onClick}
+    >
       {getItemSvg(name)}
     </Icon>
   );

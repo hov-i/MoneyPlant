@@ -8,7 +8,6 @@ import SelColor from "../Calendar/SelColor";
 import SelType from "../Calendar/SelType";
 
 const WorkAdd = () => {
-
   const [contentId, setContentId] = useState(5);
   const [myWkName, setMyWkName] = useState("");
   const [myPayType, setMyPayType] = useState(1);
@@ -95,7 +94,7 @@ const WorkAdd = () => {
         myWkStart,
         myWkEnd,
         myWkPayday,
-        myColor : contentId,
+        myColor: contentId,
       });
 
       if (createMyWork.data === "근무를 성공적으로 생성했습니다.") {
@@ -125,7 +124,11 @@ const WorkAdd = () => {
           <p className="label">급여</p>
           <div>
             {/* <MyType value={myPayType.toString()} onChange={onChangeMyPayType} /> */}
-            <SelType value={myPayType} myPayType={myPayType} onChange={onChangeMyPayType} />
+            <SelType
+              value={myPayType}
+              myPayType={myPayType}
+              onChange={onChangeMyPayType}
+            />
             <Input value={myWkMoney} onChange={handleMyWkMoneyChange} />
 
             <p className="text">원</p>

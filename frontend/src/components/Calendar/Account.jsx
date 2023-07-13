@@ -1,17 +1,20 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Account = ({ account, content, amount }) => {
-    const color = account === '지출' ? '#ff005c' : '#3fcea5';
-    const sign = account === '지출' ? '-' : '+';
+  const color = account === "지출" ? "#ff005c" : "#3fcea5";
+  const sign = account === "지출" ? "-" : "+";
 
-    return (
-        <>
-            <AccountContainer color={color}>
-                <p className="item">{content}</p>
-                <p>{sign}{amount}</p>
-            </AccountContainer>
-        </>
-    );
+  return (
+    <>
+      <AccountContainer color={color}>
+        <p className="item">{content}</p>
+        <p>
+          {sign}
+          {amount}
+        </p>
+      </AccountContainer>
+    </>
+  );
 };
 export default Account;
 

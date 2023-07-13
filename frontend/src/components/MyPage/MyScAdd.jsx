@@ -7,7 +7,6 @@ import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
 import SelColor from "../Calendar/SelColor";
 
 const ScAdd = () => {
-
   const [contentId, setContentId] = useState(1);
   const [myScName, setMyScName] = useState("");
   const [myScBudget, setMyScBudget] = useState("");

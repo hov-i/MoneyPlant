@@ -3,7 +3,10 @@ import axiosInstance from "./axiosInstance";
 const AxiosApi = {
   createSchedule: async (inputValues) => {
     try {
-      const response = await axiosInstance.post("/calendar/create/schedule", inputValues);
+      const response = await axiosInstance.post(
+        "/calendar/create/schedule",
+        inputValues
+      );
 
       return response.data;
     } catch (error) {
@@ -14,7 +17,10 @@ const AxiosApi = {
 
   createWork: async (inputValues) => {
     try {
-      const response = await axiosInstance.post("/calendar/create/work", inputValues);
+      const response = await axiosInstance.post(
+        "/calendar/create/work",
+        inputValues
+      );
       return response.data;
     } catch (error) {
       console.error("Request Error:", error);
@@ -35,8 +41,8 @@ const AxiosApi = {
       const incomeDates = Object.keys(dailyIncomeList);
       const incomeAmounts = Object.values(dailyIncomeList);
 
-      console.log("지출 날짜"+expenseDates); // 응답 데이터 출력
-      console.log("수입 날짜"+incomeDates); // 응답 데이터 출력
+      console.log("지출 날짜" + expenseDates); // 응답 데이터 출력
+      console.log("수입 날짜" + incomeDates); // 응답 데이터 출력
 
       return {
         expenseDates,
@@ -44,7 +50,7 @@ const AxiosApi = {
         incomeDates,
         incomeAmounts,
         dailyExpenseList,
-        dailyIncomeList
+        dailyIncomeList,
       };
     } catch (error) {
       console.error(error);
