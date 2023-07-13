@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import Modal from "../Common/Modal";
+import QuickAdd from "../MyPage/QuickView";
 import ClickButton from "../Common/ClickButton";
 import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 import SelColor from "./SelColor";
@@ -264,7 +265,10 @@ const WorkAdd = ({ isQuick }) => {
         <ClickButton onClick={onCreateWork}>근무 등록</ClickButton>
       </ButtonContainer>
       {modalOpen && (
-        <Modal open={modalOpen} close={closeModal} width={"300px"}></Modal>
+        <Modal open={modalOpen} close={closeModal} width={"300px"}>
+          {" "}
+          <QuickAdd />
+        </Modal>
       )}
     </>
   );
