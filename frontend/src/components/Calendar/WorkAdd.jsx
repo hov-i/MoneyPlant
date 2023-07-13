@@ -111,6 +111,7 @@ const WorkAdd = ({ isQuick }) => {
         workDate,
         workName,
         payType,
+        workMoney,
         workStart,
         workEnd,
         payday,

@@ -65,34 +65,24 @@ public class MyWorkService {
         double tax = 100 - workDto.getWorkTax();
         int pay;
 
-        switch (type) {
-            case 1:
-                String[] stTimeParts = stTime.split(":");
-                int stHours = Integer.parseInt(stTimeParts[0]);
-                int stMinutes = Integer.parseInt(stTimeParts[1]);
+        if (type == 1) {
+            String[] stTimeParts = stTime.split(":");
+            int stHourToMin = Integer.parseInt(stTimeParts[0]) * 60;
+            int stMinutes = Integer.parseInt(stTimeParts[1]);
 
-                String[] endTimeParts = endTime.split(":");
-                int endHours = Integer.parseInt(endTimeParts[0]);
-                int endMinutes = Integer.parseInt(endTimeParts[1]);
+            String[] endTimeParts = endTime.split(":");
+            int endHourToMin = Integer.parseInt(endTimeParts[0]) * 60;
+            int endMinutes = Integer.parseInt(endTimeParts[1]);
 
-                double totalHours = ((endHours + (endMinutes / 60.0)) - (stHours + (stMinutes / 60.0))) - (restTime / 60.0);
+            double totalHours = (endHourToMin + endMinutes - stHourToMin + stMinutes - restTime) / 60;
 
-                double hourlyWage = money * totalHours * tax;
-                pay = (int) Math.round(hourlyWage);
-                break;
-            case 2:
-                pay = (int) (money * caseCnt * tax);
-                break;
-            case 3:
-                pay = (int) (money * tax);
-                break;
-            default:
-                pay = 0;
-                break;
-        }
+            pay = (int) Math.round((money * totalHours / 60) * tax);
+        } else if (type == 2) {
+            pay = (int) (money * caseCnt * tax);
+        } else pay = (int) (money * tax);
+
         return pay;
     }
-
 
     // 마이페이지 나의 근무 수정
 
