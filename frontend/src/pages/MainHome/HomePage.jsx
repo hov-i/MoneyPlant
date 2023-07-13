@@ -43,12 +43,8 @@ const Home = () => {
               handleToggle={handleToggle}
             />
             {/* <Plus width="25px" height="25px" onClick={openModal} /> */}
-            <Button
-              onClick={onClickTodayHandler}
-              width={"70px"}
-              height={"35px"}
-              margin={"20px"}>
-              Today
+            <Button onClick={onClickTodayHandler} width={'60px'} height={'35px'}>
+                오늘
             </Button>
           </div>
 
@@ -90,7 +86,7 @@ const CalendarContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     margin-bottom: 20px;
     > svg {
       fill: ${({ theme }) => theme.menuColor};

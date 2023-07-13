@@ -45,11 +45,11 @@ const AccountContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     padding-left: 2%;
-    padding-right: 4%;
+    padding-right: 2%;
     color: ${({ color }) => color};
-    padding-bottom: 20px;
-    padding-top: 20px;
+    height: 45px;
     margin: 10px;
+    margin-top: 0px;
     border-radius: 5px;
     &:hover {
         background-color: ${({ theme }) => theme.menuBgColor};
@@ -57,7 +57,7 @@ const AccountContainer = styled.div`
 
     .item {
         text-align: left;
-        width: 80px;
+        width: 200px;
         margin-left: 10px;
     }
 
