@@ -78,18 +78,18 @@ public class CalendarService {
                 OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                         .orElseThrow(() -> new RuntimeException("토큰이 존재 하지 않습니다"));
                 String accessToken = oAuthToken.getAccessToken();
-
+                System.out.println(accessToken);
                 RestTemplate restTemplate = new RestTemplate();
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
                 headers.setBearerAuth(accessToken);
 
-                String start = scheduleDto.getDate();
+                String start = scheduleDto.getScDate();
                 String end = LocalDate.parse(start).plusDays(1).toString();
 
                 String url = GOOGLE_CALENDAR_API_URL + "/calendars/" + calendarId + "/events";
                 String requestBody = "{\"id\":\"" + eventId +
-                        "\",\"summary\":\"" + scheduleDto.getName() +
+                        "\",\"summary\":\"" + scheduleDto.getScName() +
                         "\",\"start\":{\"date\":\"" + start +
                         "\"},\"end\":{\"date\":\"" + end + "\"}}";
 
@@ -102,13 +102,13 @@ public class CalendarService {
                     throw new RuntimeException("이벤트 생성 실패");
                 }
             }
-
+            System.out.println("여기까지");
             schedule.setUser(user);
             schedule.setGoogleCalendarId(calendarId);
-            schedule.setScName(scheduleDto.getName());
+            schedule.setScName(scheduleDto.getScName());
+            schedule.setScDate(scheduleDto.getScDate());
+            schedule.setScBudget(scheduleDto.getScBudget());
             schedule.setColorId(scheduleDto.getColorId());
-            schedule.setScDate(scheduleDto.getDate());
-            schedule.setScBudget(scheduleDto.getBudget());
 
             scheduleRepository.save(schedule);
 
@@ -148,12 +148,12 @@ public class CalendarService {
                 headers.setContentType(MediaType.APPLICATION_JSON);
                 headers.setBearerAuth(accessToken);
 
-                String start = scheduleDto.getDate();
+                String start = scheduleDto.getScDate();
                 String end = LocalDate.parse(start).plusDays(1).toString();
 
                 String url = GOOGLE_CALENDAR_API_URL + "/calendars/" + calendarId + "/events/" + schedule.getEventId();
                 System.out.println(url);
-                String requestBody = "{\"summary\":\"" + scheduleDto.getName() +
+                String requestBody = "{\"summary\":\"" + scheduleDto.getScName() +
                         "\",\"start\":{\"date\":\"" + start +
                         "\"},\"end\":{\"date\":\"" + end + "\"}}";
 
@@ -166,9 +166,9 @@ public class CalendarService {
             }
 
             schedule.setColorId(scheduleDto.getColorId());
-            schedule.setScName(scheduleDto.getName());
-            schedule.setScBudget(scheduleDto.getBudget());
-            schedule.setScDate(scheduleDto.getDate());
+            schedule.setScName(scheduleDto.getScName());
+            schedule.setScBudget(scheduleDto.getScBudget());
+            schedule.setScDate(scheduleDto.getScDate());
 
             scheduleRepository.save(schedule);
 
@@ -352,9 +352,9 @@ public class CalendarService {
             ScheduleDto scheduleDto = new ScheduleDto();
 
             // 조회 내용 : 일정 날짜, 일정 이름, 일정 색
-            scheduleDto.setName(schedule.getScName());
-            scheduleDto.setDate(schedule.getScDate());
-            scheduleDto.setBudget(schedule.getScBudget());
+            scheduleDto.setScName(schedule.getScName());
+            scheduleDto.setScDate(schedule.getScDate());
+            scheduleDto.setScBudget(schedule.getScBudget());
             scheduleDto.setColorId(schedule.getColorId());
 
             scheduleDtos.add(scheduleDto);
@@ -443,10 +443,10 @@ public class CalendarService {
             ScheduleDto scheduleDto = new ScheduleDto();
 
             // 조회 내용 : 일정 날짜, 일정 이름, 일정 색, 일정 예산
-            scheduleDto.setDate(schedule.getScDate());
-            scheduleDto.setName(schedule.getScName());
+            scheduleDto.setScDate(schedule.getScDate());
+            scheduleDto.setScName(schedule.getScName());
             scheduleDto.setColorId(schedule.getColorId());
-            scheduleDto.setBudget(schedule.getScBudget());
+            scheduleDto.setScBudget(schedule.getScBudget());
 
             scheduleDtoList.add(scheduleDto);
         }

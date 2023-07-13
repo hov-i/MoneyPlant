@@ -36,11 +36,16 @@ public class CalendarController {
     public ResponseEntity<String> createSchedule(
             @RequestBody ScheduleDto scheduleDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        boolean isSuccess = calendarService.createSchedule(scheduleDto, userDetails);
-        if (isSuccess) {
-            return ResponseEntity.ok("일정 생성 완료");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일정 생성 실패");
+        try {
+            boolean isSuccess = calendarService.createSchedule(scheduleDto, userDetails);
+            if (isSuccess) {
+                return ResponseEntity.ok("일정이 생성되었습니다.");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일정 생성을 실패했습니다.");
+            }
+        } catch (Exception e) {
+            log.error("Error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일정 생성 중에 오류가 발생했습니다.");
         }
     }
 
