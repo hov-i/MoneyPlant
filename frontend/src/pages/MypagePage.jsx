@@ -7,7 +7,7 @@ import Box from "../components/Common/Box";
 import TagBox from "../components/MyPage/TagBox";
 import useViewport from "../hooks/viewportHook";
 import Tag from "../components/MyPage/Tag";
-import MyPageAxiosApi from "../api/MyPageAxiosAPI";
+import MyPageAxiosApi from "../api/QuickAddAxiosAPI";
 
 const Mypage = () => {
   const { isMobile } = useViewport();
