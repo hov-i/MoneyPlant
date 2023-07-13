@@ -112,6 +112,7 @@ const AdminAllContainer = styled.div`
 
     .none {
         margin-left: 10px;
+        font-size: 12px;
     }
     .block {
         display: flex;

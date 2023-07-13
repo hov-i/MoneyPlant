@@ -21,6 +21,7 @@ const WorkContainer = styled.div`
     justify-content: center;
     margin-bottom: 10px;
     padding-left: 10px;
+    font-size: 12px;
 
     .time {
         margin-left: 30%;

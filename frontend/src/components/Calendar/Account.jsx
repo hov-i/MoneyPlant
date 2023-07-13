@@ -17,13 +17,14 @@ export default Account;
 
 const AccountContainer = styled.div`
     display: flex;
+    font-size: 12px;
     align-items: center;
     justify-content: space-between;
     padding-left: 2%;
     padding-right: 6%;
     color: ${({ color }) => color};
     margin-bottom: 20px;
-    margin-top: 20px;
+    margin-top: 10px;
     .item {
         text-align: left;
         width: 80px;

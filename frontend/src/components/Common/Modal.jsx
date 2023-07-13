@@ -55,18 +55,14 @@ const ModalStyle = styled.div`
         border-radius: 10px;
         background-color: ${({ theme }) => theme.bgColor};
         animation: modal-show 0.3s;
-        overflow: auto;
-    }
-    /* 스크롤바 설정*/
-    .modal > section::-webkit-scrollbar {
-        width: 8px;
+        overflow: scroll;
+        -ms-overflow-style: none;
     }
 
-    /* 스크롤바 막대 설정*/
-    .modal > section::-webkit-scrollbar-thumb {
-        background-color: #3fcea580;
-        /* 스크롤바 둥글게 설정    */
-        border-radius: 100px;
+    /* 스크롤바 설정*/
+    .modal > section::-webkit-scrollbar {
+        display: none;
+        width: 0 !important;
     }
 
     .topButton {
