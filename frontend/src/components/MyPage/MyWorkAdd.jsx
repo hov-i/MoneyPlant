@@ -19,7 +19,7 @@ const WorkAdd = () => {
   const [myWkRest, setMyWkRest] = useState("");
   const [myWkCase, setMyWkCase] = useState("");
   const [myWkTax, setMyWkTax] = useState("");
-  const [myWkPayday, setMyWkPayday] = useState("");
+  const [myPayday, setMyPayday] = useState("");
 
   const handleMyWkNameChange = (event) => {
     setMyWkName(event.target.value);
@@ -78,8 +78,8 @@ const WorkAdd = () => {
     setMyWkTax(event.target.value);
   };
 
-  const handleMyWkPaydayChange = (event) => {
-    setMyWkPayday(event.target.value);
+  const handleMyPaydayChange = (event) => {
+    setMyPayday(event.target.value);
   };
 
   const handleContentIdChange = (event) => {
@@ -93,7 +93,7 @@ const WorkAdd = () => {
         myPayType,
         myWkStart,
         myWkEnd,
-        myWkPayday,
+        myPayday,
         myColor: contentId,
       });
 
@@ -182,8 +182,8 @@ const WorkAdd = () => {
             <p className="label">급여일</p>
             <Input
               type="date"
-              value={myWkPayday}
-              onChange={handleMyWkPaydayChange}
+              value={myPayday}
+              onChange={handleMyPaydayChange}
             />
           </div>
           {/* <p className="label">color</p> */}

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef, forwardRef } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import styled from "styled-components";
 import useViewport from "../../hooks/viewportHook";
 import Modal from "../Common/Modal";
 import AdminAll from "./AdminAll";
 import { ReactComponent as Right } from "../../assets/right.svg";
 import { ReactComponent as Left } from "../../assets/left.svg";
-import CalenderAPI from "../../api/CalendarAPI";
+import CalenderAPI from "../../api/CalendarAxiosAPI";
 
 // 캘린더 API 적용
 import Calendar from "react-calendar";

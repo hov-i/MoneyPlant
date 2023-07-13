@@ -4,7 +4,7 @@ import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import Modal from "../Common/Modal";
 import ClickButton from "../Common/ClickButton";
-import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
+import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 import SelColor from "./SelColor";
 import SelType from "./SelType";
 
@@ -12,19 +12,20 @@ import { ReactComponent as Post } from "../../assets/Post.svg";
 
 const WorkAdd = () => {
   const [contentId, setContentId] = useState(5);
-  const [date, setDate] = useState("");
-  const [myWkName, setMyWkName] = useState("");
-  const [myPayType, setMyPayType] = useState(1);
+  const [workDate, setDate] = useState("");
+  const [workName, setWorkName] = useState("");
+  const [payType, setPayType] = useState(1);
+  const [workMoney, setWorkMoney] = useState("");
+  const [workStart, setWorkStart] = useState("");
+  const [workEnd, setWorkEnd] = useState("");
+  const [workRest, setWorkRest] = useState("");
+  const [workCase, setWorkCase] = useState("");
+  const [workTax, setWorkTax] = useState("");
+  const [payday, setPayday] = useState("");
+
   const [isHourly, setIsHourly] = useState(true);
   const [isCase, setIsCase] = useState(false);
-  const [myWkMoney, setMyWkMoney] = useState("");
-  const [myWkStart, setMyWkStart] = useState("");
-  const [myWkEnd, setMyWkEnd] = useState("");
-  const [myWkRest, setMyWkRest] = useState("");
-  const [myWkCase, setMyWkCase] = useState("");
-  const [myWkTax, setMyWkTax] = useState("");
-  const [myWkPayday, setMyWkPayday] = useState("");
-
+  
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -39,13 +40,13 @@ const WorkAdd = () => {
     setDate(event.target.value);
   };
 
-  const handleMyWkNameChange = (event) => {
-    setMyWkName(event.target.value);
+  const handleWorkNameChange = (event) => {
+    setWorkName(event.target.value);
   };
 
   // 카테고리 값 가져오기
-  const onChangeMyPayType = (selectedItem) => {
-    setMyPayType(parseInt(selectedItem));
+  const onChangePayType = (selectedItem) => {
+    setPayType(parseInt(selectedItem));
 
     switch (parseInt(selectedItem)) {
       case 1: // 시급
@@ -72,51 +73,51 @@ const WorkAdd = () => {
     }
   };
 
-  const handleMyWkMoneyChange = (event) => {
-    setMyWkMoney(event.target.value);
+  const handleWorkMoneyChange = (event) => {
+    setWorkMoney(event.target.value);
   };
 
-  const handleMyWkStartChange = (event) => {
-    setMyWkStart(event.target.value);
+  const handleWorkStartChange = (event) => {
+    setWorkStart(event.target.value);
   };
 
-  const handleMyWkEndChange = (event) => {
-    setMyWkEnd(event.target.value);
+  const handleWorkEndChange = (event) => {
+    setWorkEnd(event.target.value);
   };
 
-  const handleMyWkRestChange = (event) => {
-    setMyWkRest(event.target.value);
+  const handleWorkRestChange = (event) => {
+    setWorkRest(event.target.value);
   };
 
-  const handleMyWkCaseChange = (event) => {
-    setMyWkCase(event.target.value);
+  const handleWorkCaseChange = (event) => {
+    setWorkCase(event.target.value);
   };
 
-  const handleMyWkTaxChange = (event) => {
-    setMyWkTax(event.target.value);
+  const handleWorkTaxChange = (event) => {
+    setWorkTax(event.target.value);
   };
 
-  const handleMyWkPaydayChange = (event) => {
-    setMyWkPayday(event.target.value);
+  const handlePaydayChange = (event) => {
+    setPayday(event.target.value);
   };
 
   const handleContentIdChange = (event) => {
     setContentId(event);
   };
 
-  const onCreateMyWork = async () => {
+  const onCreateWork = async () => {
     try {
-      const createMyWork = await MyPageAxiosApi.createMyWork({
-        date,
-        myWkName,
-        myPayType,
-        myWkStart,
-        myWkEnd,
-        myWkPayday,
+      const createWork = await CalendarAxiosApi.createWork({
+        workDate,
+        workName,
+        payType,
+        workStart,
+        workEnd,
+        payday,
         myColor: contentId,
       });
 
-      if (createMyWork.data === "근무를 성공적으로 생성했습니다.") {
+      if (createWork.data === "근무를 성공적으로 생성했습니다.") {
         console.log("입력 성공");
         window.location.reload();
       } else {
@@ -145,24 +146,25 @@ const WorkAdd = () => {
             <Input
               type="date"
               id="date"
-              value={date}
+              value={workDate}
               onChange={handleDateChange}
             />
           </div>
+
           <div>
             <p className="label">근무이름</p>
-            <Input value={myWkName} onChange={handleMyWkNameChange} />
+            <Input value={workName} onChange={handleWorkNameChange} />
           </div>
 
           <p className="label">급여</p>
           <div>
             {/* <MyType value={myPayType.toString()} onChange={onChangeMyPayType} /> */}
             <SelType
-              value={myPayType}
-              myPayType={myPayType}
-              onChange={onChangeMyPayType}
+              value={payType}
+              myPayType={payType}
+              onChange={onChangePayType}
             />
-            <Input value={myWkMoney} onChange={handleMyWkMoneyChange} />
+            <Input value={workMoney} onChange={handleWorkMoneyChange} />
 
             <p className="text">원</p>
           </div>
@@ -173,14 +175,14 @@ const WorkAdd = () => {
               <div>
                 <Input
                   type="time"
-                  value={myWkStart}
-                  onChange={handleMyWkStartChange}
+                  value={workStart}
+                  onChange={handleWorkStartChange}
                 />
                 <p className="label"> - </p>
                 <Input
                   type="time"
-                  value={myWkEnd}
-                  onChange={handleMyWkEndChange}
+                  value={workEnd}
+                  onChange={handleWorkEndChange}
                 />
               </div>
               <div>
@@ -188,8 +190,8 @@ const WorkAdd = () => {
                 <Input
                   type="number"
                   min="0"
-                  value={myWkRest}
-                  onChange={handleMyWkRestChange}
+                  value={workRest}
+                  onChange={handleWorkRestChange}
                 />
                 <p className="text">분</p>
               </div>
@@ -197,28 +199,28 @@ const WorkAdd = () => {
           ) : (
             <></>
           )}
+
           {isCase ? (
             <div>
               <p className="label">건 수</p>
-              <Input value={myWkCase} onChange={handleMyWkCaseChange} />
+              <Input value={workCase} onChange={handleWorkCaseChange} />
               <p className="text">건</p>
             </div>
           ) : (
             <></>
           )}
+
           <div>
             <p className="label">세 금</p>
-            <Input value={myWkTax} onChange={handleMyWkTaxChange} />
+            <Input value={workTax} onChange={handleWorkTaxChange} />
             <p className="text">%</p>
           </div>
+
           <div>
             <p className="label">급여일</p>
-            <Input
-              type="date"
-              value={myWkPayday}
-              onChange={handleMyWkPaydayChange}
-            />
+            <Input type="date" value={payday} onChange={handlePaydayChange} />
           </div>
+
           {/* <p className="label">color</p> */}
           <SelColor
             // value={myColor}
@@ -232,7 +234,7 @@ const WorkAdd = () => {
         </InputContainer>
       </Container>
       <ButtonContainer>
-        <ClickButton onClick={onCreateMyWork}>근무 등록</ClickButton>
+        <ClickButton onClick={onCreateWork}>근무 등록</ClickButton>
       </ButtonContainer>
     </>
   );

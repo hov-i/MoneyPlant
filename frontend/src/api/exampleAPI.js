@@ -15,4 +15,4 @@ const exampleAPI = {
   },
 };
 
-export default API;
+export default exampleAPI;
