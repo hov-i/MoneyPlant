@@ -323,10 +323,11 @@ public class CalendarService {
             work.setUser(user);
             work.setWorkName(workDto.getWorkName());
             work.setColorId(workDto.getColorId());
+            work.setPayType(workDto.getPayType());
             work.setWorkDate(workDto.getWorkDate());
             work.setWorkStart(workDto.getWorkStart());
             work.setWorkEnd(workDto.getWorkEnd());
-            work.setWorkPay(workDto.getWorkPay());
+            work.setWorkPay(calMyHourlySalary(workDto));
             work.setPayday(workDto.getPayday());
 
             workRepository.save(work);
@@ -338,7 +339,34 @@ public class CalendarService {
         }
     }
 
-    // 마이페이지 나의 근무 가져와서 등록하기
+    public int calMyHourlySalary(WorkDto workDto) {
+        int type = workDto.getPayType();
+        int money = workDto.getWorkMoney();
+        String stTime = workDto.getWorkStart();
+        String endTime = workDto.getWorkEnd();
+        int caseCnt = workDto.getWorkCase();
+        int restTime = workDto.getWorkRest();
+        double tax = 1 - (workDto.getWorkTax() / 100);
+        int pay;
+
+        if (type == 1) {
+            String[] stTimeParts = stTime.split(":");
+            int stHourToMin = Integer.parseInt(stTimeParts[0]) * 60;
+            int stMinutes = Integer.parseInt(stTimeParts[1]);
+
+            String[] endTimeParts = endTime.split(":");
+            int endHourToMin = Integer.parseInt(endTimeParts[0]) * 60;
+            int endMinutes = Integer.parseInt(endTimeParts[1]);
+
+            double totalHours = (endHourToMin + endMinutes - stHourToMin + stMinutes - restTime) / 60;
+
+            pay = (int) Math.round((money * totalHours) * tax);
+        } else if (type == 2) {
+            pay = (int) (money * caseCnt * tax);
+        } else pay = (int) (money * tax);
+
+        return pay;
+    }
 
 
     // ===========================================================================
