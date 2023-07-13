@@ -58,22 +58,33 @@ public class MyWorkService {
     public int calMyHourlySalary(WorkDto workDto) {
         int type = workDto.getPayType();
         int money = workDto.getWorkMoney();
-//        String stTime = workDto.getWorkStart();
-//        String endTime = workDto.getWorkEnd();
-//        int caseCnt = workDto.getWorkCase();
-//        int restTime = workDto.getWorkRest();
-//        double tax = workDto.getWorkTax();
+        String stTime = workDto.getWorkStart();
+        String endTime = workDto.getWorkEnd();
+        int caseCnt = workDto.getWorkCase();
+        int restTime = workDto.getWorkRest();
+        double tax = 100 - workDto.getWorkTax();
         int pay;
 
         switch (type) {
             case 1:
-                pay = 10000;
+                String[] stTimeParts = stTime.split(":");
+                int stHours = Integer.parseInt(stTimeParts[0]);
+                int stMinutes = Integer.parseInt(stTimeParts[1]);
+
+                String[] endTimeParts = endTime.split(":");
+                int endHours = Integer.parseInt(endTimeParts[0]);
+                int endMinutes = Integer.parseInt(endTimeParts[1]);
+
+                double totalHours = ((endHours + (endMinutes / 60.0)) - (stHours + (stMinutes / 60.0))) - (restTime / 60.0);
+
+                double hourlyWage = money * totalHours * tax;
+                pay = (int) Math.round(hourlyWage);
                 break;
             case 2:
-                pay = money;
+                pay = (int) (money * caseCnt * tax);
                 break;
             case 3:
-                pay = 20000;
+                pay = (int) (money * tax);
                 break;
             default:
                 pay = 0;
