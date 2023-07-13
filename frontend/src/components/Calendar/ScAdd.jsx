@@ -48,7 +48,7 @@ const ScAdd = () => {
         scDate,
         scName,
         scBudget,
-        myColor: contentId,
+        colorId: contentId,
       });
 
       if (createSc.data === "일정을 성공적으로 생성했습니다.") {
