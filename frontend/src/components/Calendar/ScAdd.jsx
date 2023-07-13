@@ -9,7 +9,7 @@ import SelColor from "./SelColor";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const ScAdd = () => {
+const ScAdd = ({ isQuick }) => {
   const [contentId, setContentId] = useState(1);
   const [scDate, setScDate] = useState("");
   const [scName, setScName] = useState("");
@@ -76,17 +76,7 @@ const ScAdd = () => {
           </div>
 
           <div>
-            <p className="label">날짜</p>
-            <Input
-              type="date"
-              id="date"
-              value={scDate}
-              onChange={handleScDateChange}
-            />
-          </div>
-
-          {/* <div>
-            {isMypage ? (
+            {isQuick ? (
               <></>
             ) : (
               <>
@@ -99,7 +89,7 @@ const ScAdd = () => {
                 />
               </>
             )}
-          </div> */}
+          </div>
 
           <div>
             <p className="label">일정</p>
