@@ -45,7 +45,7 @@ public class CalendarService {
         String eventId;
 
         do {
-            int length = random.nextInt(maxLength-minLength + 1) + minLength;
+            int length = random.nextInt(maxLength - minLength + 1) + minLength;
             StringBuilder sb = new StringBuilder(length);
             for (int i = 0; i < length; i++) {
                 int randomIndex = random.nextInt(ALLOWED_CHARACTERS.length());
@@ -55,7 +55,7 @@ public class CalendarService {
             eventId = sb.toString();
             System.out.println("eventId존재하는가? : " + scheduleRepository.existsByGoogleCalendarIdAndEventId(calendarId, eventId));
         }
-        while(scheduleRepository.existsByGoogleCalendarIdAndEventId(calendarId, eventId));
+        while (scheduleRepository.existsByGoogleCalendarIdAndEventId(calendarId, eventId));
         return eventId;
     }
 
@@ -173,7 +173,7 @@ public class CalendarService {
             scheduleRepository.save(schedule);
 
             return true;
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -326,7 +326,7 @@ public class CalendarService {
             work.setColor(workDto.getColor());
             work.setWorkDate(workDto.getWorkDate());
             work.setWorkPay(workDto.getWorkPay());
-            work.setWorkPayday(workDto.getWorkPayday());
+            work.setPayday(workDto.getPayday());
 
             workRepository.save(work);
 
@@ -378,7 +378,7 @@ public class CalendarService {
             work.setColor(workDto.getColor());
             work.setWorkDate(workDto.getWorkDate());
             work.setWorkPay(workDto.getWorkPay());
-            work.setWorkPayday(workDto.getWorkPayday());
+            work.setPayday(workDto.getPayday());
 
             workDtoList.add(workDto);
         }

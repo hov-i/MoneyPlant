@@ -7,7 +7,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name="schedule")
+@Table(name = "schedule")
 @Setter
 @Getter
 @ToString
@@ -21,15 +21,11 @@ public class Schedule { // 약어로 sc를 사용합니다.
     @JoinColumn(name = "id")
     private User user; // userId
 
-    @Column(name="google_cal_id")
+    @Column(name = "google_cal_id")
     private String googleCalendarId;
 
     @Column(name = "event_id", unique = true)
     private String eventId; // 구글 캘린더 event ID
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_type")
-    private Role role;
 
     @Column(name = "sc_date", nullable = false)
     private String scDate; // 일정 날짜

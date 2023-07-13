@@ -4,16 +4,16 @@ import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import Modal from "../Common/Modal";
 import ClickButton from "../Common/ClickButton";
-import MyPageAxiosApi from "../../api/MyPageAxiosAPI";
+import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 import SelColor from "./SelColor";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
 const ScAdd = () => {
   const [contentId, setContentId] = useState(1);
-  const [date, setDate] = useState("");
-  const [myScName, setMyScName] = useState("");
-  const [myScBudget, setMyScBudget] = useState("");
+  const [scDate, setScDate] = useState("");
+  const [scName, setScName] = useState("");
+  const [scBudget, setScBudget] = useState("");
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -25,16 +25,16 @@ const ScAdd = () => {
     setModalOpen(false);
   };
 
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
+  const handleScDateChange = (event) => {
+    setScDate(event.target.value);
   };
 
-  const handleMyScNameChange = (event) => {
-    setMyScName(event.target.value);
+  const handleScNameChange = (event) => {
+    setScName(event.target.value);
   };
 
-  const handleMyScBudgetChange = (event) => {
-    setMyScBudget(event.target.value);
+  const handleScBudgetChange = (event) => {
+    setScBudget(event.target.value);
   };
 
   const handleContentIdChange = (event) => {
@@ -42,16 +42,16 @@ const ScAdd = () => {
     // setContentId(event.target.contentId);
   };
 
-  const onCreateMySc = async () => {
+  const onCreateSc = async () => {
     try {
-      const createMySc = await MyPageAxiosApi.createMySchedule({
-        date,
-        myScName,
-        myScBudget,
+      const createSc = await CalendarAxiosApi.createSchedule({
+        scDate,
+        scName,
+        scBudget,
         myColor: contentId,
       });
 
-      if (createMySc.data === "일정을 성공적으로 생성했습니다.") {
+      if (createSc.data === "일정을 성공적으로 생성했습니다.") {
         console.log("입력 성공");
         window.location.reload();
       } else {
@@ -76,13 +76,41 @@ const ScAdd = () => {
           </div>
 
           <div>
-            <p className="label">일정</p>
-            <Input value={myScName} onChange={handleMyScNameChange} />
+            <p className="label">날짜</p>
+            <Input
+              type="date"
+              id="date"
+              value={scDate}
+              onChange={handleScDateChange}
+            />
           </div>
+
+          {/* <div>
+            {isMypage ? (
+              <></>
+            ) : (
+              <>
+                <p className="label">날짜</p>
+                <Input
+                  type="date"
+                  id="date"
+                  value={scDate}
+                  onChange={handleScDateChange}
+                />
+              </>
+            )}
+          </div> */}
+
+          <div>
+            <p className="label">일정</p>
+            <Input value={scName} onChange={handleScNameChange} />
+          </div>
+
           <div>
             <p className="label">예산</p>
-            <Input value={myScBudget} onChange={handleMyScBudgetChange} />
+            <Input value={scBudget} onChange={handleScBudgetChange} />
           </div>
+
           <SelColor
             // value={myColor}
             contentId={contentId}
@@ -96,7 +124,7 @@ const ScAdd = () => {
         </InputContainer>
       </Container>
       <ButtonContainer>
-        <ClickButton onClick={onCreateMySc}>일정 등록</ClickButton>
+        <ClickButton onClick={onCreateSc}>일정 등록</ClickButton>
       </ButtonContainer>
     </>
   );

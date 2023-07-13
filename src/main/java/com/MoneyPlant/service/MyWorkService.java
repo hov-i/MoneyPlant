@@ -41,7 +41,7 @@ public class MyWorkService {
             myWork.setMyPayType(myWorkDto.getMyPayType());
             myWork.setMyWkStart(myWorkDto.getMyWkStart());
             myWork.setMyWkEnd(myWorkDto.getMyWkEnd());
-            myWork.setMyWkPayday(myWorkDto.getMyWkPayday());
+            myWork.setMyPayday(myWorkDto.getMyPayday());
             myWork.setMyColor(myWorkDto.getMyColor());
             myWork.setMyWkPay(myWorkDto.getMyWkPay());
 
@@ -90,7 +90,6 @@ public class MyWorkService {
 //    }
 
 
-
     // 마이페이지 나의 근무 수정
 
     // 마이페이지 나의 근무 삭제
@@ -99,7 +98,7 @@ public class MyWorkService {
     // 마이페이지 전체 나의 근무 조회
     public List<MyWorkDto> getWorkForMyPage(UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
-        List<MyWork> myWorkList = myWorkRepository.findByUserId(userId) ;
+        List<MyWork> myWorkList = myWorkRepository.findByUserId(userId);
 
         List<MyWorkDto> myWorkDtoList = new ArrayList<>();
         for (MyWork myWork : myWorkList) {
@@ -109,7 +108,7 @@ public class MyWorkService {
             myWorkDto.setMyWkName(myWork.getMyWkName());
             myWorkDto.setMyWkStart(myWork.getMyWkStart());
             myWorkDto.setMyWkEnd(myWork.getMyWkEnd());
-            myWorkDto.setMyWkPayday(myWork.getMyWkPayday());
+            myWorkDto.setMyPayday(myWork.getMyPayday());
             myWorkDto.setMyColor(myWork.getMyColor());
             myWorkDto.setMyWkPay(myWork.getMyWkPay());
 
