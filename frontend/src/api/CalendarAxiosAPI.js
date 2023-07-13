@@ -1,10 +1,11 @@
 import axiosInstance from "./axiosInstance";
 
 const AxiosApi = {
-  createSchedule: async (inputValues) => {
+  createSchedule: async (isQuick, inputValues) => {
+    const type = isQuick ? "mySchedule" : "schedule";
     try {
       const response = await axiosInstance.post(
-        "/calendar/create/schedule",
+        `/calendar/create/schedule/${type}`,
         inputValues
       );
 
@@ -15,10 +16,11 @@ const AxiosApi = {
     }
   },
 
-  createWork: async (inputValues) => {
+  createWork: async (isQuick, inputValues) => {
+    const type = isQuick ? "myWork" : "work";
     try {
       const response = await axiosInstance.post(
-        "/calendar/create/work",
+        `/calendar/create/work/${type}`,
         inputValues
       );
       return response.data;
@@ -54,6 +56,15 @@ const AxiosApi = {
       };
     } catch (error) {
       console.error(error);
+      throw error;
+    }
+  },
+
+  // 간편등록 전체 조회
+  getMyPageList: async () => {
+    try {
+      return await axiosInstance.get("/mypage");
+    } catch (error) {
       throw error;
     }
   },

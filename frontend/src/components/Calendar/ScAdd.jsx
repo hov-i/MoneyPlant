@@ -44,7 +44,7 @@ const ScAdd = ({ isQuick }) => {
 
   const onCreateSc = async () => {
     try {
-      const createSc = await CalendarAxiosApi.createSchedule({
+      const createSc = await CalendarAxiosApi.createSchedule(isQuick, {
         scDate,
         scName,
         scBudget,

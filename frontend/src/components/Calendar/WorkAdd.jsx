@@ -36,7 +36,7 @@ const WorkAdd = ({ isQuick }) => {
     setModalOpen(false);
   };
 
-  const handleWkDateChange = (event) => {
+  const handleWorkDateChange = (event) => {
     setDate(event.target.value);
   };
 
@@ -107,7 +107,7 @@ const WorkAdd = ({ isQuick }) => {
 
   const onCreateWork = async () => {
     try {
-      const createWork = await CalendarAxiosApi.createWork({
+      const createWork = await CalendarAxiosApi.createWork(isQuick, {
         workDate,
         workName,
         payType,
@@ -151,7 +151,7 @@ const WorkAdd = ({ isQuick }) => {
                   type="date"
                   id="date"
                   value={workDate}
-                  onChange={handleWkDateChange}
+                  onChange={handleWorkDateChange}
                 />
               </>
             )}
