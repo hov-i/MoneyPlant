@@ -10,7 +10,7 @@ import SelType from "./SelType";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const WorkAdd = () => {
+const WorkAdd = ({ isQuick }) => {
   const [contentId, setContentId] = useState(5);
   const [workDate, setDate] = useState("");
   const [workName, setWorkName] = useState("");
@@ -142,17 +142,7 @@ const WorkAdd = () => {
           </div>
 
           <div>
-            <p className="label">날짜</p>
-            <Input
-              type="date"
-              id="date"
-              value={workDate}
-              onChange={handleWkDateChange}
-            />
-          </div>
-
-          {/* <div>
-            {isMypage ? (
+            {isQuick ? (
               <></>
             ) : (
               <>
@@ -165,7 +155,7 @@ const WorkAdd = () => {
                 />
               </>
             )}
-          </div> */}
+          </div>
 
           <div>
             <p className="label">근무이름</p>
