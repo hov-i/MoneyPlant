@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/auth/refreshtoken").permitAll()
+                .antMatchers("/api/auth/refreshtoken", "auth/password/update").permitAll()
                 .antMatchers("/api/**").authenticated() // Require authentication for backend URLs starting with "/api/"
                 .antMatchers("/auth/signout").authenticated()
                 .anyRequest().permitAll() // Allow access to all other URLs without authentication

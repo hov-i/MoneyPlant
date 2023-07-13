@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 // AuthService 는 인증에 관한 서비스만 제공해야하지 않을까??
 // 인증은? 토큰 등록, 토큰 발급, 토큰 갱신, 토큰 삭제 같은거
@@ -157,5 +158,27 @@ public class AuthService {
                             "refresh token이 DB에 존재하지 않습니다!"));
         }
         return ResponseEntity.badRequest().body(new MessageResponse("Refresh Token is empty!"));
+    }
+
+    // 비밀번호 업데이트
+    public ResponseEntity<?> updatePassword(String email, String currentPassword, String newPassword) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("유저 확인 불가"));
+        }
+
+        User user = optionalUser.get();
+
+        // 현재 비밀번호 검증
+        if (!encoder.matches(currentPassword, user.getPassword())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("현재 비밀번호가 일치하지 않습니다."));
+        }
+
+        // 새로운 비밀번호 암호화
+        String encodedPassword = encoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("변경 성공"));
     }
 }
