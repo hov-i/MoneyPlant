@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const DOMAIN = "https://localhost:8888"; // 이거 .env파일에 넣어서 관리하는 건 어떨까요 파일마다 쓰기 귀찮잖아요
+const DOMAIN = "http://localhost:8888"; // 이거 .env파일에 넣어서 관리하는 건 어떨까요 파일마다 쓰기 귀찮잖아요
 
 const AuthAPI = axios.create({
   baseURL: DOMAIN, // 기본 url 주소 설정

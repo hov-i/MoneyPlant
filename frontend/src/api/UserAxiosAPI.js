@@ -1,5 +1,5 @@
 import axios from "axios";
-const DOMAIN = "";
+const DOMAIN = "http://localhost:8888";
 
 const UserAxiosAPI = {
   getUserInfo: async () => {
