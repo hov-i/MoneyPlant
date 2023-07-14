@@ -7,6 +7,7 @@ import Mybudget from "./pages/MybudgetPage";
 import Chart from "./pages/ChartPage";
 import GlobalStyle from "./styles/GlobalStyle";
 import QuickAdd from "./pages/QuickAddPage";
+import Setting from "./pages/SettingPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Help from './pages/HelpPage';
 
@@ -24,6 +25,7 @@ function App() {
               <Route path="/chart" element={<Chart />} />
               <Route path="/mybudget" element={<Mybudget />} />
               <Route path="/mypage" element={<QuickAdd />} />
+              <Route path="/setting" element={<Setting />} />
               <Route path="/help" element={<Help />} />
             </Routes>
           </Router>
