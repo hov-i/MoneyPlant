@@ -69,6 +69,7 @@ public class CalendarService {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다"));
             Schedule schedule = new Schedule();
+            Expense expense = new Expense();
 
             // If Google Calendar is linked, proceed with Google API
             if (calendarId != null) {
@@ -102,7 +103,7 @@ public class CalendarService {
                     throw new RuntimeException("이벤트 생성 실패");
                 }
             }
-            System.out.println("여기까지");
+
             schedule.setUser(user);
             schedule.setGoogleCalendarId(calendarId);
             schedule.setScName(scheduleDto.getScName());
@@ -111,6 +112,16 @@ public class CalendarService {
             schedule.setColorId(scheduleDto.getColorId());
 
             scheduleRepository.save(schedule);
+
+            Category category = categoryRepository.findByCategoryId((long) 14);
+            
+            expense.setUser(user);
+            expense.setCategory(category);
+            expense.setExpenseAmount(scheduleDto.getScBudget());
+            expense.setExpenseDate(scheduleDto.getScDate());
+            expense.setExpenseContent(scheduleDto.getScName());
+
+            expenseRepository.save(expense);
 
             return true;
         } catch (Exception e) {
