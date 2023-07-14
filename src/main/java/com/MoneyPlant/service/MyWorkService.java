@@ -4,6 +4,7 @@ import com.MoneyPlant.dto.WorkDto;
 import com.MoneyPlant.dto.MyWorkDto;
 import com.MoneyPlant.entity.*;
 import com.MoneyPlant.repository.*;
+import com.MoneyPlant.service.CalendarService;
 import com.MoneyPlant.service.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ import java.util.List;
 public class MyWorkService {
     private final MyWorkRepository myWorkRepository;
     private final UserRepository userRepository;
+    private final CalendarService calendarService;
 
     // 마이페이지 나의 근무 생성
     public boolean createMyWork(WorkDto workDto, UserDetailsImpl userDetails) {
@@ -43,7 +45,7 @@ public class MyWorkService {
             myWork.setMyWkEnd(workDto.getWorkEnd());
             myWork.setMyPayday(workDto.getPayday());
             myWork.setMyColor(workDto.getColorId());
-            myWork.setMyWkPay(calMyHourlySalary(workDto));
+            myWork.setMyWkPay(calendarService.calMyHourlySalary(workDto));
 
             myWorkRepository.save(myWork);
             return true;
@@ -52,38 +54,6 @@ public class MyWorkService {
 
             return false;
         }
-    }
-
-    //     마이페이지 나의 급여 계산 - 시급 / 일급&월급 / 건별
-    public int calMyHourlySalary(WorkDto workDto) {
-        int type = workDto.getPayType();
-        int money = workDto.getWorkMoney();
-        String stTime = workDto.getWorkStart();
-        String endTime = workDto.getWorkEnd();
-        int caseCnt = workDto.getWorkCase();
-        int restTime = workDto.getWorkRest();
-        double tax = 1 - (workDto.getWorkTax() / 100);
-        int pay;
-        System.out.println(workDto.getWorkTax());
-        System.out.println(tax);
-
-        if (type == 1) {
-            String[] stTimeParts = stTime.split(":");
-            int stHourToMin = Integer.parseInt(stTimeParts[0]) * 60;
-            int stMinutes = Integer.parseInt(stTimeParts[1]);
-
-            String[] endTimeParts = endTime.split(":");
-            int endHourToMin = Integer.parseInt(endTimeParts[0]) * 60;
-            int endMinutes = Integer.parseInt(endTimeParts[1]);
-
-            double totalHours = (endHourToMin + endMinutes - stHourToMin - stMinutes - restTime) / 60;
-
-            pay = (int) Math.round((money * totalHours) * tax);
-        } else if (type == 2) {
-            pay = (int) (money * caseCnt * tax);
-        } else pay = (int) (money * tax);
-
-        return pay;
     }
 
     // 마이페이지 나의 근무 수정

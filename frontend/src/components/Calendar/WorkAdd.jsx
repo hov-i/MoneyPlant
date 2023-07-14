@@ -266,8 +266,7 @@ const WorkAdd = ({ isQuick }) => {
       </ButtonContainer>
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          {" "}
-          <QuickAdd />
+          <QuickAdd isBasic={false} />
         </Modal>
       )}
     </>

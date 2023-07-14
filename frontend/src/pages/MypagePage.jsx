@@ -31,7 +31,6 @@ const Mypage = () => {
     getMyPageList();
   }, []);
 
-
   return (
     <>
       <Header />
