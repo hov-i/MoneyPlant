@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import Modal from "../Common/Modal";
+import QuickAdd from "../MyPage/QuickView";
 import ClickButton from "../Common/ClickButton";
 import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 import SelColor from "./SelColor";
@@ -70,35 +71,42 @@ const ScAdd = ({ isQuick }) => {
         <BlockLine />
 
         <InputContainer>
-          <div className="quick" onClick={openModal}>
-            <Post width="15" height="15" fill="#575757" />
-            <p className="label">간편 등록</p>
-          </div>
-
-          <div>
-            {isQuick ? (
-              <></>
-            ) : (
-              <>
+          {isQuick ? (
+            <></>
+          ) : (
+            <>
+              <div className="quick" onClick={openModal}>
+                <Post width="12" height="12" fill="#575757" />
+                <p className="quick-text">간편 등록</p>
+              </div>
+              <div>
                 <p className="label">날짜</p>
                 <Input
+                  // className="date"
                   type="date"
                   id="date"
                   value={scDate}
                   onChange={handleScDateChange}
                 />
-              </>
-            )}
-          </div>
+                <p> ㅤ </p>
+              </div>
+            </>
+          )}
 
           <div>
             <p className="label">일정</p>
             <Input value={scName} onChange={handleScNameChange} />
+            <p> ㅤ </p>
           </div>
 
           <div>
             <p className="label">예산</p>
-            <Input value={scBudget} onChange={handleScBudgetChange} />
+            <Input
+              className="budget-size"
+              value={scBudget}
+              onChange={handleScBudgetChange}
+            />
+            <p className="text">원</p>
           </div>
 
           <SelColor
@@ -107,15 +115,17 @@ const ScAdd = ({ isQuick }) => {
             onContentIdChange={handleContentIdChange}
             isBasic={true}
           />
-
-          {modalOpen && (
-            <Modal open={modalOpen} close={closeModal} width={"300px"}></Modal>
-          )}
         </InputContainer>
       </Container>
       <ButtonContainer>
         <ClickButton onClick={onCreateSc}>일정 등록</ClickButton>
       </ButtonContainer>
+
+      {modalOpen && (
+        <Modal open={modalOpen} close={closeModal} width={"300px"}>
+          <QuickAdd />
+        </Modal>
+      )}
     </>
   );
 };
@@ -131,7 +141,7 @@ const Title = styled.div`
 `;
 
 const Input = styled.input`
-  width: 70%;
+  width: 60%;
   border-top: none;
   border-left: none;
   color: lightgray;
@@ -156,6 +166,14 @@ const Container = styled.div`
     margin: 10px;
     font-size: 15px;
   }
+  .text {
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    margin: 3px;
+    margin-top: 9px;
+    color: gray;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -165,6 +183,7 @@ const InputContainer = styled.div`
   flex-wrap: wrap;
   width: 200px;
   margin: 20px;
+  padding-left: 5px;
 
   div {
     display: flex;
@@ -176,10 +195,16 @@ const InputContainer = styled.div`
     justify-content: center;
     vertical-align: center;
   }
-
   .quick {
-    margin: 5px;
+    margin: 10px;
     align-items: center;
+    color: #575757;
+    font-size: 10px;
+  }
+  .quick-text {
+    font-size: 12px;
+    margin: 3px;
+    cursor: pointer;
   }
 `;
 

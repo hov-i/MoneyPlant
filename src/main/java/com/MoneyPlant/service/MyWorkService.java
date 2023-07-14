@@ -62,8 +62,10 @@ public class MyWorkService {
         String endTime = workDto.getWorkEnd();
         int caseCnt = workDto.getWorkCase();
         int restTime = workDto.getWorkRest();
-        double tax = 100 - workDto.getWorkTax();
+        double tax = 1 - (workDto.getWorkTax() / 100);
         int pay;
+        System.out.println(workDto.getWorkTax());
+        System.out.println(tax);
 
         if (type == 1) {
             String[] stTimeParts = stTime.split(":");
@@ -76,7 +78,7 @@ public class MyWorkService {
 
             double totalHours = (endHourToMin + endMinutes - stHourToMin + stMinutes - restTime) / 60;
 
-            pay = (int) Math.round((money * totalHours / 60) * tax);
+            pay = (int) Math.round((money * totalHours) * tax);
         } else if (type == 2) {
             pay = (int) (money * caseCnt * tax);
         } else pay = (int) (money * tax);

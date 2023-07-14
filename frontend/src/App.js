@@ -8,6 +8,7 @@ import Chart from "./pages/ChartPage";
 import GlobalStyle from "./styles/GlobalStyle";
 import QuickAdd from "./pages/QuickAddPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Help from './pages/HelpPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/chart" element={<Chart />} />
               <Route path="/mybudget" element={<Mybudget />} />
               <Route path="/mypage" element={<QuickAdd />} />
+              <Route path="/help" element={<Help />} />
             </Routes>
           </Router>
         </GoogleOAuthProvider>
