@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const DOMAIN = "https://localhost:8888/api";
+const DOMAIN = "";
 
 let isLoginAlertShown = false; // 로그인 경고창 1번만 뜨게끔
 

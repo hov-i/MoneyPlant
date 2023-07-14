@@ -21,7 +21,7 @@ public class Work {
     @JoinColumn(name = "id")
     private User user; // userId
 
-    @Column(name = "work_date")
+    @Column(name = "work_date", nullable = false)
     private String workDate; // 근무 날짜
 
     @Column(name = "work_name", nullable = false)

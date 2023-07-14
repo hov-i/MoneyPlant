@@ -358,7 +358,7 @@ public class CalendarService {
             int endHourToMin = Integer.parseInt(endTimeParts[0]) * 60;
             int endMinutes = Integer.parseInt(endTimeParts[1]);
 
-            double totalHours = (endHourToMin + endMinutes - stHourToMin + stMinutes - restTime) / 60;
+            double totalHours = (endHourToMin + endMinutes - stHourToMin - stMinutes - restTime) / 60;
 
             pay = (int) Math.round((money * totalHours) * tax);
         } else if (type == 2) {

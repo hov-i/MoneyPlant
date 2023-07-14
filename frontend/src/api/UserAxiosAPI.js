@@ -1,5 +1,5 @@
 import axios from "axios";
-const DOMAIN = "https://localhost:8888";
+const DOMAIN = "";
 
 const UserAxiosAPI = {
   getUserInfo: async () => {
@@ -10,6 +10,7 @@ const UserAxiosAPI = {
     }
   },
 
+// 비밀번호 찾기
   postEmailSend: async (inputEmail) => {
     try {
       const response = await axios.post(
