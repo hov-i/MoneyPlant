@@ -114,7 +114,7 @@ public class CalendarService {
             scheduleRepository.save(schedule);
 
             Category category = categoryRepository.findByCategoryId((long) 14);
-            
+
             expense.setUser(user);
             expense.setCategory(category);
             expense.setExpenseAmount(scheduleDto.getScBudget());
@@ -329,8 +329,9 @@ public class CalendarService {
             Long userId = userDetails.getId();
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
-
             Work work = new Work();
+            Income income = new Income();
+
             work.setUser(user);
             work.setWorkName(workDto.getWorkName());
             work.setColorId(workDto.getColorId());
@@ -342,6 +343,16 @@ public class CalendarService {
             work.setPayday(workDto.getPayday());
 
             workRepository.save(work);
+
+            CategoryIncome categoryIncome = categoryIncomeRepository.findByCategoryIncomeId((long) 1);
+
+            income.setUser(user);
+            income.setCategoryIncome(categoryIncome);
+            income.setIncomeAmount(calMyHourlySalary(workDto));
+            income.setIncomeDate(workDto.getPayday());
+            income.setIncomeContent(workDto.getWorkName());
+
+            incomeRepository.save(income);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -379,6 +390,23 @@ public class CalendarService {
         return pay;
     }
 
+    // 캘린더 근무 삭제
+    public boolean deleteWork(Long workId, UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+
+        try {
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다."));
+            Work work = workRepository.findByWorkId(workId);
+
+            // Delete the work from the database
+            workRepository.deleteByWorkId(workId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     // ===========================================================================
     // 캘린더 전체 일정 조회 - 달력
