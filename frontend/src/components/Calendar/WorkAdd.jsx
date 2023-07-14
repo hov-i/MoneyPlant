@@ -26,6 +26,7 @@ const WorkAdd = ({ isQuick }) => {
 
   const [isHourly, setIsHourly] = useState(true);
   const [isCase, setIsCase] = useState(false);
+  const [isSalary, setIsSalary] = useState(true);
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -53,21 +54,25 @@ const WorkAdd = ({ isQuick }) => {
       case 1: // 시급
         setIsHourly(true);
         setIsCase(false);
+        setIsSalary(true);
         break;
 
       case 2: // 건별
         setIsHourly(false);
         setIsCase(true);
+        setIsSalary(false);
         break;
 
       case 3: // 일급
         setIsHourly(false);
         setIsCase(false);
+        setIsSalary(false);
         break;
 
       case 4: // 월급
         setIsHourly(false);
         setIsCase(false);
+        setIsSalary(true);
         break;
 
       default:
@@ -228,6 +233,8 @@ const WorkAdd = ({ isQuick }) => {
               <p className="label">건 수</p>
               <Input
                 className="small"
+                type="number"
+                min="0"
                 value={workCase}
                 required
                 onChange={handleWorkCaseChange}
@@ -250,7 +257,20 @@ const WorkAdd = ({ isQuick }) => {
 
           <div>
             <p className="label">급여일</p>
-            <Input type="date" value={payday} onChange={handlePaydayChange} />
+            {isSalary ? (
+              <Input type="date" value={payday} onChange={handlePaydayChange} />
+            ) : (
+              <>
+                <p className="text">매달</p>
+                <Input
+                  type="number"
+                  min="0"
+                  value={payday}
+                  onChange={handlePaydayChange}
+                />
+                <p className="text">일</p>
+              </>
+            )}
           </div>
 
           {/* <p className="label">color</p> */}
