@@ -52,7 +52,7 @@ const Header = () => {
                     <AvatarButton />
                     {showLogoutButton && (
                         <ProfileButton>
-                            <MyPageButton>
+                            <MyPageButton to={'/setting'}>
                                 <Person width="19" height="19" fill="#575757" />
                                 <p className="logout">마이페이지</p>
                             </MyPageButton>
@@ -108,12 +108,14 @@ const DarkModeButton = styled.button`
     border: none;
 `;
 
-const MyPageButton = styled.div`
+const MyPageButton = styled(NavLink)`
     width: 110px;
     padding-top: 10px;
     padding-bottom: 10px;
     flex-shrink: 0;
     border-radius: 7px;
+    border: none;
+    border-style: none;
     position: fixed;
     top: 70px;
     right: 20px;

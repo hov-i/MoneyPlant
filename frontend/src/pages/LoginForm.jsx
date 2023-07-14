@@ -8,7 +8,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import AuthAxiosAPI from "../api/AuthAxiosAPI";
 import GoogleLogin from "../assets/GoogleLoginButtonLight.png";
 import styled from "styled-components";
-import FindPassword from "../components/FindPwd/FindPassword";
+import FindPassword from "../components/Setting/FindPassword";
 
 //패스워드/아이디 찾기
 import Modal from "../components/Common/Modal";

@@ -54,6 +54,21 @@ const AuthAxiosAPI = {
       console.log(error);
     }
   },
+
+    // 비밀번호 수정
+    postNewPassword: async (email, currentPassword, newPassword) => {
+      const passwordData = {
+        email: email,
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      };
+      try {
+        return await AuthAPI.post("/auth/password/update", passwordData);
+      } catch (error) {
+        console.log("postNewPassword: ", passwordData, error);
+        throw error;
+      }
+    },
 };
 
 export default AuthAxiosAPI;

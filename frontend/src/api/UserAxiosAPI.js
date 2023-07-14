@@ -10,6 +10,7 @@ const UserAxiosAPI = {
     }
   },
 
+// 비밀번호 찾기
   postEmailSend: async (inputEmail) => {
     try {
       const response = await axios.post(
