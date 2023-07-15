@@ -415,7 +415,7 @@ public class CalendarService {
         Long userId = userDetails.getId();
         List<Schedule> scheduleList = scheduleRepository.findByUserId(userId);
 
-        List<ScheduleDto> scheduleDtos = new ArrayList<>();
+        List<ScheduleDto> scheduleDtoList = new ArrayList<>();
         for (Schedule schedule : scheduleList) {
             ScheduleDto scheduleDto = new ScheduleDto();
 
@@ -425,9 +425,9 @@ public class CalendarService {
             scheduleDto.setScBudget(schedule.getScBudget());
             scheduleDto.setColorId(schedule.getColorId());
 
-            scheduleDtos.add(scheduleDto);
+            scheduleDtoList.add(scheduleDto);
         }
-        return scheduleDtos;
+        return scheduleDtoList;
     }
 
 
@@ -545,54 +545,52 @@ public class CalendarService {
     }
 
     // 캘린더 전체 수입 detail (daily Income) - 날짜, 개별 수입 내역
-    public List<IncomeDto> getIncomeWithCategory(UserDetailsImpl userDetails) {
-        Long userId = userDetails.getId();
-        log.info("시용자 아이디 : " + userId);
-        List<Income> incomeList = incomeRepository.findByUserId(userId);
-
-        List<IncomeDto> incomeDtoList = new ArrayList<>();
-        for (Income income : incomeList) {
-            IncomeDto incomeDto = new IncomeDto();
-            incomeDto.setIncomeId(income.getIncomeId());
-            incomeDto.setIncomeAmount(income.getIncomeAmount());
-            incomeDto.setIncomeDate(income.getIncomeDate());
-            incomeDto.setIncomeContent(income.getIncomeContent());
-            incomeDto.setCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId());
-            incomeDto.setUserId(income.getUser().getId());
-
-            String categoryIncomeName = categoryIncomeRepository.findByCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId()).getCategoryIncomeName();
-            incomeDto.setCategoryIncomeName(categoryIncomeName);
-
-            incomeDtoList.add(incomeDto);
-        }
-
-        return incomeDtoList;
-    }
+//    public List<IncomeDto> getIncomeWithCategory(UserDetailsImpl userDetails) {
+//        Long userId = userDetails.getId();
+//        log.info("시용자 아이디 : " + userId);
+//        List<Income> incomeList = incomeRepository.findByUserId(userId);
+//
+//        List<IncomeDto> incomeDtoList = new ArrayList<>();
+//        for (Income income : incomeList) {
+//            IncomeDto incomeDto = new IncomeDto();
+//            incomeDto.setIncomeId(income.getIncomeId());
+//            incomeDto.setIncomeAmount(income.getIncomeAmount());
+//            incomeDto.setIncomeDate(income.getIncomeDate());
+//            incomeDto.setIncomeContent(income.getIncomeContent());
+//            incomeDto.setCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId());
+//            incomeDto.setUserId(income.getUser().getId());
+//
+//            String categoryIncomeName = categoryIncomeRepository.findByCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId()).getCategoryIncomeName();
+//            incomeDto.setCategoryIncomeName(categoryIncomeName);
+//
+//            incomeDtoList.add(incomeDto);
+//        }
+//
+//        return incomeDtoList;
+//    }
 
     // 캘린더 전체 지출 detail (daily Expense) - 날짜, 개별 지출 내역
-    public List<ExpenseDto> getExpenseWithCategory(UserDetailsImpl userDetails) {
-        Long userId = userDetails.getId();
-        log.info("지출 사용자 아이디 : " + userId);
-        List<Expense> expenseList = expenseRepository.findByUserId(userId);
-
-        List<ExpenseDto> expenseDtoList = new ArrayList<>();
-        for (Expense expense : expenseList) {
-            ExpenseDto expenseDto = new ExpenseDto();
-            expenseDto.setExpenseId(expense.getExpenseId());
-            expenseDto.setExpenseAmount(expense.getExpenseAmount());
-            expenseDto.setExpenseDate(expense.getExpenseDate());
-            expenseDto.setExpenseContent(expense.getExpenseContent());
-            expenseDto.setCategoryId(expense.getCategory().getCategoryId());
-            expenseDto.setUserId(expense.getUser().getId());
-
-            String categoryName = categoryRepository.findByCategoryId(expense.getCategory().getCategoryId()).getCategoryName();
-            expenseDto.setCategoryName(categoryName);
-
-            expenseDtoList.add(expenseDto);
-        }
-
-        return expenseDtoList;
-    }
-
-
+//    public List<ExpenseDto> getExpenseWithCategory(UserDetailsImpl userDetails) {
+//        Long userId = userDetails.getId();
+//        log.info("지출 사용자 아이디 : " + userId);
+//        List<Expense> expenseList = expenseRepository.findByUserId(userId);
+//
+//        List<ExpenseDto> expenseDtoList = new ArrayList<>();
+//        for (Expense expense : expenseList) {
+//            ExpenseDto expenseDto = new ExpenseDto();
+//            expenseDto.setExpenseId(expense.getExpenseId());
+//            expenseDto.setExpenseAmount(expense.getExpenseAmount());
+//            expenseDto.setExpenseDate(expense.getExpenseDate());
+//            expenseDto.setExpenseContent(expense.getExpenseContent());
+//            expenseDto.setCategoryId(expense.getCategory().getCategoryId());
+//            expenseDto.setUserId(expense.getUser().getId());
+//
+//            String categoryName = categoryRepository.findByCategoryId(expense.getCategory().getCategoryId()).getCategoryName();
+//            expenseDto.setCategoryName(categoryName);
+//
+//            expenseDtoList.add(expenseDto);
+//        }
+//
+//        return expenseDtoList;
+//    }
 }

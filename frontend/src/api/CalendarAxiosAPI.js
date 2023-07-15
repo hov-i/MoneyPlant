@@ -60,14 +60,23 @@ const AxiosApi = {
     }
   },
 
-  // 간편등록 전체 조회
-  getMyPageList: async () => {
+  getTodaySchedule: async (scDate) => {
     try {
-      return await axiosInstance.get("/mypage");
+      return await axiosInstance.get(`/today/schedule/${scDate}`);
     } catch (error) {
       throw error;
     }
   },
+
+
+  getTodayWork: async (workDate) => {
+    try {
+      return await axiosInstance.get(`/today/work/${workDate}`);
+    } catch (error) {
+      throw error;
+    }
+  },
+  
 };
 
 export default AxiosApi;
