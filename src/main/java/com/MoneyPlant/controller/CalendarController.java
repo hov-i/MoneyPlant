@@ -122,4 +122,18 @@ public class CalendarController {
 
         return ResponseEntity.ok(calendarDto);
     }
+
+    // 캘린더 일일 일정 조회
+    @GetMapping("/today/schedule/{scDate}")
+    public ResponseEntity<List<ScheduleDto>> getTodaySchedule(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String scDate) {
+        List<ScheduleDto> todayScheduleList = calendarService.getScheduleForDetail(userDetails, scDate);
+        return ResponseEntity.ok(todayScheduleList);
+    }
+
+    // 캘린더 일일 근무 조회
+    @GetMapping("/today/work/{workDate}")
+    public ResponseEntity<List<WorkDto>> getTodayWork(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String workDate) {
+        List<WorkDto> todayWorkList = calendarService.getWorkForDetail(userDetails, workDate);
+        return ResponseEntity.ok(todayWorkList);
+    }
 }

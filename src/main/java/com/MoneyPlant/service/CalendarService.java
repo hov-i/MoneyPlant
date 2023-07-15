@@ -502,9 +502,9 @@ public class CalendarService {
 
 
     // 캘린더 전체 일정 조회 - 일별 상세
-    public List<ScheduleDto> getScheduleForDetail(UserDetailsImpl userDetails) {
+    public List<ScheduleDto> getScheduleForDetail(UserDetailsImpl userDetails, String scDate) {
         Long userId = userDetails.getId();
-        List<Schedule> scheduleList = scheduleRepository.findByUserId(userId);
+        List<Schedule> scheduleList = scheduleRepository.findByUserIdScDate(userId, scDate);
 
         List<ScheduleDto> scheduleDtoList = new ArrayList<>();
         for (Schedule schedule : scheduleList) {
@@ -522,9 +522,9 @@ public class CalendarService {
     }
 
     // 캘린더 전체 근무 조회 - 일별 상세
-    public List<WorkDto> getWorkForDetail(UserDetailsImpl userDetails) {
+    public List<WorkDto> getWorkForDetail(UserDetailsImpl userDetails, String workDate) {
         Long userId = userDetails.getId();
-        List<Work> workList = workRepository.findByUserId(userId);
+        List<Work> workList = workRepository.findByUserIdWorkDate(userId, workDate);
 
         List<WorkDto> workDtoList = new ArrayList<>();
         for (Work work : workList) {
