@@ -258,18 +258,19 @@ const WorkAdd = ({ isQuick }) => {
           <div>
             <p className="label">급여일</p>
             {isSalary ? (
-              <Input type="date" value={payday} onChange={handlePaydayChange} />
-            ) : (
               <>
                 <p className="text">매달</p>
                 <Input
                   type="number"
                   min="0"
+                  max="31"
                   value={payday}
                   onChange={handlePaydayChange}
                 />
                 <p className="text">일</p>
               </>
+            ) : (
+              <Input type="date" value={payday} onChange={handlePaydayChange} />
             )}
           </div>
 
