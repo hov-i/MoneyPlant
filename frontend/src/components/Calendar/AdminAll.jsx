@@ -184,6 +184,7 @@ const AdminAllContainer = styled.div`
   .tagBox {
     display: flex;
     padding-left: 10px;
+    padding-bottom: 30px;
   }
 
   .accountBox {
