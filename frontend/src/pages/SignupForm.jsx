@@ -1,15 +1,30 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Box, Grid } from "@mui/material";
+import { Box, FormControlLabel, Grid, Checkbox } from "@mui/material";
 import Button from "@mui/material/Button";
 import AuthAxiosAPI from "../api/AuthAxiosAPI";
-import Typography from "@mui/material/Typography";
-
 import Modal from "../components/Common/Modal";
+import PrivacyTerms from "../components/Common/PrivacyTerms";
 
 // 이메일 인증도 추가해야하지 않을까? 가입할 때 이메일로 코드 보낸다거나 url링크로 인증한다던가
 
 const SignupForm = ({ setValue }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [checkboxChecked, setCheckboxChecked] = useState(false);
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleCheckboxClick = () => {
+    setModalOpen(true);
+  };
+
+  const handleButtonClick = () => {
+    setCheckboxChecked(true);
+    setModalOpen(false);
+  };
+
   const [inputEmail, setInputEmail] = useState("");
   const [inputFirstName, setInputFirstName] = useState("");
   const [inputLastName, setInputLastName] = useState("");
@@ -22,16 +37,6 @@ const SignupForm = ({ setValue }) => {
   const [isEmail, setIsEmail] = useState(false);
   const [isPwd, setIsPwd] = useState(false);
   const [isConPwd, setIsConPwd] = useState(false);
-
-  //약관 오픈
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   // 이메일 체크
   const onChangeEmail = (e) => {
@@ -266,31 +271,30 @@ const SignupForm = ({ setValue }) => {
             }}
           />
         </Grid>
-
-        <Typography
-          onClick={openModal}
-          variant="button"
-          align="right"
-          style={{ cursor: "pointer" }}
-          sx={{
-            marginLeft: "160px",
-            marginBottom: "5px",
-            cursor: "pointer",
-            fontSize: "1rem",
-            color: "gray",
-            "&:hover": {
-              color: "#8BD4D3",
-            },
-          }}>
-          여기를 클릭해 약관 확인 후 동의해주세요.
-        </Typography>
+        <Grid
+          container
+          alignItems="center"
+          display="flex"
+          justifyContent="flex-end"
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={checkboxChecked}
+                onClick={handleCheckboxClick}
+              />
+            }
+            label="개인정보 약관 동의"
+            labelPlacement="end"
+          />
+        </Grid>
       </Grid>
-
-      {modalOpen && (
-        <Modal open={modalOpen} close={closeModal} width={"300px"}></Modal>
-      )}
-
-      {isFirstName && isLastName && isEmail && isPwd && isConPwd ? (
+      {isFirstName &&
+      isLastName &&
+      isEmail &&
+      isPwd &&
+      isConPwd &&
+      checkboxChecked ? (
         <Button
           type="submit"
           variant="contained"
@@ -303,7 +307,8 @@ const SignupForm = ({ setValue }) => {
             "&:hover": {
               backgroundColor: "#87EEC5",
             },
-          }}>
+          }}
+        >
           회원가입
         </Button>
       ) : (
@@ -319,9 +324,16 @@ const SignupForm = ({ setValue }) => {
             "&.Mui-disabled": {
               color: "white",
             },
-          }}>
+          }}
+        >
           회원가입
         </Button>
+      )}
+
+      {modalOpen && (
+        <Modal open={modalOpen} close={closeModal}>
+          <PrivacyTerms handleButtonClick={handleButtonClick} />
+        </Modal>
       )}
     </Box>
   );
