@@ -516,7 +516,8 @@ public class CalendarService {
         for (Schedule schedule : scheduleList) {
             ScheduleDto scheduleDto = new ScheduleDto();
 
-            // 조회 내용 : 일정 날짜, 일정 이름, 일정 색, 일정 예산
+            // 조회 내용 : 일정ID, 일정 날짜, 일정 이름, 일정 색, 일정 예산
+            scheduleDto.setScId(schedule.getScId());
             scheduleDto.setScDate(schedule.getScDate());
             scheduleDto.setScName(schedule.getScName());
             scheduleDto.setColorId(schedule.getColorId());

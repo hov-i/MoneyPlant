@@ -16,6 +16,29 @@ const AxiosApi = {
     }
   },
 
+  updateSchedule: async(data) => {
+    try {
+      const response = await axiosInstance.post(
+          "/calendar/update/schedule/", data
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Request Error : ", error);
+      throw error;
+    }
+  },
+  deleteSchedule: async(scId) => {
+    try {
+      const response = await axiosInstance.post(
+          `/calendar/delete/${scId}`
+      );
+    } catch (error) {
+      console.error("Request Error : ", error);
+      throw error;
+    }
+  },
+
   createWork: async (isQuick, inputValues) => {
     const type = isQuick ? "myWork" : "work";
     try {

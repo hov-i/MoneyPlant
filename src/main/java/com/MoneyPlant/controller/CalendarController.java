@@ -70,9 +70,9 @@ public class CalendarController {
         }
     }
 
-    @DeleteMapping("/delete/schedule")
+    @DeleteMapping("/delete/schedule/{scId}")
     public ResponseEntity<String> deleteSchedule(
-            @RequestBody Long scId,
+            @PathVariable("scId") Long scId,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         boolean isSuccess = calendarService.deleteSchedule(scId, userDetails);
         if (isSuccess) {
