@@ -6,6 +6,7 @@ import EditMyInfo from "../components/Setting/EditMyInfo";
 import Container from "../components/Common/Container";
 import useViewport from "../hooks/viewportHook";
 import styled from "styled-components";
+import CalChart from "../components/Chart/CalChart"
 
 const Setting = () => {
   const { isMobile } = useViewport();
@@ -20,7 +21,7 @@ const Setting = () => {
           <EditMyInfo />
         </Box>
         <Box titleMargin={"20px"} height={"300px"} width={"45%"}>
-          <></>
+          <CalChart/>
         </Box>
         </BoxContainer>
       </Container>

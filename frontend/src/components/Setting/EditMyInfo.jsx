@@ -4,8 +4,10 @@ import ClickButton from "../Common/ClickButton";
 import UserAxiosAPI from "../../api/UserAxiosAPI";
 import AuthAxiosAPI from "../../api/AuthAxiosAPI";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import { Box, Grid } from "@mui/material";
+import Modal from "../../components/Common/Modal";
+import QnA from "../../components/Setting/QnA";
+// import TextField from "@mui/material/TextField";
+// import { Box, Grid } from "@mui/material";
 
 const EditMyInfo = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -86,6 +88,16 @@ const EditMyInfo = () => {
     }
   };
 
+  //QnA 오픈
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <InfoBox>
       <div>
@@ -106,7 +118,6 @@ const EditMyInfo = () => {
                   <Typography
                     onClick={handleEditMyInfo}
                     variant="button"
-                    align="right"
                     style={{ cursor: "pointer" }}
                     sx={{
                       cursor: "pointer",
@@ -155,6 +166,24 @@ const EditMyInfo = () => {
             </>
           )}
         </div>
+        <Typography
+          onClick={openModal}
+          variant="button"
+          style={{ cursor: "pointer" }}
+          sx={{
+            cursor: "pointer",
+            fontSize: "1.2rem",
+            color: "gray",
+            "&:hover": {
+              color: "#8BD4D3",
+            },
+          }}>
+          사이트 이용에 질문이 있으신가요?
+        </Typography>
+
+        {modalOpen && (
+        <Modal open={modalOpen} close={closeModal} width={"300px"}><QnA/></Modal>
+      )}
       </div>
     </InfoBox>
   );
