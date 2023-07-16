@@ -2,7 +2,6 @@ import axios from "axios";
 
 const DOMAIN = "http://localhost:8888/api";
 
-let isLoginAlertShown = false; // 로그인 경고창 1번만 뜨게끔
 
 const axiosInstance = axios.create({
   baseURL: DOMAIN,

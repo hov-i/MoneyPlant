@@ -62,7 +62,7 @@ const AxiosApi = {
 
   getTodaySchedule: async (scDate) => {
     try {
-      return await axiosInstance.get(`/today/schedule/${scDate}`);
+      return await axiosInstance.get(`calendar/today/schedule/${scDate}`);
     } catch (error) {
       throw error;
     }
@@ -71,7 +71,7 @@ const AxiosApi = {
 
   getTodayWork: async (workDate) => {
     try {
-      return await axiosInstance.get(`/today/work/${workDate}`);
+      return await axiosInstance.get(`calendar/today/work/${workDate}`);
     } catch (error) {
       throw error;
     }
