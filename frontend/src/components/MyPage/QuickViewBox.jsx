@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Container from "../Common/Container";
 import BlockLine from "../Common/BlockLine";
 import Box from "../Common/Box";
-import QuickAdd from "../MyPage/QuickView";
+import QuickAdd from "./QuickAdd";
 import ClickButton from "../Common/ClickButton";
 
 const QuickView = () => {
@@ -15,7 +15,9 @@ const QuickView = () => {
       <Container>
         <Title>간편 등록</Title>
         <BlockLine />
-        <Box><QuickAdd isBasic={true} /></Box>
+        <Box>
+          <QuickAdd isBasic={true} />
+        </Box>
       </Container>
 
       <ButtonContainer>

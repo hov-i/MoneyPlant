@@ -82,7 +82,7 @@ const AdminAll = ({ setValue }) => {
         ) : (
           <>
             {selectTodaySc.map((data) => (
-              <Tag color={data.colorId} detail={data.scName} />
+              <Tag width={"15%"} color={data.colorId} detail={data.scName} />
             ))}
           </>
         )}

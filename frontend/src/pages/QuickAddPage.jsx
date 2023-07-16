@@ -6,7 +6,7 @@ import Container from "../components/Common/Container";
 import Box from "../components/Common/Box";
 import TagBox from "../components/MyPage/TagBox";
 import useViewport from "../hooks/viewportHook";
-import QuickAdd from "../components/MyPage/QuickView";
+import QuickAdd from "../components/MyPage/QuickAdd";
 
 const Mypage = () => {
   const { isMobile } = useViewport();

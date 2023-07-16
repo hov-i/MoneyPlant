@@ -9,7 +9,7 @@ const Tag = ({ color, detail, width }) => {
       : contentList.work.find((item) => item.contentId === color);
 
   return (
-    <TagStyled backgroundColor={setColor ? setColor.Color : null} width={width}>
+    <TagStyled width={width} backgroundColor={setColor ? setColor.Color : null}>
       {detail}
     </TagStyled>
   );
@@ -19,7 +19,7 @@ export default Tag;
 
 const TagStyled = styled.button`
   height: 32px;
-  width: ${({ width }) => width || "15%"};
+  width: ${({ width }) => width || "20%"};
   border-radius: 15px;
   color: white;
   font-size: 12px;
