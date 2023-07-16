@@ -12,7 +12,10 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     Schedule findByScId(Long scId);
 
+    List<Schedule> findByUserIdAndScDate(Long userId, String scDate);
+
     void deleteByScId(Long scId);
+
 
     Schedule findByGoogleCalendarIdAndEventId(String googleCalendarId, String eventId);
 

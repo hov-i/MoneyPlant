@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const MyPageAxiosApi = {
+const QuickAddAxiosApi = {
   // 나의 일정 생성
   createMySchedule: async (inputValues) => {
     try {
@@ -37,4 +37,4 @@ const MyPageAxiosApi = {
   },
 };
 
-export default MyPageAxiosApi;
+export default QuickAddAxiosApi;

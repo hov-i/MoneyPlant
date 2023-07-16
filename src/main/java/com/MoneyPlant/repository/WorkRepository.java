@@ -13,5 +13,7 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
 
     Work findByWorkId(Long workId);
 
+    List<Work> findByUserIdAndWorkDate(Long userId, String workDate);
+
     void deleteByWorkId(Long workId);
 }

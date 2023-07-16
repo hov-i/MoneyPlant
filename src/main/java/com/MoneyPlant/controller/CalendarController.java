@@ -70,9 +70,9 @@ public class CalendarController {
         }
     }
 
-    @DeleteMapping("/delete/schedule")
+    @DeleteMapping("/delete/schedule/{scId}")
     public ResponseEntity<String> deleteSchedule(
-            @RequestBody Long scId,
+            @PathVariable("scId") Long scId,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         boolean isSuccess = calendarService.deleteSchedule(scId, userDetails);
         if (isSuccess) {
@@ -121,5 +121,19 @@ public class CalendarController {
         CalendarDto calendarDto = new CalendarDto(scheduleDtoList, workDtoList, dailyExpenseList, dailyIncomeList);
 
         return ResponseEntity.ok(calendarDto);
+    }
+
+    // 캘린더 일일 일정 조회
+    @GetMapping("/today/schedule/{scDate}")
+    public ResponseEntity<List<ScheduleDto>> getTodaySchedule(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String scDate) {
+        List<ScheduleDto> todayScheduleList = calendarService.getScheduleForDetail(userDetails, scDate);
+        return ResponseEntity.ok(todayScheduleList);
+    }
+
+    // 캘린더 일일 근무 조회
+    @GetMapping("/today/work/{workDate}")
+    public ResponseEntity<List<WorkDto>> getTodayWork(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String workDate) {
+        List<WorkDto> todayWorkList = calendarService.getWorkForDetail(userDetails, workDate);
+        return ResponseEntity.ok(todayWorkList);
     }
 }

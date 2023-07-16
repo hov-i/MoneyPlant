@@ -40,7 +40,7 @@ public class AuthController {
         return authService.signout();
     }
 
-    @PostMapping("auth/refreshtoken")
+    @PostMapping("/api/auth/refreshtoken")
     public ResponseEntity<?> refreshtoken(HttpServletRequest request) {
         return authService.tokenRefresh(request);
     }

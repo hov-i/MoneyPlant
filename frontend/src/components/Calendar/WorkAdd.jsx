@@ -11,7 +11,7 @@ import SelType from "./SelType";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const WorkAdd = ({ isQuick }) => {
+const WorkAdd = ({ isQuick, value }) => {
   const [contentId, setContentId] = useState(5);
   const [workDate, setDate] = useState("");
   const [workName, setWorkName] = useState("");
@@ -23,6 +23,10 @@ const WorkAdd = ({ isQuick }) => {
   const [workCase, setWorkCase] = useState("");
   const [workTax, setWorkTax] = useState(0);
   const [payday, setPayday] = useState("");
+  
+  // const setvalue = new Date(value);
+  // setvalue.setDate(setvalue.getDate() + 1);
+  // const workDate = setvalue.toISOString().split("T")[0];
 
   const [isHourly, setIsHourly] = useState(true);
   const [isCase, setIsCase] = useState(false);
@@ -257,20 +261,21 @@ const WorkAdd = ({ isQuick }) => {
 
           <div>
             <p className="label">급여일</p>
-            {isSalary ? (
-              <Input type="date" value={payday} onChange={handlePaydayChange} />
-            ) : (
+            {/* {isSalary ? (
               <>
                 <p className="text">매달</p>
                 <Input
                   type="number"
                   min="0"
+                  max="31"
                   value={payday}
                   onChange={handlePaydayChange}
                 />
                 <p className="text">일</p>
               </>
-            )}
+            ) : ( */}
+            <Input type="date" value={payday} onChange={handlePaydayChange} />
+            {/* )} */}
           </div>
 
           {/* <p className="label">color</p> */}

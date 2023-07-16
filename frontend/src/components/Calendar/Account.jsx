@@ -42,6 +42,7 @@ export default Account;
 
 const AccountContainer = styled.div`
     display: flex;
+    width: 90%;
     align-items: center;
     justify-content: space-between;
     padding-left: 2%;
