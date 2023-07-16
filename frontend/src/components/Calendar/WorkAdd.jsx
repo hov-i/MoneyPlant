@@ -13,7 +13,7 @@ import { ReactComponent as Post } from "../../assets/Post.svg";
 
 const WorkAdd = ({ isQuick, value }) => {
   const [contentId, setContentId] = useState(5);
-  // const [workDate, setDate] = useState("");
+  const [workDate, setDate] = useState("");
   const [workName, setWorkName] = useState("");
   const [payType, setPayType] = useState(1);
   const [workMoney, setWorkMoney] = useState("");
@@ -23,9 +23,10 @@ const WorkAdd = ({ isQuick, value }) => {
   const [workCase, setWorkCase] = useState("");
   const [workTax, setWorkTax] = useState(0);
   const [payday, setPayday] = useState("");
-  const setvalue = new Date(value);
-  setvalue.setDate(setvalue.getDate() + 1);
-  const workDate = setvalue.toISOString().split("T")[0];
+  
+  // const setvalue = new Date(value);
+  // setvalue.setDate(setvalue.getDate() + 1);
+  // const workDate = setvalue.toISOString().split("T")[0];
 
   const [isHourly, setIsHourly] = useState(true);
   const [isCase, setIsCase] = useState(false);
@@ -41,9 +42,9 @@ const WorkAdd = ({ isQuick, value }) => {
     setModalOpen(false);
   };
 
-  // const handleWorkDateChange = (event) => {
-  //   setDate(event.target.value);
-  // };
+  const handleWorkDateChange = (event) => {
+    setDate(event.target.value);
+  };
 
   const handleWorkNameChange = (event) => {
     setWorkName(event.target.value);
@@ -163,7 +164,7 @@ const WorkAdd = ({ isQuick, value }) => {
                   id="date"
                   required
                   value={workDate}
-                  // onChange={handleWorkDateChange}
+                  onChange={handleWorkDateChange}
                 />
               </div>
             </>
