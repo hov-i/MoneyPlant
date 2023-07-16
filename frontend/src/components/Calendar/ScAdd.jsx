@@ -10,11 +10,14 @@ import SelColor from "./SelColor";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const ScAdd = ({ isQuick }) => {
+const ScAdd = ({ isQuick, value }) => {
   const [contentId, setContentId] = useState(1);
-  const [scDate, setScDate] = useState("");
   const [scName, setScName] = useState("");
   const [scBudget, setScBudget] = useState("");
+
+  const setvalue = new Date(value);
+  setvalue.setDate(setvalue.getDate() + 1);
+  const scDate = setvalue.toISOString().split("T")[0];
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -24,10 +27,6 @@ const ScAdd = ({ isQuick }) => {
 
   const closeModal = () => {
     setModalOpen(false);
-  };
-
-  const handleScDateChange = (event) => {
-    setScDate(event.target.value);
   };
 
   const handleScNameChange = (event) => {
@@ -40,7 +39,6 @@ const ScAdd = ({ isQuick }) => {
 
   const handleContentIdChange = (event) => {
     setContentId(event);
-    // setContentId(event.target.contentId);
   };
 
   const onCreateSc = async () => {
@@ -81,13 +79,7 @@ const ScAdd = ({ isQuick }) => {
               </div>
               <div>
                 <p className="label">날짜</p>
-                <Input
-                  // className="date"
-                  type="date"
-                  id="date"
-                  value={scDate}
-                  onChange={handleScDateChange}
-                />
+                <Input type="date" id="date" value={scDate} />
                 <p> ㅤ </p>
               </div>
             </>

@@ -105,7 +105,11 @@ const AdminAll = ({ setValue }) => {
           <>
             {selectTodayWork.map((data) => (
               <WorkContainer>
-                <Tag color={data.colorId} detail={data.workName} />
+                <Tag
+                  width={"70%"}
+                  color={data.colorId}
+                  detail={data.workName}
+                />
                 <p className="time">
                   {data.workStart} ~ {data.workEnd}
                 </p>
@@ -175,18 +179,18 @@ const AdminAllContainer = styled.div`
     align-items: center;
     padding-left: 10px;
   }
-
   .title {
     font-size: 15px;
     width: 100px;
     margin-left: 10px;
   }
   .tagBox {
-    display: flex
+    display: flex;
+    flex-wrap: wrap;
     padding-left: 10px;
     margin-bottom: 30px;
+    /* width: 95%; */
   }
-
   .accountBox {
     margin-bottom: 20px;
     padding-right: 10px;
@@ -195,18 +199,21 @@ const AdminAllContainer = styled.div`
 
 const WorkContainer = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
-  padding-left: 10px;
+  padding: 0 10px;
   font-size: 12px;
+  width: 100%;
 
   .time {
-    margin-left: 30%;
-    margin-right: 30%;
+    margin-left: 20%;
+    margin-right: 20%;
+    width: 100%;
   }
   .money {
-    width: 80px;
+    width: 85%;
     margin-right: 30px;
     text-align: right;
   }
