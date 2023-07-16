@@ -118,12 +118,13 @@ public class LedgerService {
     //----------------------------------------------------------
     //수정
     // 수입 수정
-    public boolean updateIncome(Long incomeId, IncomeDto updatedIncomeDto) {
+    public boolean updateIncome(Long incomeId, IncomeDto updatedIncomeDto, UserDetailsImpl userDetails) {
         try {
+            Long userId = userDetails.getId();
             Income income = incomeRepository.findById(incomeId)
                     .orElseThrow(() -> new RuntimeException("수입 정보를 찾을 수 없습니다."));
 
-            User user = userRepository.findById(updatedIncomeDto.getUserId())
+            User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
             CategoryIncome categoryIncome = categoryIncomeRepository.findById(updatedIncomeDto.getCategoryIncomeId())

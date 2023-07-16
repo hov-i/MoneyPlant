@@ -90,9 +90,9 @@ const LedgerChange = ({ isIncome }) => {
                         <p className="label">날짜</p>
                         <Input type="date" id="date" />
                         <p className="label">금액</p>
-                        <Input id="amount" value={amount} onChange={handleAmountChange} />
+                        <Input id="amount" value={amount} onChange={handleAmountChange}/>
                         <p className="label">내용</p>
-                        <Input id="content" value={content} onChange={handleContentChange} />
+                        <Input id="content" value={content} onChange={handleContentChange}/>
                     </InputContainer>
                 </Container>
                 <ButtonContainer>

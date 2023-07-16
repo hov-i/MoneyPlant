@@ -79,7 +79,7 @@ public class LedgerController {
             @RequestBody IncomeDto updatedIncomeDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        boolean isUpdated = ledgerService.updateIncome(incomeId, updatedIncomeDto);
+        boolean isUpdated = ledgerService.updateIncome(incomeId, updatedIncomeDto, userDetails);
 
         if (isUpdated) {
             return ResponseEntity.ok("수입 정보가 성공적으로 수정되었습니다.");
