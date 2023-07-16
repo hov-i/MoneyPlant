@@ -103,13 +103,13 @@ const AdminAll = ({ setValue }) => {
           <p className="none">등록 된 근무가 없습니다.</p>
         ) : (
           <>
-            {selectTodaySc.map((data) => (
+            {selectTodayWork.map((data) => (
               <WorkContainer>
                 <Tag color={data.colorId} detail={data.workName} />
                 <p className="time">
                   {data.workStart} ~ {data.workEnd}
                 </p>
-                <p className="money">{data.workPay}</p>
+                <p className="money">{data.workPay}원</p>
               </WorkContainer>
             ))}
           </>
@@ -123,7 +123,7 @@ const AdminAll = ({ setValue }) => {
         <div className="title">수입/지출</div>
         <AdminLedger setValue={setValue} />
       </div>
-      <div className="accountBox">
+      <div className="tagBox">
         {selectTodayExpense.length === 0 && selectTodayIncome.length === 0 ? (
           <p className="none">수입/지출 내역이 없습니다.</p>
         ) : (
@@ -182,9 +182,9 @@ const AdminAllContainer = styled.div`
     margin-left: 10px;
   }
   .tagBox {
-    display: flex;
+    display: flex
     padding-left: 10px;
-    padding-bottom: 30px;
+    margin-bottom: 30px;
   }
 
   .accountBox {

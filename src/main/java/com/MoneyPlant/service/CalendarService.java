@@ -448,6 +448,8 @@ public class CalendarService {
             workDto.setWorkName(work.getWorkName());
             workDto.setColorId(work.getColorId());
             workDto.setWorkDate(work.getWorkDate());
+            workDto.setWorkStart(work.getWorkStart());
+            workDto.setWorkEnd(work.getWorkEnd());
             workDto.setWorkPay(work.getWorkPay());
             workDto.setPayday(work.getPayday());
 

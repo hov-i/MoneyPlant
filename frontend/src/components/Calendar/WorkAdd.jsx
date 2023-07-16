@@ -257,7 +257,7 @@ const WorkAdd = ({ isQuick }) => {
 
           <div>
             <p className="label">급여일</p>
-            {isSalary ? (
+            {/* {isSalary ? (
               <>
                 <p className="text">매달</p>
                 <Input
@@ -269,9 +269,9 @@ const WorkAdd = ({ isQuick }) => {
                 />
                 <p className="text">일</p>
               </>
-            ) : (
-              <Input type="date" value={payday} onChange={handlePaydayChange} />
-            )}
+            ) : ( */}
+            <Input type="date" value={payday} onChange={handlePaydayChange} />
+            {/* )} */}
           </div>
 
           {/* <p className="label">color</p> */}
