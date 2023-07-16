@@ -10,7 +10,7 @@ import SelColor from "./SelColor";
 import SelType from "./SelType";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
-import QuickView from "../MyPage/QuickViewBox";
+import QuickView from "../MyPage/QuickView";
 
 const WorkAdd = ({ isQuick, value }) => {
   const [contentId, setContentId] = useState(5);
@@ -290,6 +290,7 @@ const WorkAdd = ({ isQuick, value }) => {
       <ButtonContainer>
         <ClickButton onClick={onCreateWork}>근무 등록</ClickButton>
       </ButtonContainer>
+
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
           <QuickView isBasic={false} />
