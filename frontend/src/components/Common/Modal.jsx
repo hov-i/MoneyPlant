@@ -2,17 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Close } from '../../assets/close.svg';
 import useViewport from '../../hooks/viewportHook';
+
 const Modal = (props) => {
     const { isMobile } = useViewport();
     const { open, close, name, width, height } = props;
 
     const closeModal = () => {
+        console.log('closeModal', close);
         close(name);
+    };
+
+    const handleOverlayClick = (e) => {
+        if (e.target === e.currentTarget) {
+            closeModal();
+        }
     };
 
     return (
         <ModalStyle width={width} height={height} isMobile={isMobile}>
-            <div className={open ? 'openModal modal' : 'modal'}>
+            <div className={open ? 'openModal modal' : 'modal'} onClick={handleOverlayClick}>
                 {open ? (
                     <section>
                         <div className="topButton">
@@ -27,7 +35,6 @@ const Modal = (props) => {
         </ModalStyle>
     );
 };
-
 export default Modal;
 const ModalStyle = styled.div`
     .modal {
@@ -50,7 +57,7 @@ const ModalStyle = styled.div`
 
     .modal > section {
         width: ${(props) => (props.isMobile ? '100%' : props.width || '60%')};
-        height: ${(props) => (props.isMobile ? '100%': props.height || '500px')};
+        height: ${(props) => (props.isMobile ? '100%' : props.height || '500px')};
         margin: 0 auto;
         border-radius: 10px;
         background-color: ${({ theme }) => theme.bgColor};
@@ -78,6 +85,7 @@ const ModalStyle = styled.div`
         color: #999;
         position: fixed;
         background-color: transparent;
+        z-index: 1;
     }
 
     .modal.openModal {
