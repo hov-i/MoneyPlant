@@ -232,14 +232,18 @@ public class CalendarService {
 
     // GoogleCalendar events 조회후 DB에 추가 또는 업데이트
     public void getGoogleCalendarEvents(UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
         try {
-            User user = userRepository.findById(userDetails.getId())
+            User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("User not found"));
             String calendarId = user.getGoogleCalendarId();
             System.out.println("CalendarId : " + calendarId);
 
             OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                     .orElseThrow(() -> new RuntimeException("Token does not exist"));
+//            if (oAuthTokenRepository.existsByUserId(userId)) {
+//                OAuthToken oAuthToken = oAuthTokenRepository.findByUser()
+//            }
             String accessToken = oAuthToken.getAccessToken();
             if (calendarId == null || accessToken == null) {
                 return; // Exit early if calendarId or accessToken is null
@@ -441,11 +445,11 @@ public class CalendarService {
             WorkDto workDto = new WorkDto();
 
             // 조회 내용 :  근무 날짜, 근무 이름, 급여일, 근무 color, 급여
-            work.setWorkName(workDto.getWorkName());
-            work.setColorId(workDto.getColorId());
-            work.setWorkDate(workDto.getWorkDate());
-            work.setWorkPay(workDto.getWorkPay());
-            work.setPayday(workDto.getPayday());
+            workDto.setWorkName(work.getWorkName());
+            workDto.setColorId(work.getColorId());
+            workDto.setWorkDate(work.getWorkDate());
+            workDto.setWorkPay(work.getWorkPay());
+            workDto.setPayday(work.getPayday());
 
             workDtoList.add(workDto);
         }
