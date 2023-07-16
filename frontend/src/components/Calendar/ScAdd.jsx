@@ -3,12 +3,13 @@ import { useState } from "react";
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import Modal from "../Common/Modal";
-import QuickAdd from "../MyPage/QuickView";
+import QuickAdd from "../MyPage/QuickAdd";
 import ClickButton from "../Common/ClickButton";
 import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 import SelColor from "./SelColor";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
+import QuickView from "../MyPage/QuickViewBox";
 
 const ScAdd = ({ isQuick, value }) => {
   const [contentId, setContentId] = useState(1);
@@ -126,7 +127,7 @@ const ScAdd = ({ isQuick, value }) => {
 
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          <QuickAdd isBasic={true} />
+          <QuickView isBasic={true} />
         </Modal>
       )}
     </>

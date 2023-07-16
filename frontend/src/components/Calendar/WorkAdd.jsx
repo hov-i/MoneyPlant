@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import Modal from "../Common/Modal";
-import QuickAdd from "../MyPage/QuickView";
+import QuickAdd from "../MyPage/QuickAdd";
 import ClickButton from "../Common/ClickButton";
 import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 import SelColor from "./SelColor";
 import SelType from "./SelType";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
+import QuickView from "../MyPage/QuickViewBox";
 
 const WorkAdd = ({ isQuick, value }) => {
   const [contentId, setContentId] = useState(5);
@@ -23,7 +24,7 @@ const WorkAdd = ({ isQuick, value }) => {
   const [workCase, setWorkCase] = useState("");
   const [workTax, setWorkTax] = useState(0);
   const [payday, setPayday] = useState("");
-  
+
   // const setvalue = new Date(value);
   // setvalue.setDate(setvalue.getDate() + 1);
   // const workDate = setvalue.toISOString().split("T")[0];
@@ -291,7 +292,7 @@ const WorkAdd = ({ isQuick, value }) => {
       </ButtonContainer>
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          <QuickAdd isBasic={false} />
+          <QuickView isBasic={false} />
         </Modal>
       )}
     </>
