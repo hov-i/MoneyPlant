@@ -8,7 +8,6 @@ import com.MoneyPlant.dto.UserInfoResponse;
 import com.MoneyPlant.entity.RefreshToken;
 import com.MoneyPlant.entity.Role;
 import com.MoneyPlant.entity.User;
-import com.MoneyPlant.repository.OAuthTokenRepository;
 import com.MoneyPlant.repository.RoleRepository;
 import com.MoneyPlant.repository.UserRepository;
 import com.MoneyPlant.security.exception.TokenRefreshException;
@@ -16,7 +15,7 @@ import com.MoneyPlant.security.jwt.JwtUtils;
 import com.MoneyPlant.service.jwt.RefreshTokenService;
 import com.MoneyPlant.service.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
