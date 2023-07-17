@@ -51,7 +51,6 @@ const Mypage = () => {
                     width={"20%"}
                     color={data1.myColor}
                     detail={data1.myScName}
-                    onclick={onclickChangeScValue}
                   />
                 ))}
             </TagBox>
@@ -63,7 +62,6 @@ const Mypage = () => {
                     width={"20%"}
                     color={data2.myColor}
                     detail={data2.myWkName}
-                    onclick={onclickChangeWkValue}
                   />
                 ))}
             </TagBox>

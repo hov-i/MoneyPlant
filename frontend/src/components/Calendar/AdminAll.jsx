@@ -103,20 +103,14 @@ const AdminAll = ({ setValue, isBasic }) => {
         ) : (
           <>
             {selectTodaySc.map((data) => (
-              <Tag
-                width={"15%"}
-                color={data.colorId}
-                detail={data.scName}
-                onClick={openModalSc}
-              />
+              <ScheduleContainer onClick={openModalSc}>
+                <Tag width={"15%"} color={data.colorId} detail={data.scName} />
+              </ScheduleContainer>
             ))}
           </>
         )}
       </div>
-      {/* <Tag color={"red"} detail={"tes"}></Tag>
-        <Tag color={"red"} detail={"test"}></Tag>
-        <Tag color={"red"} detail={"test"}></Tag>
-        <Tag color={"red"} detail={"test"}></Tag> */}
+
       {/* 근무 */}
       <div className="block">
         <div className="title">근무</div>
@@ -230,6 +224,8 @@ const AdminAllContainer = styled.div`
     padding-right: 10px;
   }
 `;
+
+const ScheduleContainer = styled.div``;
 
 const WorkContainer = styled.div`
   display: flex;
