@@ -192,7 +192,7 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
           {isBasic ? (
             <div className="dot-work"></div>
           ) : (
-            <div className="box-schedule">
+            <div className="box-work">
               <p>{foundWork.workName}</p>
             </div>
           )}
