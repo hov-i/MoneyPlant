@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-//확인
 const ClickButton = ({ width, height, margin, children, onClick }) => {
   return (
     <ClickButtonStyled
