@@ -11,7 +11,7 @@ import SelType from "./SelType";
 import { ReactComponent as Post } from "../../assets/Post.svg";
 import QuickView from "../MyPage/QuickView";
 
-const WorkAdd = ({ isBasic, isUpdate, value }) => {
+const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
   const [contentId, setContentId] = useState(5);
   const [workDate, setDate] = useState("");
   const [workName, setWorkName] = useState("");

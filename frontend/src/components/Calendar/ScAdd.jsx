@@ -10,16 +10,15 @@ import SelColor from "./SelColor";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const ScAdd = ({ isBasic, isUpdate, value }) => {
+const ScAdd = ({ isBasic, isUpdate, isQuick, value }) => {
   const [contentId, setContentId] = useState(1);
-  const [scDate, setScDate] = useState("");
+  // const [scDate, setScDate] = useState("");
   const [scName, setScName] = useState("");
   const [scBudget, setScBudget] = useState("");
 
-  // const setvalue = isQuick ? Date(value) : null;
-
-  // setvalue.setDate(setvalue.getDate() + 1);
-  // const scDate = setvalue.toISOString().split("T")[0];
+  const setvalue = new Date(value);
+  setvalue.setDate(setvalue.getDate() + 1);
+  const scDate = setvalue.toISOString().split("T")[0];
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -31,9 +30,9 @@ const ScAdd = ({ isBasic, isUpdate, value }) => {
     setModalOpen(false);
   };
 
-  const handleScDateChange = (event) => {
-    setScDate(event.target.value);
-  };
+  // const handleScDateChange = (event) => {
+  //   setScDate(event.target.value);
+  // };
 
   const handleScNameChange = (event) => {
     setScName(event.target.value);
@@ -90,7 +89,7 @@ const ScAdd = ({ isBasic, isUpdate, value }) => {
                   type="date"
                   id="date"
                   value={scDate}
-                  onChange={handleScDateChange}
+                  // onChange={handleScDateChange}
                 />
                 <p> ㅤ </p>
               </div>
@@ -107,7 +106,6 @@ const ScAdd = ({ isBasic, isUpdate, value }) => {
                   type="date"
                   id="date"
                   value={scDate}
-                  onChange={handleScDateChange}
                 />
                 <p> ㅤ </p>
               </div>

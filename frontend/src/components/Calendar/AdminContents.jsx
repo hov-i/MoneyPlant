@@ -27,7 +27,11 @@ const AdminContents = ({ isBasic, setValue }) => {
       {/* 모달 */}
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          {isBasic ? <ScAdd value={setValue} /> : <WorkAdd value={setValue} />}
+          {isBasic ? (
+            <ScAdd isBasic={true} value={setValue} />
+          ) : (
+            <WorkAdd isBasic={true} value={setValue} />
+          )}
         </Modal>
       )}
     </>
