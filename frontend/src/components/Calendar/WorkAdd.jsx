@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import Modal from "../Common/Modal";
-import QuickAdd from "../MyPage/QuickAdd";
 import ClickButton from "../Common/ClickButton";
 import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 import SelColor from "./SelColor";
@@ -12,7 +11,7 @@ import SelType from "./SelType";
 import { ReactComponent as Post } from "../../assets/Post.svg";
 import QuickView from "../MyPage/QuickView";
 
-const WorkAdd = ({ isQuick, value }) => {
+const WorkAdd = ({ isQuick, isUpdate, value }) => {
   const [contentId, setContentId] = useState(5);
   const [workDate, setDate] = useState("");
   const [workName, setWorkName] = useState("");
@@ -143,6 +142,8 @@ const WorkAdd = ({ isQuick, value }) => {
     }
   };
 
+  const onUpdateWork = async () => {};
+
   return (
     <>
       <Container>
@@ -169,6 +170,23 @@ const WorkAdd = ({ isQuick, value }) => {
                 />
               </div>
             </>
+          )}
+
+          {isUpdate ? (
+            <>
+              <div>
+                <p className="label">날짜</p>
+                <Input
+                  type="date"
+                  id="date"
+                  required
+                  value={workDate}
+                  onChange={handleWorkDateChange}
+                />
+              </div>
+            </>
+          ) : (
+            <></>
           )}
 
           <div>
@@ -290,6 +308,22 @@ const WorkAdd = ({ isQuick, value }) => {
       <ButtonContainer>
         <ClickButton onClick={onCreateWork}>근무 등록</ClickButton>
       </ButtonContainer>
+
+      {isUpdate ? (
+        <>
+          <div>
+            <ButtonContainer>
+              <ClickButton onClick={onUpdateWork}>근무 수정</ClickButton>
+            </ButtonContainer>
+          </div>
+        </>
+      ) : (
+        <>
+          <ButtonContainer>
+            <ClickButton onClick={onCreateWork}>근무 등록</ClickButton>
+          </ButtonContainer>
+        </>
+      )}
 
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
