@@ -216,7 +216,6 @@ public class LedgerService {
             //필요 조회 정보
             incomeDto.setIncomeAmount(income.getIncomeAmount());
             incomeDto.setIncomeDate(income.getIncomeDate());
-
             incomeDtoList.add(incomeDto);
         }
 
@@ -402,6 +401,7 @@ public class LedgerService {
             expenseDto.setExpenseDate(expense.getExpenseDate());
             String categoryName = categoryRepository.findByCategoryId(expense.getCategory().getCategoryId()).getCategoryName();
             expenseDto.setCategoryName(categoryName);
+            expenseDto.setCategoryId(expense.getCategory().getCategoryId());
             expenseDtoList.add(expenseDto);
         }
 
@@ -421,6 +421,7 @@ public class LedgerService {
             incomeDto.setIncomeDate(income.getIncomeDate());
             String categoryName = categoryIncomeRepository.findByCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId()).getCategoryIncomeName();
             incomeDto.setCategoryIncomeName(categoryName);
+            incomeDto.setCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId());
             IncomeDtoList.add(incomeDto);
         }
 

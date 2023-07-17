@@ -9,7 +9,7 @@ const CategoryIncomeInput = ({
   onCategoryIncomeIdChange,
 }) => {
   const { isMobile } = useViewport();
-  const [activeCategoryIncomeId, setActiveCategoryIncomeId] = useState(1); // 초기값으로 categoryId 1 설정
+const [activeCategoryIncomeId, setActiveCategoryIncomeId] = useState(categoryIncomeId ? categoryIncomeId : 15 ); // 초기값으로 categoryId 1 설정
 
   const handleIconClick = (categoryIncomeId) => {
     const category = categoryIncomeList.find(

@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 const CategoryInput = ({ categoryList, categoryId, onCategoryIdChange }) => {
   const { isMobile } = useViewport();
-  const [activeCategoryId, setActiveCategoryId] = useState(1); // 초기값으로 categoryId 1 설정
+  const [activeCategoryId, setActiveCategoryId] = useState(categoryId ? categoryId : 1); // 초기값으로 categoryId 1 설정
 
   const handleIconClick = (categoryId) => {
     const category = categoryList.find(

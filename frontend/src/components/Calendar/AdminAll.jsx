@@ -155,6 +155,8 @@ const AdminAll = ({ setValue, isBasic }) => {
                 amount={data.expenseAmount}
                 content={data.expenseContent}
                 categoryName={data.categoryName}
+                setValue={setValue}
+                categoryId={data.categoryId}
               />
             ))}
             {selectTodayIncome.map((data, index) => (
@@ -164,6 +166,8 @@ const AdminAll = ({ setValue, isBasic }) => {
                 amount={data.incomeAmount}
                 content={data.incomeContent}
                 categoryName={data.categoryIncomeName}
+                setValue={setValue}
+                categoryId={data.categoryIncomeId}
               />
             ))}
           </>

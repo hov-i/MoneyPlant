@@ -9,11 +9,15 @@ import LedgerAxiosAPI from '../../api/LedgerAxiosAPI';
 import { ReactComponent as Delete } from '../../assets/delete.svg';
 // import moment from "moment";
 
-const LedgerChange = ({ isIncome }) => {
-    const [categoryId, setCategoryId] = useState(1);
-    const [categoryIncomeId, setCategoryIncomeId] = useState(15);
+const LedgerChange = ({ isIncome, defaultCategoryId, value, defaultContent, defaultAmount }) => {
+    const [categoryId, setCategoryId] = useState(defaultCategoryId);
+    const [categoryIncomeId, setCategoryIncomeId] = useState(defaultCategoryId);
     const [amount, setAmount] = useState('');
     const [content, setContent] = useState('');
+
+    const setvalue = new Date(value);
+    setvalue.setDate(setvalue.getDate() + 1);
+    const date = setvalue.toISOString().split("T")[0];
 
     const handleAmountChange = (event) => {
         setAmount(event.target.value);
@@ -88,11 +92,11 @@ const LedgerChange = ({ isIncome }) => {
                     )}
                     <InputContainer>
                         <p className="label">날짜</p>
-                        <Input type="date" id="date" />
+                        <Input type="date" id="date" defaultValue={date}/>
                         <p className="label">금액</p>
-                        <Input id="amount" value={amount} onChange={handleAmountChange}/>
+                        <Input id="amount"  defaultValue={defaultAmount} onChange={handleAmountChange}/>
                         <p className="label">내용</p>
-                        <Input id="content" value={content} onChange={handleContentChange}/>
+                        <Input id="content" defaultValue={defaultContent} onChange={handleContentChange}/>
                     </InputContainer>
                 </Container>
                 <ButtonContainer>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import Modal from "../Common/Modal";
 import LedgerChange from "./LedgerChange";
 
-const Account = ({ account, content, amount, categoryName }) => {
+const Account = ({ account, content, amount, categoryName, setValue, categoryId }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -32,8 +32,8 @@ const Account = ({ account, content, amount, categoryName }) => {
       </AccountContainer>
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={'300px'}>
-        {account === '지출' ? <LedgerChange /> : <LedgerChange isIncome={1} />}
-      </Modal>
+            {account === '지출' ? <LedgerChange defaultCategoryId={categoryId} value={setValue} defaultContent={content} defaultAmount={amount}/> : <LedgerChange isIncome={1} defaultCategoryId={categoryId} value={setValue} defaultContent={content} defaultAmount={amount}/>}
+        </Modal>
       )}
     </>
   );
