@@ -42,11 +42,11 @@ const TagBox = ({ tag, children }) => {
         <>
           {tag === "일정" ? (
             <Modal open={modalOpen} close={closeModal} width={"300px"}>
-              <ScAdd isQuick={true} />
+              <ScAdd isBasic = {true}/>
             </Modal>
           ) : (
-            <Modal open={modalOpen} close={closeModal} width={"300px"}>
-              <WorkAdd isQuick={true} />
+            <Modal isBasic = {true} open={modalOpen} close={closeModal} width={"300px"}>
+              <WorkAdd />
             </Modal>
           )}
         </>

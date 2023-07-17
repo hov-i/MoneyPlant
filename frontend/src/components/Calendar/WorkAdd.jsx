@@ -11,7 +11,7 @@ import SelType from "./SelType";
 import { ReactComponent as Post } from "../../assets/Post.svg";
 import QuickView from "../MyPage/QuickView";
 
-const WorkAdd = ({ isQuick, isUpdate, value }) => {
+const WorkAdd = ({ isBasic, isUpdate, value }) => {
   const [contentId, setContentId] = useState(5);
   const [workDate, setDate] = useState("");
   const [workName, setWorkName] = useState("");
@@ -147,13 +147,11 @@ const WorkAdd = ({ isQuick, isUpdate, value }) => {
   return (
     <>
       <Container>
-        <Title>근무 등록</Title>
+        {isUpdate ? <Title>근무 수정</Title> : <Title>근무 등록</Title>}
         <BlockLine />
 
         <InputContainer>
-          {isQuick ? (
-            <></>
-          ) : (
+          {isBasic ? (
             <>
               <div className="quick" onClick={openModal}>
                 <Post width="13" height="13" fill="#575757" />
@@ -170,6 +168,8 @@ const WorkAdd = ({ isQuick, isUpdate, value }) => {
                 />
               </div>
             </>
+          ) : (
+            <></>
           )}
 
           {isUpdate ? (
@@ -305,22 +305,22 @@ const WorkAdd = ({ isQuick, isUpdate, value }) => {
           />
         </InputContainer>
       </Container>
-      <ButtonContainer>
+      {/* <ButtonContainer>
         <ClickButton onClick={onCreateWork}>근무 등록</ClickButton>
-      </ButtonContainer>
+      </ButtonContainer> */}
 
       {isUpdate ? (
         <>
           <div>
             <ButtonContainer>
-              <ClickButton onClick={onUpdateWork}>근무 수정</ClickButton>
+              <ClickButton onClick={onUpdateWork}>수정하기</ClickButton>
             </ButtonContainer>
           </div>
         </>
       ) : (
         <>
           <ButtonContainer>
-            <ClickButton onClick={onCreateWork}>근무 등록</ClickButton>
+            <ClickButton onClick={onCreateWork}>등록하기</ClickButton>
           </ButtonContainer>
         </>
       )}
