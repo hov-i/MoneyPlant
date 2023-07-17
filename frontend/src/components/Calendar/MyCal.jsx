@@ -49,22 +49,34 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
   const [expenseAmounts, setExpenseAmounts] = useState([]);
   const [incomeDates, setIncomeDates] = useState([]);
   const [incomeAmounts, setIncomeAmounts] = useState([]);
+  const [scheduleList, setScheduleList] = useState([]);
+  const [workList, setWorkList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await CalenderAPI.getCalendarView();
-        const { expenseDates, expenseAmounts, incomeDates, incomeAmounts } =
-          response;
+        const {
+          expenseDates,
+          expenseAmounts,
+          incomeDates,
+          incomeAmounts,
+          scheduleList,
+          workList,
+        } = response;
         setExpenseDates(expenseDates);
         setExpenseAmounts(expenseAmounts);
         setIncomeDates(incomeDates);
         setIncomeAmounts(incomeAmounts);
+        setScheduleList(scheduleList);
+        setWorkList(workList);
 
         console.log("지출 날짜", expenseDates);
         console.log("지출 금액", expenseAmounts);
         console.log("수입 날짜", incomeDates);
         console.log("수입 금액", incomeAmounts);
+        console.log("scheduleList : " + scheduleList);
+        console.log("workList : " + workList);
 
         // 필요한 작업 수행
       } catch (error) {
@@ -153,14 +165,17 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
     });
 
     // 일정
-    if (scDateList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
+    const foundSchedule = scheduleList.find(
+      (schedule) => schedule.scDate === moment(date).format("YYYY-MM-DD")
+    );
+    if (foundSchedule) {
       contentSchedule.push(
         <>
           {isBasic ? (
             <div className="dot-schedule"></div>
           ) : (
             <div className="box-schedule">
-              <p></p>
+              <p>{foundSchedule.scName}</p>
             </div>
           )}
         </>
@@ -168,14 +183,17 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
     }
 
     // 근무
-    if (workDateList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
+    const foundWork = workList.find(
+      (work) => work.workDate === moment(date).format("YYYY-MM-DD")
+    );
+    if (foundWork) {
       contentWork.push(
         <>
           {isBasic ? (
             <div className="dot-work"></div>
           ) : (
             <div className="box-work">
-              <p>근무</p>
+              <p>{foundWork.workName}</p>
             </div>
           )}
         </>
@@ -274,6 +292,7 @@ const CalendarContainer = styled.div`
   justify-content: space-between;
   display: flex;
   align-items: center;
+
   .calendar-tab {
     display: ${(props) => (props.isMobile ? "none" : "flex")};
     flex-direction: column;
@@ -360,11 +379,13 @@ const CalendarContainer = styled.div`
   .dot-schedule,
   .box-schedule {
     background-color: #329d9c;
+    /* background-color: ${(props) => props.backgroundColor}; */
   }
 
   .dot-work,
   .box-work {
     background-color: #bdbdbd;
+    /* background-color: ${(props) => props.backgroundColor}; */
   }
 
   .box-schedule,
@@ -376,6 +397,7 @@ const CalendarContainer = styled.div`
     align-items: center;
     justify-content: center;
     vertical-align: center;
+
     p {
       color: #fff;
       font-size: 0.6em;
@@ -518,6 +540,7 @@ const CalendarContainer = styled.div`
   }
 
   /* 해당 월의 날짜가 아니면 투명도 0.5 */
+
   .react-calendar__month-view__days__day--neighboringMonth {
     opacity: 0.3;
   }
@@ -549,9 +572,11 @@ const DayButton = styled.button`
   justify-content: center;
 
   cursor: pointer;
+
   &:hover {
     background-color: ${({ theme }) => theme.menuBgColor};
   }
+
   > svg {
     fill: ${({ theme }) => theme.budgetButton};
   }
