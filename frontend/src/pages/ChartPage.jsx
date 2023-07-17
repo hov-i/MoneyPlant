@@ -31,7 +31,7 @@ const Chart = () => {
             // 년도 비교
             return {
               x: item.x,
-              l: item.l,
+              l: item.l || 0,
             };
           }
           return null;
@@ -39,19 +39,40 @@ const Chart = () => {
         .filter(Boolean); // null인 요소 제거
 
       const barIncomeChartData = await ListAxiosAPI.getBarIncomeChart();
-                  const transformedBarIncomeChartData = barIncomeChartData.map((item) => ({
-                      x: item.x,
-                      v: item.v || 0,
-                  }));
+      console.log("받아온 수입 막대 차트 데이터:", barIncomeChartData);
 
-                  const barExpenseChartData = await ListAxiosAPI.getBarExpenseChart();
-                  const transformedBarExpenseChartData = barExpenseChartData.map((item) => ({
-                      x: item.x,
-                      v1: item.v1 || 0,
-                  }));
+      const transformedBarIncomeChartData = barIncomeChartData.map((item) => ({
+        x: item.x,
+        v: item.v || 0,
+      }));
+      console.log(
+        "변환된 수입 막대 차트 데이터:",
+        transformedBarIncomeChartData
+      );
+
+      const barExpenseChartData = await ListAxiosAPI.getBarExpenseChart();
+      const transformedBarExpenseChartData = barExpenseChartData.map(
+        (item) => ({
+          x: item.x,
+          v1: item.v1 || 0,
+        })
+      );
+      console.log(
+        "변환된 지출 막대 차트 데이터:",
+        transformedBarExpenseChartData
+      );
 
       // 데이터 결합
       const combinedChartData = transformedLineChartData.map((lineItem) => {
+        console.log(
+          "transformedBarIncomeChartData:",
+          transformedBarIncomeChartData
+        );
+        console.log(
+          "transformedBarExpenseChartData:",
+          transformedBarExpenseChartData
+        );
+
         const barIncomeItem = transformedBarIncomeChartData.find(
           (barItem) => barItem.x === lineItem.x
         );
@@ -59,13 +80,42 @@ const Chart = () => {
           (barItem) => barItem.x === lineItem.x
         );
 
+        console.log(
+          "transformedBarIncomeChartData2:",
+          transformedBarIncomeChartData
+        );
+        console.log(
+          "transformedBarExpenseChartData2:",
+          transformedBarExpenseChartData
+        );
+
+        console.log("바뀐 barIncomeItem 값:", barIncomeItem);
+        console.log("바뀐 barExpenseItem 값:", barExpenseItem);
+
         return {
           x: lineItem.x,
           l: lineItem.l,
           v: barIncomeItem ? barIncomeItem.v : "0",
-          v1: barExpenseItem ? barExpenseItem.v1 : "0",
+          v1: barExpenseItem ? -barExpenseItem.v1 : "0",
         };
       });
+
+      // barIncomeItem 값만 있을 때 결합 데이터 생성
+      transformedBarIncomeChartData.forEach((barIncomeItem) => {
+        const existingChartData = combinedChartData.find(
+          (item) => item.x === barIncomeItem.x
+        );
+        if (!existingChartData) {
+          combinedChartData.push({
+            x: barIncomeItem.x,
+            l: barIncomeItem.v,
+            v: barIncomeItem.v,
+            v1: "0",
+          });
+        }
+      });
+
+      console.log("결합된 차트 데이터:", combinedChartData);
 
       // 결합 데이터 분배
       setChartData(combinedChartData);
