@@ -8,7 +8,6 @@ const Modal = (props) => {
     const { open, close, name, width, height } = props;
 
     const closeModal = () => {
-        console.log('closeModal', close);
         close(name);
     };
 

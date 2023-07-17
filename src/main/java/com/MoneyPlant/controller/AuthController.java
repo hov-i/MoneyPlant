@@ -5,10 +5,12 @@ import com.MoneyPlant.dto.MessageResponse;
 import com.MoneyPlant.dto.SignupRequest;
 import com.MoneyPlant.service.AuthService;
 
+import com.MoneyPlant.service.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,4 +64,9 @@ public class AuthController {
 
         return response;
     }
+
+//    @DeleteMapping("auth/user/delete")
+//    public ResponseEntity<Boolean> userDelete(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+//
+//    }
 }
