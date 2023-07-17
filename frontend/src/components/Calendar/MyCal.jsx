@@ -1,10 +1,10 @@
-import React, {useState, useEffect, forwardRef} from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import styled from "styled-components";
 import useViewport from "../../hooks/viewportHook";
 import Modal from "../Common/Modal";
 import AdminAll from "./AdminAll";
-import {ReactComponent as Right} from "../../assets/right.svg";
-import {ReactComponent as Left} from "../../assets/left.svg";
+import { ReactComponent as Right } from "../../assets/right.svg";
+import { ReactComponent as Left } from "../../assets/left.svg";
 import CalenderAPI from "../../api/CalendarAxiosAPI";
 
 // 캘린더 API 적용
@@ -12,273 +12,277 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 
-const MYCalendar = forwardRef(({isBasic}, ref) => {
-    const [modalOpen, setModalOpen] = useState(false);
+const MYCalendar = forwardRef(({ isBasic }, ref) => {
+  const [modalOpen, setModalOpen] = useState(false);
 
-    const {isMobile} = useViewport();
-    const openModal = () => {
-        setModalOpen(true);
+  const { isMobile } = useViewport();
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const curDate = new Date();
+  const [value, setValue] = useState(curDate);
+
+  // value가 변경될 때마다 모달 창 열기
+  useEffect(() => {
+    if (value !== curDate) {
+      openModal();
+    }
+  }, [value]);
+
+  const handleNextDay = () => {
+    const nextDay = moment(value).add(1, "day").toDate();
+    setValue(nextDay);
+  };
+  const handleBeforeDay = () => {
+    const beforeDay = moment(value).add(-1, "day").toDate();
+    setValue(beforeDay);
+  };
+  // api 연결
+  const [calendarView, setCalendarView] = useState([]);
+
+  const [expenseDates, setExpenseDates] = useState([]);
+  const [expenseAmounts, setExpenseAmounts] = useState([]);
+  const [incomeDates, setIncomeDates] = useState([]);
+  const [incomeAmounts, setIncomeAmounts] = useState([]);
+  const [scheduleList, setScheduleList] = useState([]);
+  const [workList, setWorkList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await CalenderAPI.getCalendarView();
+        const {
+          expenseDates,
+          expenseAmounts,
+          incomeDates,
+          incomeAmounts,
+          scheduleList,
+          workList,
+        } = response;
+        setExpenseDates(expenseDates);
+        setExpenseAmounts(expenseAmounts);
+        setIncomeDates(incomeDates);
+        setIncomeAmounts(incomeAmounts);
+        setScheduleList(scheduleList);
+        setWorkList(workList);
+
+        console.log("지출 날짜", expenseDates);
+        console.log("지출 금액", expenseAmounts);
+        console.log("수입 날짜", incomeDates);
+        console.log("수입 금액", incomeAmounts);
+        console.log("scheduleList : " + scheduleList);
+        console.log("workList : " + workList);
+
+        // 필요한 작업 수행
+      } catch (error) {
+        console.error("조회 실패", error);
+      }
     };
 
-    const closeModal = () => {
-        setModalOpen(false);
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const getCalendarView = async () => {
+      try {
+        const rsp = await CalenderAPI.getCalendarView();
+        if (rsp.status === 200) setCalendarView(rsp.data);
+        setCalendarView(rsp.data);
+        console.log("Calendar list 조회");
+      } catch (error) {
+        console.error("Request Error:", error);
+      }
     };
+    getCalendarView();
+  }, []);
 
-    const curDate = new Date();
-    const [value, setValue] = useState(curDate);
+  // 컨텐츠 날짜 리스트
 
-    // value가 변경될 때마다 모달 창 열기
-    useEffect(() => {
-        if (value !== curDate) {
-            openModal();
-        }
-    }, [value]);
+  const scDateList = [
+    //     {calendarView.scDtoList &&
+    //       calendarView.scDtoList.map((data1) => (
+    // "{data1.scDate}"
+    //       ))}
+  ];
 
-    const handleNextDay = () => {
-        const nextDay = moment(value).add(1, "day").toDate();
-        setValue(nextDay);
-    };
-    const handleBeforeDay = () => {
-        const beforeDay = moment(value).add(-1, "day").toDate();
-        setValue(beforeDay);
-    };
-    // api 연결
-    const [calendarView, setCalendarView] = useState([]);
+  const workDateList = [
+    "2023-06-03",
+    "2023-06-04",
+    "2023-06-10",
+    "2023-06-11",
+    "2023-06-17",
+    "2023-06-18",
+    "2023-06-24",
+    "2023-06-25",
+  ];
 
-    const [expenseDates, setExpenseDates] = useState([]);
-    const [expenseAmounts, setExpenseAmounts] = useState([]);
-    const [incomeDates, setIncomeDates] = useState([]);
-    const [incomeAmounts, setIncomeAmounts] = useState([]);
-    const [scheduleList, setScheduleList] = useState([]);
-    const [workList, setWorkList] = useState([]);
+  // 각 날짜 타일에 컨텐츠 추가
+  const addContent = ({ date }: any) => {
+    // 해당 날짜에 추가할 컨텐츠의 배열
+    const contentBasic = [];
+    const contentSchedule = [];
+    const contentWork = [];
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await CalenderAPI.getCalendarView();
-                const {
-                    expenseDates,
-                    expenseAmounts,
-                    incomeDates,
-                    incomeAmounts,
-                    scheduleList,
-                    workList,
-                } = response;
-                setExpenseDates(expenseDates);
-                setExpenseAmounts(expenseAmounts);
-                setIncomeDates(incomeDates);
-                setIncomeAmounts(incomeAmounts);
-                setScheduleList(scheduleList);
-                setWorkList(workList);
+    // date가 리스트의 날짜와 일치하면 해당 컨텐츠 추가
 
-                console.log("지출 날짜", expenseDates);
-                console.log("지출 금액", expenseAmounts);
-                console.log("수입 날짜", incomeDates);
-                console.log("수입 금액", incomeAmounts);
-                console.log("scheduleList : " + scheduleList);
-                console.log("workList : " + workList);
+    // 수입
+    incomeDates.forEach((day, index) => {
+      if (day === moment(date).format("YYYY-MM-DD")) {
+        const amount = incomeAmounts[index];
 
-                // 필요한 작업 수행
-            } catch (error) {
-                console.error("조회 실패", error);
-            }
-        };
+        contentBasic.push(
+          <React.Fragment key={index}>
+            {isBasic ? (
+              <p className="income-text">+{amount}원</p>
+            ) : (
+              <div className="dot-income"></div>
+            )}
+          </React.Fragment>
+        );
+      }
+    });
 
-        fetchData();
-    }, []);
+    // 지출
+    expenseDates.forEach((day, index) => {
+      if (day === moment(date).format("YYYY-MM-DD")) {
+        const amount = expenseAmounts[index];
 
-    useEffect(() => {
-        const getCalendarView = async () => {
-            try {
-                const rsp = await CalenderAPI.getCalendarView();
-                if (rsp.status === 200) setCalendarView(rsp.data);
-                setCalendarView(rsp.data);
-                console.log("Calendar list 조회");
-            } catch (error) {
-                console.error("Request Error:", error);
-            }
-        };
-        getCalendarView();
-    }, []);
+        contentBasic.push(
+          <React.Fragment key={index}>
+            {isBasic ? (
+              <p className="expense-text">-{amount}원</p>
+            ) : (
+              <div className="dot-expense"></div>
+            )}
+          </React.Fragment>
+        );
+      }
+    });
 
-    // 컨텐츠 날짜 리스트
-
-    const scDateList = [
-        //     {calendarView.scDtoList &&
-        //       calendarView.scDtoList.map((data1) => (
-        // "{data1.scDate}"
-        //       ))}
-    ];
-
-    const workDateList = [
-        "2023-06-03",
-        "2023-06-04",
-        "2023-06-10",
-        "2023-06-11",
-        "2023-06-17",
-        "2023-06-18",
-        "2023-06-24",
-        "2023-06-25",
-    ];
-
-    // 각 날짜 타일에 컨텐츠 추가
-    const addContent = ({date}: any) => {
-        // 해당 날짜에 추가할 컨텐츠의 배열
-        const contentBasic = [];
-        const contentSchedule = [];
-        const contentWork = [];
-
-        // date가 리스트의 날짜와 일치하면 해당 컨텐츠 추가
-
-        // 수입
-        incomeDates.forEach((day, index) => {
-            if (day === moment(date).format("YYYY-MM-DD")) {
-                const amount = incomeAmounts[index];
-
-                contentBasic.push(
-                    <React.Fragment key={index}>
-                        {isBasic ? (
-                            <p className="income-text">+{amount}원</p>
-                        ) : (
-                            <div className="dot-income"></div>
-                        )}
-                    </React.Fragment>
-                );
-            }
-        });
-
-        // 지출
-        expenseDates.forEach((day, index) => {
-            if (day === moment(date).format("YYYY-MM-DD")) {
-                const amount = expenseAmounts[index];
-
-                contentBasic.push(
-                    <React.Fragment key={index}>
-                        {isBasic ? (
-                            <p className="expense-text">-{amount}원</p>
-                        ) : (
-                            <div className="dot-expense"></div>
-                        )}
-                    </React.Fragment>
-                );
-            }
-        });
-
-        // 일정
-        const foundSchedule = scheduleList.find((schedule) => schedule.scDate === moment(date).format("YYYY-MM-DD"));
-        if (foundSchedule) {
-            contentSchedule.push(
-                <>
-                    {isBasic ? (
-                        <div className="dot-schedule"></div>
-                    ) : (
-                        <div className="box-schedule">
-                            <p>{foundSchedule.scName}</p>
-                        </div>
-                    )}
-                </>
-            );
-        }
-
-
-        // 근무
-        if (workDateList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
-            contentWork.push(
-                <>
-                    {isBasic ? (
-                        <div className="dot-work"></div>
-                    ) : (
-                        <div className="box-work">
-                            <p>근무</p>
-                        </div>
-                    )}
-                </>
-            );
-        }
-
-        return (
-            <div className="contents">
-                {isBasic ? (
-                    <>
-                        <div className="content-row">
-                            <div className="content-sc">{contentSchedule}</div>
-                            <div className="content-work">{contentWork}</div>
-                        </div>
-                        <div className="content-column">{contentBasic}</div>
-                    </>
-                ) : (
-                    <>
-                        <div className="content-row">{contentBasic}</div>
-                        <div className="content-column">
-                            <div className="content-sc">{contentSchedule}</div>
-                            <div className="content-work">{contentWork}</div>
-                        </div>
-                    </>
-                )}
+    // 일정
+    const foundSchedule = scheduleList.find(
+      (schedule) => schedule.scDate === moment(date).format("YYYY-MM-DD")
+    );
+    if (foundSchedule) {
+      contentSchedule.push(
+        <>
+          {isBasic ? (
+            <div className="dot-schedule"></div>
+          ) : (
+            <div className="box-schedule">
+              <p>{foundSchedule.scName}</p>
             </div>
-        ); // 각 날짜마다 해당 요소가 들어감
-    };
+          )}
+        </>
+      );
+    }
+
+    // 근무
+    const foundWork = workList.find(
+      (work) => work.workDate === moment(date).format("YYYY-MM-DD")
+    );
+    if (foundWork) {
+      contentWork.push(
+        <>
+          {isBasic ? (
+            <div className="dot-work"></div>
+          ) : (
+            <div className="box-schedule">
+              <p>{foundWork.workName}</p>
+            </div>
+          )}
+        </>
+      );
+    }
 
     return (
-        <CalendarContainer isMobile={isMobile}>
-            <div className="calendar_Main">
-                {isBasic ? (
-                    <Calendar
-                        ref={ref}
-                        calendarType="US" // 요일을 일요일부터 시작하도록 설정
-                        locale="en" // 달력 설정 언어
-                        onChange={setValue}
-                        value={value}
-                        formatMonthYear={(locale, value) =>
-                            value.toLocaleDateString("ko", {year: "numeric", month: "long"})
-                        }
-                        // next2Label={null}
-                        // prev2Label={null}
-                        tileContent={addContent}
-                        isBasic={true}
-                        minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-                        maxDetail="month"
-                    />
-                ) : (
-                    <Calendar
-                        ref={ref}
-                        calendarType="US" // 요일을 일요일부터 시작하도록 설정
-                        locale="en" // 달력 설정 언어
-                        onChange={setValue}
-                        value={value}
-                        formatMonthYear={(locale, value) =>
-                            value.toLocaleDateString("ko", {year: "numeric", month: "long"})
-                        }
-                        // onClickDay={dayIn}
-                        // returnValue="range"
-                        tileContent={addContent}
-                        isBasic={false}
-                        minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-                        maxDetail="month"
-                    />
-                )}
-
-                <div>
-                    {modalOpen && (
-                        <Modal open={modalOpen} close={closeModal} width={"500px"}>
-                            <DayContainer>
-                                <DayButton onClick={handleBeforeDay}>
-                                    <Left/>
-                                </DayButton>
-                                <SelectDay>
-                                    {moment(value).format("YYYY년 MM월 DD일")}
-                                </SelectDay>
-                                <DayButton onClick={handleNextDay}>
-                                    <Right/>
-                                </DayButton>
-                            </DayContainer>
-                            <AdminAll setValue={value}/>
-                        </Modal>
-                    )}
-                </div>
+      <div className="contents">
+        {isBasic ? (
+          <>
+            <div className="content-row">
+              <div className="content-sc">{contentSchedule}</div>
+              <div className="content-work">{contentWork}</div>
             </div>
-        </CalendarContainer>
-    );
+            <div className="content-column">{contentBasic}</div>
+          </>
+        ) : (
+          <>
+            <div className="content-row">{contentBasic}</div>
+            <div className="content-column">
+              <div className="content-sc">{contentSchedule}</div>
+              <div className="content-work">{contentWork}</div>
+            </div>
+          </>
+        )}
+      </div>
+    ); // 각 날짜마다 해당 요소가 들어감
+  };
+
+  return (
+    <CalendarContainer isMobile={isMobile}>
+      <div className="calendar_Main">
+        {isBasic ? (
+          <Calendar
+            ref={ref}
+            calendarType="US" // 요일을 일요일부터 시작하도록 설정
+            locale="en" // 달력 설정 언어
+            onChange={setValue}
+            value={value}
+            formatMonthYear={(locale, value) =>
+              value.toLocaleDateString("ko", { year: "numeric", month: "long" })
+            }
+            // next2Label={null}
+            // prev2Label={null}
+            tileContent={addContent}
+            isBasic={true}
+            minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
+            maxDetail="month"
+          />
+        ) : (
+          <Calendar
+            ref={ref}
+            calendarType="US" // 요일을 일요일부터 시작하도록 설정
+            locale="en" // 달력 설정 언어
+            onChange={setValue}
+            value={value}
+            formatMonthYear={(locale, value) =>
+              value.toLocaleDateString("ko", { year: "numeric", month: "long" })
+            }
+            // onClickDay={dayIn}
+            // returnValue="range"
+            tileContent={addContent}
+            isBasic={false}
+            minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
+            maxDetail="month"
+          />
+        )}
+
+        <div>
+          {modalOpen && (
+            <Modal open={modalOpen} close={closeModal} width={"500px"}>
+              <DayContainer>
+                <DayButton onClick={handleBeforeDay}>
+                  <Left />
+                </DayButton>
+                <SelectDay>
+                  {moment(value).format("YYYY년 MM월 DD일")}
+                </SelectDay>
+                <DayButton onClick={handleNextDay}>
+                  <Right />
+                </DayButton>
+              </DayContainer>
+              <AdminAll setValue={value} />
+            </Modal>
+          )}
+        </div>
+      </div>
+    </CalendarContainer>
+  );
 });
 export default MYCalendar;
 
@@ -298,7 +302,7 @@ const CalendarContainer = styled.div`
     padding: 10px;
     width: 300px;
     height: auto;
-    background-color: ${({theme}) => theme.bgColor};
+    background-color: ${({ theme }) => theme.bgColor};
     color: #999;
     line-height: 1.125em;
     border: 0px;
@@ -375,11 +379,13 @@ const CalendarContainer = styled.div`
   .dot-schedule,
   .box-schedule {
     background-color: #329d9c;
+    /* background-color: ${(props) => props.backgroundColor}; */
   }
 
   .dot-work,
   .box-work {
     background-color: #bdbdbd;
+    /* background-color: ${(props) => props.backgroundColor}; */
   }
 
   .box-schedule,
@@ -404,7 +410,7 @@ const CalendarContainer = styled.div`
     margin: 10px;
     width: 85%;
     margin: 0 auto;
-    background-color: ${({theme}) => theme.bgColor};
+    background-color: ${({ theme }) => theme.bgColor};
     color: #999;
     border: 0px;
     border-radius: 10px;
@@ -412,7 +418,7 @@ const CalendarContainer = styled.div`
   }
 
   .react-calendar__navigation button {
-    color: ${({theme}) => theme.menuColor};
+    color: ${({ theme }) => theme.menuColor};
     font-weight: bold;
     width: auto;
     height: auto;
@@ -429,7 +435,7 @@ const CalendarContainer = styled.div`
   }
 
   .react-calendar__navigation__label__labelText {
-    color: ${({theme}) => theme.menuColor};
+    color: ${({ theme }) => theme.menuColor};
     font-size: 17px;
   }
 
@@ -443,7 +449,7 @@ const CalendarContainer = styled.div`
 
   .react-calendar__navigation button:enabled:hover,
   .react-calendar__navigation button:enabled:focus {
-    background-color: ${({theme}) => theme.bgColor};
+    background-color: ${({ theme }) => theme.bgColor};
     border: 0px;
     border-radius: 10px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
@@ -455,14 +461,14 @@ const CalendarContainer = styled.div`
 
   .react-calendar__tile:enabled:hover,
   .react-calendar__tile:enabled:focus {
-    background: ${({theme}) => theme.seldayColor};
+    background: ${({ theme }) => theme.seldayColor};
     color: #fff;
     border-radius: 6px;
   }
 
   .react-calendar__tile--now {
-      /* background: ${({theme}) => theme.bgColor}; */
-    background: ${({theme}) => theme.todayColor};
+    /* background: ${({ theme }) => theme.bgColor}; */
+    background: ${({ theme }) => theme.todayColor};
     border-radius: 6px;
     font-weight: bold;
     color: #222;
@@ -471,7 +477,7 @@ const CalendarContainer = styled.div`
   // 오늘 날짜 선택 시
   .react-calendar__tile--now:enabled:hover,
   .react-calendar__tile--now:enabled:focus {
-    background: ${({theme}) => theme.seldayColor};
+    background: ${({ theme }) => theme.seldayColor};
 
     border-radius: 6px;
     font-weight: bold;
@@ -480,7 +486,7 @@ const CalendarContainer = styled.div`
 
   .react-calendar__tile--hasActive:enabled:hover,
   .react-calendar__tile--hasActive:enabled:focus {
-    background: ${({theme}) => theme.seldayColor};
+    background: ${({ theme }) => theme.seldayColor};
   }
 
   .react-calendar--selectRange .react-calendar__tile--hover {
@@ -488,7 +494,7 @@ const CalendarContainer = styled.div`
   }
 
   .react-calendar__tile--range {
-    background: ${({theme}) => theme.seldayColor};
+    background: ${({ theme }) => theme.seldayColor};
     color: #fff;
     border-radius: 6px;
   }
@@ -526,7 +532,7 @@ const CalendarContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     font-size: 12px;
-    color: ${({theme}) => theme.menuColor};
+    color: ${({ theme }) => theme.menuColor};
   }
 
   .react-calendar__month-view__weekdays {
@@ -568,10 +574,10 @@ const DayButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${({theme}) => theme.menuBgColor};
+    background-color: ${({ theme }) => theme.menuBgColor};
   }
 
   > svg {
-    fill: ${({theme}) => theme.budgetButton};
+    fill: ${({ theme }) => theme.budgetButton};
   }
 `;
