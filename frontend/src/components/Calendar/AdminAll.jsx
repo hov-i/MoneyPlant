@@ -3,12 +3,33 @@ import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import AdminContents from "./AdminContents";
 import AdminLedger from "./AdminLedger";
+import ScAdd from "../Calendar/ScAdd";
+import WorkAdd from "../Calendar/WorkAdd";
+import Modal from "../Common/Modal";
 import Tag from "../MyPage/Tag";
 import Account from "./Account";
 import LedgerAxiosApi from "../../api/LedgerAxiosAPI";
 import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 
-const AdminAll = ({ setValue }) => {
+const AdminAll = ({ setValue, isBasic }) => {
+  const [modalOpenSc, setModalOpenSc] = useState(false);
+  const [modalOpenWk, setModalOpenWk] = useState(false);
+
+  const openModalSc = () => {
+    setModalOpenSc(true);
+  };
+
+  const openModalWk = () => {
+    setModalOpenWk(true);
+  };
+
+  const closeModalSc = () => {
+    setModalOpenSc(false);
+  };
+  const closeModalWk = () => {
+    setModalOpenWk(false);
+  };
+
   const [selectTodaySc, setSelectTodaySc] = useState([]);
   const [selectTodayWork, setSelectTodayWork] = useState([]);
   const [selectTodayExpense, setSelectTodayExpense] = useState([]);
@@ -82,17 +103,20 @@ const AdminAll = ({ setValue }) => {
         ) : (
           <>
             {selectTodaySc.map((data) => (
-              <Tag width={"15%"} color={data.colorId} detail={data.scName} />
+              <Tag
+                width={"15%"}
+                color={data.colorId}
+                detail={data.scName}
+                onClick={openModalSc}
+              />
             ))}
           </>
         )}
       </div>
-
       {/* <Tag color={"red"} detail={"tes"}></Tag>
         <Tag color={"red"} detail={"test"}></Tag>
         <Tag color={"red"} detail={"test"}></Tag>
         <Tag color={"red"} detail={"test"}></Tag> */}
-
       {/* 근무 */}
       <div className="block">
         <div className="title">근무</div>
@@ -104,7 +128,7 @@ const AdminAll = ({ setValue }) => {
         ) : (
           <>
             {selectTodayWork.map((data) => (
-              <WorkContainer>
+              <WorkContainer onClick={openModalWk}>
                 <Tag
                   width={"70%"}
                   color={data.colorId}
@@ -119,10 +143,8 @@ const AdminAll = ({ setValue }) => {
           </>
         )}
       </div>
-
       <BlockLine />
       {/* 가계부 */}
-
       <div className="block">
         <div className="title">수입/지출</div>
         <AdminLedger setValue={setValue} />
@@ -153,6 +175,18 @@ const AdminAll = ({ setValue }) => {
           </>
         )}
       </div>
+      {/* 모달 */}
+      {modalOpenSc && (
+        <Modal open={modalOpenSc} close={closeModalSc} width={"300px"}>
+          <ScAdd isUpdate={true} />
+        </Modal>
+      )}
+
+      {modalOpenWk && (
+        <Modal open={modalOpenWk} close={closeModalWk} width={"300px"}>
+          <WorkAdd isUpdate={true} />
+        </Modal>
+      )}
     </AdminAllContainer>
   );
 };
@@ -206,6 +240,7 @@ const WorkContainer = styled.div`
   padding: 0 10px;
   font-size: 12px;
   width: 100%;
+  cursor: pointer;
 
   .time {
     margin-left: 20%;

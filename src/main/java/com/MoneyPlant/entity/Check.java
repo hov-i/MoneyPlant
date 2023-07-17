@@ -1,6 +1,5 @@
 package com.MoneyPlant.entity;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,7 +8,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "list")
-@Getter @Setter
+@Getter
+@Setter
 @ToString
 //카테고리 아이디 외래키로 참조
 public class Check {

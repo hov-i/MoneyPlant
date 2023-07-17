@@ -10,15 +10,15 @@ import SelColor from "./SelColor";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const ScAdd = ({ isQuick, value }) => {
+const ScAdd = ({ isBasic, isUpdate, isQuick, value }) => {
   const [contentId, setContentId] = useState(1);
-  const [scDate, setScDate] = useState("");
+  // const [scDate, setScDate] = useState("");
   const [scName, setScName] = useState("");
   const [scBudget, setScBudget] = useState("");
 
-  // const setvalue = new Date(value);
-  // setvalue.setDate(setvalue.getDate() + 1);
-  // const scDate = setvalue.toISOString().split("T")[0];
+  const setvalue = new Date(value);
+  setvalue.setDate(setvalue.getDate() + 1);
+  const scDate = setvalue.toISOString().split("T")[0];
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -30,9 +30,9 @@ const ScAdd = ({ isQuick, value }) => {
     setModalOpen(false);
   };
 
-  const handleScDateChange = (event) => {
-    setScDate(event.target.value);
-  };
+  // const handleScDateChange = (event) => {
+  //   setScDate(event.target.value);
+  // };
 
   const handleScNameChange = (event) => {
     setScName(event.target.value);
@@ -68,16 +68,16 @@ const ScAdd = ({ isQuick, value }) => {
     }
   };
 
+  const onUpdateSc = async () => {};
+
   return (
     <>
       <Container>
-        <Title>일정 등록</Title>
+        {isUpdate ? <Title>일정 수정</Title> : <Title>일정 등록</Title>}
         <BlockLine />
 
         <InputContainer>
-          {isQuick ? (
-            <></>
-          ) : (
+          {isBasic ? (
             <>
               <div className="quick" onClick={openModal}>
                 <Post width="12" height="12" fill="#575757" />
@@ -89,11 +89,29 @@ const ScAdd = ({ isQuick, value }) => {
                   type="date"
                   id="date"
                   value={scDate}
-                  onChange={handleScDateChange}
+                  // onChange={handleScDateChange}
                 />
                 <p> ㅤ </p>
               </div>
             </>
+          ) : (
+            <></>
+          )}
+
+          {isUpdate ? (
+            <>
+              <div>
+                <p className="label">날짜</p>
+                <Input
+                  type="date"
+                  id="date"
+                  value={scDate}
+                />
+                <p> ㅤ </p>
+              </div>
+            </>
+          ) : (
+            <></>
           )}
 
           <div>
@@ -120,9 +138,23 @@ const ScAdd = ({ isQuick, value }) => {
           />
         </InputContainer>
       </Container>
-      <ButtonContainer>
+      {/* <ButtonContainer>
         <ClickButton onClick={onCreateSc}>일정 등록</ClickButton>
-      </ButtonContainer>
+      </ButtonContainer> */}
+
+      {isUpdate ? (
+        <>
+          <ButtonContainer>
+            <ClickButton onClick={onUpdateSc}>수정하기</ClickButton>
+          </ButtonContainer>
+        </>
+      ) : (
+        <>
+          <ButtonContainer>
+            <ClickButton onClick={onCreateSc}>등록하기</ClickButton>
+          </ButtonContainer>
+        </>
+      )}
 
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>

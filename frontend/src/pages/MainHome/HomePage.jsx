@@ -43,7 +43,7 @@ const Home = () => {
               handleToggle={handleToggle}
             />
             {/* <Plus width="25px" height="25px" onClick={openModal} /> */}
-            <Button onClick={onClickTodayHandler} width={'60px'} height={'35px'}>
+            <Button onClick={onClickTodayHandler} width={'60px'} height={'35px'} marginBottom={"0px"}>
                 오늘
             </Button>
           </div>
