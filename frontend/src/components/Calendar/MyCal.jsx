@@ -43,6 +43,8 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
     setValue(beforeDay);
   };
   // api 연결
+  const [calendarView, setCalendarView] = useState([]);
+
   const [expenseDates, setExpenseDates] = useState([]);
   const [expenseAmounts, setExpenseAmounts] = useState([]);
   const [incomeDates, setIncomeDates] = useState([]);
@@ -73,18 +75,30 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const getCalendarView = async () => {
+      try {
+        const rsp = await CalenderAPI.getCalendarView();
+        if (rsp.status === 200) setCalendarView(rsp.data);
+        setCalendarView(rsp.data);
+        console.log("Calendar list 조회");
+      } catch (error) {
+        console.error("Request Error:", error);
+      }
+    };
+    getCalendarView();
+  }, []);
+
   // 컨텐츠 날짜 리스트
 
-  const scList = [
-    "2023-06-04",
-    "2023-06-05",
-    "2023-06-10",
-    "2023-06-11",
-    "2023-06-17",
-    "2023-06-30",
+  const scDateList = [
+    //     {calendarView.scDtoList &&
+    //       calendarView.scDtoList.map((data1) => (
+    // "{data1.scDate}"
+    //       ))}
   ];
 
-  const workList = [
+  const workDateList = [
     "2023-06-03",
     "2023-06-04",
     "2023-06-10",
@@ -139,14 +153,14 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
     });
 
     // 일정
-    if (scList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
+    if (scDateList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
       contentSchedule.push(
         <>
           {isBasic ? (
             <div className="dot-schedule"></div>
           ) : (
             <div className="box-schedule">
-              <p>일정</p>
+              <p></p>
             </div>
           )}
         </>
@@ -154,7 +168,7 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
     }
 
     // 근무
-    if (workList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
+    if (workDateList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
       contentWork.push(
         <>
           {isBasic ? (
@@ -167,6 +181,7 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
         </>
       );
     }
+
     return (
       <div className="contents">
         {isBasic ? (
