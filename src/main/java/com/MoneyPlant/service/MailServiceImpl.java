@@ -47,7 +47,7 @@ public class MailServiceImpl implements MailService {
         switch(type) {
             case "findPw":
                 code = makeCode(10);
-                subject = "MoneyPlan:T에서 변경된 비밀번호를 전송했습니다."+code;
+                subject = "MoneyPlan:T에서 변경된 비밀번호를 전송했습니다.";
                 break;
             // 다른 타입에 대한 처리 로직 필요시 추가
         }

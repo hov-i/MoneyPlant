@@ -254,316 +254,223 @@ const MYCalendar = forwardRef(({ isBasic }, ref) => {
 export default MYCalendar;
 
 const CalendarContainer = styled.div`
-    padding-bottom: 30px;
-    width: 100%;
+  padding-bottom: 30px;
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  .calendar-tab {
+    display: ${(props) => (props.isMobile ? "none" : "flex")};
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    margin: 20px 10px 0 20px;
+    padding: 10px;
+    width: 300px;
+    height: auto;
+    background-color: ${({ theme }) => theme.bgColor};
+    color: #999;
+    line-height: 1.125em;
+    border: 0px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .select-day {
+    margin: 10px;
+  }
+
+  .contents {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
+  }
+
+  .calendar_Main {
+    display: flex;
+  }
+
+  .content-row {
+    display: flex;
+    flex-direction: row;
+    margin: 7px;
+  }
+
+  .content-colunm {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-sc,
+  .content-work {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .dot-income,
+  .dot-expense,
+  .dot-schedule,
+  .dot-work {
+    margin: 1px;
+    width: ${(props) => (props.isMobile ? "0.5em" : "0.6em")};
+    height: ${(props) => (props.isMobile ? "0.5em" : "0.6em")};
+    border-radius: 50%;
+    /* margin-top: 55px; */
+  }
+
+  .income-text {
+    color: #3fcea5;
+  }
+
+  .expense-text {
+    color: #ff005c;
+  }
+
+  .dot-income {
+    background-color: #3fcea5;
+  }
+
+  .dot-expense {
+    background-color: #ff005c;
+  }
+
+  .income-text,
+  .expense-text {
+    font-size: 0.8em;
+  }
+
+  .dot-schedule,
+  .box-schedule {
+    background-color: #329d9c;
+  }
+
+  .dot-work,
+  .box-work {
+    background-color: #bdbdbd;
+  }
+
+  .box-schedule,
+  .box-work {
+    width: 2em;
+    height: 1.2em;
+    border-radius: 10%;
+    margin: 1px;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
+    p {
+      color: #fff;
+      font-size: 0.6em;
+      padding-bottom: 1px;
+    }
+  }
+
+  // react-calendar.css
+  .react-calendar {
+    margin: 10px;
+    width: 85%;
+    margin: 0 auto;
+    background-color: ${({ theme }) => theme.bgColor};
+    color: #999;
+    border: 0px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .react-calendar__navigation button {
+    color: ${({ theme }) => theme.menuColor};
+    font-weight: bold;
+    width: auto;
+    height: auto;
+    background: none;
+    /* font-size: 16px; */
+    /* margin-top: 15px; */
+  }
+
+  .react-calendar__navigation__arrow {
+    font-size: 25px;
     display: flex;
     align-items: center;
-    .calendar-tab {
-        display: ${(props) => (props.isMobile ? 'none' : 'flex')};
-        flex-direction: column;
-        /* justify-content: center; */
-        align-items: center;
-        margin: 20px 10px 0 20px;
-        padding: 10px;
-        width: 300px;
-        height: auto;
-        background-color: ${({ theme }) => theme.bgColor};
-        color: #999;
-        line-height: 1.125em;
-        border: 0px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    }
+    justify-content: center;
+  }
 
-    .select-day {
-        margin: 10px;
-    }
+  .react-calendar__navigation__label__labelText {
+    color: ${({ theme }) => theme.menuColor};
+    font-size: 17px;
+  }
 
-    .contents {
-        height: 80px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-    }
+  .react-calendar__navigation__label {
+    font-size: 20px;
+  }
 
-    .calendar_Main {
-        display: flex;
-    }
+  .react-calendar__viewContainer {
+    margin-bottom: 15px;
+  }
 
-    .content-row {
-        display: flex;
-        flex-direction: row;
-        margin: 7px;
-    }
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color: ${({ theme }) => theme.bgColor};
+    border: 0px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  }
 
-    .content-colunm {
-        display: flex;
-        flex-direction: column;
-    }
+  abbr[title] {
+    text-decoration: none;
+  }
 
-    .content-sc,
-    .content-work {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-    }
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    background: ${({ theme }) => theme.seldayColor};
+    color: #fff;
+    border-radius: 6px;
+  }
 
-    .dot-income,
-    .dot-expense,
-    .dot-schedule,
-    .dot-work {
-        margin: 1px;
-        width: ${(props) => (props.isMobile ? '0.5em' : '0.6em')};
-        height: ${(props) => (props.isMobile ? '0.5em' : '0.6em')};
-        border-radius: 50%;
-        /* margin-top: 55px; */
-    }
+  .react-calendar__tile--now {
+    /* background: ${({ theme }) => theme.bgColor}; */
+    background: ${({ theme }) => theme.todayColor};
+    border-radius: 6px;
+    font-weight: bold;
+    color: #222;
+  }
 
-    .income-text {
-        color: #3fcea5;
-    }
+  // 오늘 날짜 선택 시
+  .react-calendar__tile--now:enabled:hover,
+  .react-calendar__tile--now:enabled:focus {
+    background: ${({ theme }) => theme.seldayColor};
 
-    .expense-text {
-        color: #ff005c;
-    }
+    border-radius: 6px;
+    font-weight: bold;
+    color: #fff;
+  }
 
-    .dot-income {
-        background-color: #3fcea5;
-    }
+  .react-calendar__tile--hasActive:enabled:hover,
+  .react-calendar__tile--hasActive:enabled:focus {
+    background: ${({ theme }) => theme.seldayColor};
+  }
 
-    .dot-expense {
-        background-color: #ff005c;
-    }
+  .react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: #f0f0f0;
+  }
 
-    .income-text,
-    .expense-text {
-        font-size: 0.8em;
-    }
+  .react-calendar__tile--range {
+    background: ${({ theme }) => theme.seldayColor};
+    color: #fff;
+    border-radius: 6px;
+  }
 
-    .dot-schedule,
-    .box-schedule {
-        background-color: #329d9c;
-    }
+  .react-calendar__month-view__days__day--weekend {
+    color: red;
+  }
 
-    .dot-work,
-    .box-work {
-        background-color: #bdbdbd;
-    }
+  .react-calendar__month-view__days__day--weekend:nth-child(7n) {
+    color: blue;
+  }
 
-    .box-schedule,
-    .box-work {
-        width: 2em;
-        height: 1.2em;
-        border-radius: 10%;
-        margin: 1px;
-        align-items: center;
-        justify-content: center;
-        vertical-align: center;
-        p {
-            color: #fff;
-            font-size: 0.6em;
-            padding-bottom: 1px;
-        }
-    }
-
-    // react-calendar.css
-    .react-calendar {
-        margin: 10px;
-        width: 90%;
-        margin: 0 auto;
-        background-color: ${({ theme }) => theme.bgColor};
-        color: #999;
-        border: 0px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .react-calendar__navigation button {
-        color: #222;
-        font-weight: bold;
-        width: auto;
-        height: auto;
-        background: none;
-        /* font-size: 16px; */
-        /* margin-top: 15px; */
-    }
-
-    .react-calendar__navigation__arrow {
-        font-size: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .react-calendar__navigation__label {
-        font-size: 20px;
-    }
-
-    .react-calendar__viewContainer {
-        margin-bottom: 15px;
-    }
-
-    .react-calendar__navigation button:enabled:hover,
-    .react-calendar__navigation button:enabled:focus {
-        background-color: ${({ theme }) => theme.bgColor};
-        border: 0px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    abbr[title] {
-        text-decoration: none;
-    }
-
-    .react-calendar__tile:enabled:hover,
-    .react-calendar__tile:enabled:focus {
-        background: ${({ theme }) => theme.seldayColor};
-        color: #fff;
-        border-radius: 6px;
-    }
-
-    .react-calendar__tile--now {
-        /* background: ${({ theme }) => theme.bgColor}; */
-        background: ${({ theme }) => theme.todayColor};
-        border-radius: 6px;
-        font-weight: bold;
-        color: #222;
-    }
-
-    // 오늘 날짜 선택 시
-    .react-calendar__tile--now:enabled:hover,
-    .react-calendar__tile--now:enabled:focus {
-        background: ${({ theme }) => theme.seldayColor};
-
-        border-radius: 6px;
-        font-weight: bold;
-        color: #fff;
-    }
-
-    .react-calendar__tile--hasActive:enabled:hover,
-    .react-calendar__tile--hasActive:enabled:focus {
-        background: ${({ theme }) => theme.seldayColor};
-    }
-
-    .react-calendar--selectRange .react-calendar__tile--hover {
-        background-color: #f0f0f0;
-    }
-
-    .react-calendar__tile--range {
-        background: ${({ theme }) => theme.seldayColor};
-        color: #fff;
-        border-radius: 6px;
-    }
-
-    .react-calendar__month-view__days__day--weekend {
-        color: red;
-    }
-
-    .react-calendar__month-view__days__day--weekend:nth-child(7n) {
-        color: blue;
-    }
-
-    // react-calendar.css
-    .react-calendar {
-        margin: 10px;
-        width: 85%;
-        margin: 0 auto;
-        background-color: ${({ theme }) => theme.bgColor};
-        color: #999;
-        border: 0px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .react-calendar__navigation button {
-        color: ${({ theme }) => theme.menuColor};
-        font-weight: bold;
-        width: auto;
-        height: auto;
-        background: none;
-        /* font-size: 16px; */
-        /* margin-top: 15px; */
-    }
-
-    .react-calendar__navigation__arrow {
-        font-size: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .react-calendar__navigation__label__labelText {
-        color: ${({ theme }) => theme.menuColor};
-        font-size: 17px;
-    }
-
-    .react-calendar__viewContainer {
-        margin-bottom: 15px;
-    }
-
-    .react-calendar__navigation button:enabled:hover,
-    .react-calendar__navigation button:enabled:focus {
-        background-color: ${({ theme }) => theme.bgColor};
-        border: 0px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    abbr[title] {
-        text-decoration: none;
-    }
-
-    .react-calendar__tile:enabled:hover,
-    .react-calendar__tile:enabled:focus {
-        background: ${({ theme }) => theme.seldayColor};
-        color: #fff;
-        border-radius: 6px;
-    }
-
-    .react-calendar__tile--now {
-        /* background: ${({ theme }) => theme.bgColor}; */
-        background: ${({ theme }) => theme.todayColor};
-        border-radius: 6px;
-        font-weight: bold;
-        color: #222;
-    }
-
-    // 오늘 날짜 선택 시
-    .react-calendar__tile--now:enabled:hover,
-    .react-calendar__tile--now:enabled:focus {
-        background: ${({ theme }) => theme.seldayColor};
-
-        border-radius: 6px;
-        font-weight: bold;
-        color: #fff;
-    }
-
-    .react-calendar__tile--hasActive:enabled:hover,
-    .react-calendar__tile--hasActive:enabled:focus {
-        background: ${({ theme }) => theme.todayColor};
-    }
-
-    .react-calendar--selectRange .react-calendar__tile--hover {
-        background-color: #f0f0f0;
-    }
-
-    .react-calendar__tile--range {
-        background: ${({ theme }) => theme.todayColor};
-        color: #fff;
-        border-radius: 6px;
-    }
-
-    .react-calendar__month-view__days__day--weekend {
-        color: red;
-    }
-
-    .react-calendar__month-view__days__day--weekend:nth-child(7n) {
-        color: blue;
-    }
-
-    /* .react-calendar__month-view__weekNumbers .react-calendar__tile {
+  /* .react-calendar__month-view__weekNumbers .react-calendar__tile {
   display: flex;
   align-items: center;
   justify-content: top;
@@ -571,7 +478,7 @@ const CalendarContainer = styled.div`
   font-weight: bold;
 } */
 
-    /* .react-calendar__tile {
+  /* .react-calendar__tile {
   max-width: 100%;
   padding: 10px 6.6667px;
     background: none;
@@ -579,58 +486,58 @@ const CalendarContainer = styled.div`
     line-height: 16px;
 } */
 
-    .react-calendar__tile {
-        text-align: center;
-        padding: 20px;
-        height: ${(props) => (props.isMobile ? '85px' : '100px')};
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        font-size: 12px;
-        color: ${({ theme }) => theme.menuColor};
-    }
+  .react-calendar__tile {
+    text-align: center;
+    padding: 20px;
+    height: ${(props) => (props.isMobile ? "85px" : "100px")};
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 12px;
+    color: ${({ theme }) => theme.menuColor};
+  }
 
-    .react-calendar__month-view__weekdays {
-        font-size: 1.2em;
-    }
+  .react-calendar__month-view__weekdays {
+    font-size: 1.2em;
+  }
 
-    /* 해당 월의 날짜가 아니면 투명도 0.5 */
-    .react-calendar__month-view__days__day--neighboringMonth {
-        opacity: 0.3;
-    }
+  /* 해당 월의 날짜가 아니면 투명도 0.5 */
+  .react-calendar__month-view__days__day--neighboringMonth {
+    opacity: 0.3;
+  }
 `;
 
 const SelectDay = styled.div`
-    font-size: 17px;
-    margin-right: 10px;
-    width: 140px;
-    margin: 0 auto;
+  font-size: 17px;
+  margin-right: 10px;
+  width: 140px;
+  margin: 0 auto;
 `;
 
 const DayContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
-    padding: 10px;
-    font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  font-weight: 600;
 `;
 
 const DayButton = styled.button`
-    border-radius: 15%;
-    width: 30px;
-    height: 30px;
-    background-color: #ffffff00;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border-radius: 15%;
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    cursor: pointer;
-    &:hover {
-        background-color: ${({ theme }) => theme.menuBgColor};
-    }
-    > svg {
-        fill: ${({ theme }) => theme.budgetButton};
-    }
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.menuBgColor};
+  }
+  > svg {
+    fill: ${({ theme }) => theme.budgetButton};
+  }
 `;
