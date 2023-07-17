@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -237,16 +236,15 @@ public class CalendarService {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("User not found"));
             String calendarId = user.getGoogleCalendarId();
-            System.out.println("CalendarId : " + calendarId);
-
+            if (calendarId == null) {
+                return;
+            }
             OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                     .orElseThrow(() -> new RuntimeException("Token does not exist"));
-//            if (oAuthTokenRepository.existsByUserId(userId)) {
-//                OAuthToken oAuthToken = oAuthTokenRepository.findByUser()
-//            }
             String accessToken = oAuthToken.getAccessToken();
-            if (calendarId == null || accessToken == null) {
-                return; // Exit early if calendarId or accessToken is null
+
+            if (accessToken != null) {
+                return;
             }
 
             RestTemplate restTemplate = new RestTemplate();

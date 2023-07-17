@@ -10,11 +10,12 @@ import SelColor from "./SelColor";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const ScAdd = ({ isBasic, isUpdate, isQuick, value }) => {
-  const [contentId, setContentId] = useState(1);
-  const [scDate, setScDate] = useState("");
-  const [scName, setScName] = useState("");
-  const [scBudget, setScBudget] = useState("");
+const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
+  const [scId, setScId] = useState(data ? data.scId : 0);
+  const [contentId, setContentId] = useState(data ? data.colorId : 1);
+  const [scDate, setScDate] = useState(data ? data.scDate : "");
+  const [scName, setScName] = useState(data ? data.scName : "");
+  const [scBudget, setScBudget] = useState(data ? data.scBudget : "");
 
   // const setvalue = new Date(value);
   // setvalue.setDate(setvalue.getDate() + 1);
@@ -68,7 +69,27 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value }) => {
     }
   };
 
-  const onUpdateSc = async () => {};
+  const onUpdateSc = async () => {
+    try {
+      const createSc = await CalendarAxiosApi.updateSchedule( {
+        scId,
+        scDate,
+        scName,
+        scBudget,
+        colorId: contentId,
+      });
+
+      if (createSc.data === "일정을 성공적으로 수정했습니다.") {
+        console.log("입력 성공");
+        window.location.reload();
+      } else {
+        console.log("입력 실패");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("에러:", error);
+    }
+  };
 
   return (
     <>
