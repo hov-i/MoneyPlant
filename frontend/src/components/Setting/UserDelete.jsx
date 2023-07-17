@@ -2,12 +2,29 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import ClickButton from '../Common/ClickButton';
 import { FormControlLabel, Checkbox } from '@mui/material';
+import AuthAxiosAPI from '../../api/AuthAxiosAPI';
+import { useNavigate } from 'react-router-dom';
 
 const UserDelete = () => {
     const [isAllChecked, setIsAllChecked] = useState(false);
-
+    const navigate = useNavigate();
     const handleCheckboxChange = (event) => {
         setIsAllChecked(event.target.checked);
+    };
+
+    const onDeleteUser = async () => {
+        try {
+            const deleteUser = await AuthAxiosAPI.deleteUser();
+            if (deleteUser.data === '탈퇴가 완료되었습니다.') {
+                console.log('회원 탈퇴 성공');
+                navigate('/help');
+            } else {
+                console.log('회원 탈퇴 실패');
+                navigate('/help');
+            }
+        } catch (error) {
+            console.log('에러:', error);
+        }
     };
 
     return (
@@ -35,7 +52,9 @@ const UserDelete = () => {
                     </div>
 
                     <div className="button">
-                        <ClickButton disable={!isAllChecked}>회원 탈퇴</ClickButton>
+                        <ClickButton disable={!isAllChecked} onClick={onDeleteUser}>
+                            회원 탈퇴
+                        </ClickButton>
                     </div>
                 </div>
             </Wrapper>

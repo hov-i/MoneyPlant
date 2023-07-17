@@ -31,6 +31,10 @@ const GlobalStyle = createGlobalStyle`
   input{
     font-family: "Noto Sans KR";// 폰트 설정
   }
+
+  Avatar{
+    font-family: "Noto Sans KR";// 폰트 설정
+  }
   
   body {
     font-family: "Noto Sans KR";// 폰트 설정

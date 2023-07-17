@@ -22,7 +22,6 @@ const ClickButtonStyled = styled.button`
     justify-content: center;
     align-items: center;
     padding: 0 16px;
-    margin-bottom: 20px;
     width: ${(props) => props.width || '128px'};
     height: ${(props) => props.height || '40px'};
     margin-right: ${(props) => props.margin || ''};

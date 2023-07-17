@@ -65,7 +65,7 @@ public class AuthController {
         return response;
     }
 
-    @PostMapping("auth/user/delete")
+    @DeleteMapping("auth/user/delete")
     public ResponseEntity<?> userDelete(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
             authService.userDelete(userDetails);
