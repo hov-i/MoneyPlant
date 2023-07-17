@@ -54,34 +54,50 @@ const AxiosApi = {
   },
 
   getCalendarView: async () => {
-    try {
-      const response = await axiosInstance.get("/calendar");
-      const { dailyExpenseList, dailyIncomeList } = response.data || {};
+      try {
+        const response = await axiosInstance.get("/calendar");
+        const {
+          dailyExpenseList,
+          dailyIncomeList,
+          // getScheduleForCal,
+          // getWorkForCal,
+        } = response.data || {};
 
-      // dailyExpenseList에서 date와 amount 값 가져오기
-      const expenseDates = Object.keys(dailyExpenseList);
-      const expenseAmounts = Object.values(dailyExpenseList);
+        // dailyExpenseList에서 date와 amount 값 가져오기
+        const expenseDates = Object.keys(dailyExpenseList);
+        const expenseAmounts = Object.values(dailyExpenseList);
 
-      // dailyIncomeList에서 date와 amount 값 가져오기
-      const incomeDates = Object.keys(dailyIncomeList);
-      const incomeAmounts = Object.values(dailyIncomeList);
+        // dailyIncomeList에서 date와 amount 값 가져오기
+        const incomeDates = Object.keys(dailyIncomeList);
+        const incomeAmounts = Object.values(dailyIncomeList);
 
-      console.log("지출 날짜" + expenseDates); // 응답 데이터 출력
-      console.log("수입 날짜" + incomeDates); // 응답 데이터 출력
+        console.log("지출 날짜: " + expenseDates); // 응답 데이터 출력
+        console.log("수입 날짜: " + incomeDates); // 응답 데이터 출력
 
-      return {
-        expenseDates,
-        expenseAmounts,
-        incomeDates,
-        incomeAmounts,
-        dailyExpenseList,
-        dailyIncomeList,
-      };
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  },
+        //-------------------------------------------------------------------------
+        // // getScheduleForCal에서 date와 myScName 값 가져오기
+        // const scDates = getScheduleForCal.map(item => item.scDate);
+        // const scNames = getScheduleForCal.map(item => item.scName);
+
+        // // getWorkForCal에서 date와 myWorkName 값 가져오기
+        // const workDates = getWorkForCal.map(item => item.workDate);
+        // const workNames = getWorkForCal.map(item => item.workName);
+
+        return {
+          expenseDates,
+          expenseAmounts,
+          incomeDates,
+          incomeAmounts,
+          // scDates,
+          // scNames,
+          // workDates,
+          // workNames,
+        };
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    },
 
   getTodaySchedule: async (scDate) => {
     try {
