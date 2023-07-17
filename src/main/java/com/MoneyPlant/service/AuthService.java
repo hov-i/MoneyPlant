@@ -181,4 +181,15 @@ public class AuthService {
         return ResponseEntity.ok(new MessageResponse("변경 성공"));
     }
 
+    public void userDelete(UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            throw new IllegalArgumentException("유저 확인 불가");
+        }
+        User user = optionalUser.get(); // Optional에서 User 객체 추출
+        userRepository.delete(user);
+    }
+
+
 }

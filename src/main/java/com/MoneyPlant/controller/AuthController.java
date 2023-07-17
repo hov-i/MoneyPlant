@@ -65,8 +65,14 @@ public class AuthController {
         return response;
     }
 
-//    @DeleteMapping("auth/user/delete")
-//    public ResponseEntity<Boolean> userDelete(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-//
-//    }
+    @PostMapping("auth/user/delete")
+    public ResponseEntity<?> userDelete(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        try {
+            authService.userDelete(userDetails);
+            return new ResponseEntity<>("탈퇴가 완료되었습니다.", HttpStatus.ACCEPTED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>("탈퇴를 실패하였습니다. " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

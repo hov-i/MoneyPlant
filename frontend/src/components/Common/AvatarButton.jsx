@@ -30,14 +30,14 @@ const AvatarButton = () => {
         <Avatar {...stringAvatar(name)} />
       ) : (
         <Avatar
-          sx={{
-            fontWeight: "bold",
+            sx={{
+            fontWeight: 'bold',
             fontSize: 13,
             width: 50,
             height: 50,
-            margin: 11 / 8, // 1당 8px
-          }}
-          onClick={() => navigate("/login")}
+            margin: '11px 8px', // 8px per 1
+            fontFamily: 'Noto Sans KR',
+            }}
         />
       )}
     </>

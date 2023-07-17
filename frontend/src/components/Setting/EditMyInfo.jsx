@@ -208,6 +208,7 @@ const InfoLine = styled.div`
   height: 40px;
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 const InfoText = styled.div`
   display: flex;
