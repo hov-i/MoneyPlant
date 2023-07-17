@@ -10,13 +10,14 @@ import SelColor from "./SelColor";
 
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const ScAdd = ({ isQuick, isUpdate, value }) => {
+const ScAdd = ({ isBasic, isUpdate, value }) => {
   const [contentId, setContentId] = useState(1);
   const [scDate, setScDate] = useState("");
   const [scName, setScName] = useState("");
   const [scBudget, setScBudget] = useState("");
 
-  // const setvalue = new Date(value);
+  // const setvalue = isQuick ? Date(value) : null;
+
   // setvalue.setDate(setvalue.getDate() + 1);
   // const scDate = setvalue.toISOString().split("T")[0];
 
@@ -68,20 +69,16 @@ const ScAdd = ({ isQuick, isUpdate, value }) => {
     }
   };
 
-  const onUpdateSc = async () => {
+  const onUpdateSc = async () => {};
 
-  };
-  
   return (
     <>
       <Container>
-        <Title>일정 등록</Title>
+        {isUpdate ? <Title>일정 수정</Title> : <Title>일정 등록</Title>}
         <BlockLine />
 
         <InputContainer>
-          {isQuick ? (
-            <></>
-          ) : (
+          {isBasic ? (
             <>
               <div className="quick" onClick={openModal}>
                 <Post width="12" height="12" fill="#575757" />
@@ -98,6 +95,8 @@ const ScAdd = ({ isQuick, isUpdate, value }) => {
                 <p> ㅤ </p>
               </div>
             </>
+          ) : (
+            <></>
           )}
 
           {isUpdate ? (
@@ -148,13 +147,13 @@ const ScAdd = ({ isQuick, isUpdate, value }) => {
       {isUpdate ? (
         <>
           <ButtonContainer>
-            <ClickButton onClick={onUpdateSc}>일정 수정</ClickButton>
+            <ClickButton onClick={onUpdateSc}>수정하기</ClickButton>
           </ButtonContainer>
         </>
       ) : (
         <>
           <ButtonContainer>
-            <ClickButton onClick={onCreateSc}>일정 등록</ClickButton>
+            <ClickButton onClick={onCreateSc}>등록하기</ClickButton>
           </ButtonContainer>
         </>
       )}
