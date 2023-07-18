@@ -146,12 +146,13 @@ public class LedgerService {
     }
 
     // 지출 수정
-    public boolean updateExpense(Long expenseId, ExpenseDto updatedExpenseDto) {
+    public boolean updateExpense(Long expenseId, ExpenseDto updatedExpenseDto, UserDetailsImpl userDetails) {
         try {
+            Long userId = userDetails.getId();
             Expense expense = expenseRepository.findById(expenseId)
                     .orElseThrow(() -> new RuntimeException("지출 정보를 찾을 수 없습니다."));
 
-            User user = userRepository.findById(updatedExpenseDto.getUserId())
+            User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
             Category category = categoryRepository.findById(updatedExpenseDto.getCategoryId())
@@ -401,10 +402,10 @@ public class LedgerService {
             expenseDto.setExpenseDate(expense.getExpenseDate());
             String categoryName = categoryRepository.findByCategoryId(expense.getCategory().getCategoryId()).getCategoryName();
             expenseDto.setCategoryName(categoryName);
+            expenseDto.setExpenseId(expense.getExpenseId());
             expenseDto.setCategoryId(expense.getCategory().getCategoryId());
             expenseDtoList.add(expenseDto);
         }
-
         return expenseDtoList;
     }
 
@@ -421,10 +422,10 @@ public class LedgerService {
             incomeDto.setIncomeDate(income.getIncomeDate());
             String categoryName = categoryIncomeRepository.findByCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId()).getCategoryIncomeName();
             incomeDto.setCategoryIncomeName(categoryName);
+            incomeDto.setIncomeId(income.getIncomeId());
             incomeDto.setCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId());
             IncomeDtoList.add(incomeDto);
         }
-
         return IncomeDtoList;
     }
 
