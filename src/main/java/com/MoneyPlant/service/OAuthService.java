@@ -52,10 +52,10 @@ public class OAuthService {
      * @throws JsonProcessingException
      */
     public ResponseEntity<?> OAuthLogin(String code) throws JsonProcessingException {
+        // Retrieve access token, user info, and Google user
         ResponseEntity<String> accessToken = socialOAuth.requestAccessToken(code);
         GoogleOAuthToken googleOAuthToken = socialOAuth.getAccessToken(accessToken);
         ResponseEntity<String> userInfoResponse = socialOAuth.requestUserInfo(googleOAuthToken);
-
         GoogleUser googleUser = socialOAuth.getUserInfo(userInfoResponse);
         // 이미 가입된 이메일인지 확인
         // 가입되어있으면 로그인 처리
@@ -74,29 +74,44 @@ public class OAuthService {
             userRepository.save(user);
             optionalUser = Optional.of(user);
         }
-        // OAuthToken 저장
+
         User user = optionalUser.get();
-        OAuthToken oAuthToken = OAuthToken.builder()
-                .user(user)
-                .accessToken(googleOAuthToken.getAccess_token())
-                .expire(LocalDateTime.now().plusSeconds(googleOAuthToken.getExpires_in()))
-                .refreshToken(googleOAuthToken.getRefresh_token())
-                .build();
-        oAuthTokenRepository.save(oAuthToken);
+
+        // Check if OAuthToken already exists for the user
+        Optional<OAuthToken> optionalOAuthToken = oAuthTokenRepository.findByUser(user);
+
+        if (optionalOAuthToken.isPresent()) {
+            // Update the existing OAuthToken
+            OAuthToken oAuthToken = optionalOAuthToken.get();
+            oAuthToken.updateOAuthToken(
+                    googleOAuthToken.getAccess_token(),
+                    LocalDateTime.now().plusSeconds(googleOAuthToken.getExpires_in()),
+                    googleOAuthToken.getRefresh_token()
+            );
+            oAuthTokenRepository.save(oAuthToken);
+        } else {
+            // Create a new OAuthToken
+            OAuthToken oAuthToken = OAuthToken.builder()
+                    .user(user)
+                    .accessToken(googleOAuthToken.getAccess_token())
+                    .expire(LocalDateTime.now().plusSeconds(googleOAuthToken.getExpires_in()))
+                    .refreshToken(googleOAuthToken.getRefresh_token())
+                    .build();
+            oAuthTokenRepository.save(oAuthToken);
+        }
 
         UserDetailsImpl userDetails = UserDetailsImpl.build(user);
 
         ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
-
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
-
         ResponseCookie jwtRefreshCookie = jwtUtils.generateRefreshJwtCookie(refreshToken.getToken());
 
-        // 페이지를 리다이렉션 시키기 위해서 OK가 아닌 status로 return
+        // Return a non-OK status to redirect the page
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
                 .header(HttpHeaders.LOCATION, "http://localhost:8888")
                 .build();
     }
+
 }

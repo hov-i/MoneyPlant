@@ -119,7 +119,7 @@ const FindPassword = () => {
           )}
 
           {isLoading && (
-            <CircularProgress color="#8BD4D3" size={30} /> // 로딩 중이면 로딩 스피너 표시
+            <CircularProgress /> // 로딩 중이면 로딩 스피너 표시
           )}
 
           {isEmailSent && (

@@ -30,10 +30,10 @@ public class OAuthToken {
     @Column(name = "refresh_token")
     private String refreshToken;
 
-    // 무분별하게 Setter를 쓰지말자
     // access token 수정 시 사용
-    public void updateOAuthToken (String accessToken, LocalDateTime expire) {
+    public void updateOAuthToken (String accessToken, LocalDateTime expire, String refreshToken) {
         this.accessToken = accessToken;
         this.expire = expire;
+        this.refreshToken = refreshToken;
     }
 }

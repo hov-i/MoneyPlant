@@ -14,10 +14,14 @@ import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 const AdminAll = ({ setValue, isBasic }) => {
   const [modalOpenSc, setModalOpenSc] = useState(false);
   const [modalOpenWk, setModalOpenWk] = useState(false);
+  const [selectedData, setSelectedData] = useState(null);
 
-  const openModalSc = () => {
+
+  const openModalSc = (data) => {
+    setSelectedData(data);
     setModalOpenSc(true);
   };
+
 
   const openModalWk = () => {
     setModalOpenWk(true);
@@ -103,9 +107,9 @@ const AdminAll = ({ setValue, isBasic }) => {
         ) : (
           <>
             {selectTodaySc.map((data) => (
-              <ScheduleContainer onClick={openModalSc}>
-                <Tag width={"15%"} color={data.colorId} detail={data.scName} />
-              </ScheduleContainer>
+                <ScheduleContainer onClick={() => openModalSc(data)}>
+                  <Tag width={"15%"} color={data.colorId} detail={data.scName} />
+                </ScheduleContainer>
             ))}
           </>
         )}
@@ -177,10 +181,11 @@ const AdminAll = ({ setValue, isBasic }) => {
       </div>
       {/* 모달 */}
       {modalOpenSc && (
-        <Modal open={modalOpenSc} close={closeModalSc} width={"300px"}>
-          <ScAdd isUpdate={true} />
-        </Modal>
+          <Modal open={modalOpenSc} close={closeModalSc} width={"300px"}>
+            <ScAdd isUpdate={true} data={selectedData} />
+          </Modal>
       )}
+
 
       {modalOpenWk && (
         <Modal open={modalOpenWk} close={closeModalWk} width={"300px"}>
