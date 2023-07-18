@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface OAuthTokenRepository extends JpaRepository<OAuthToken, Long> {
     Optional<OAuthToken> findByAccessToken(String accessToken);
     Optional<OAuthToken> findByUser(User user);
+    boolean existsByUserId(Long userId);
 
     @Modifying
     int deleteByUser(User user);
