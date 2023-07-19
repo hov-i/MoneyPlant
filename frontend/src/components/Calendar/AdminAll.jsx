@@ -106,7 +106,7 @@ const AdminAll = ({ setValue, isBasic }) => {
           <>
             {selectTodaySc.map((data) => (
               <ScheduleContainer onClick={() => openModalSc(data)}>
-                <Tag width={"100%"} color={data.colorId} detail={data.scName} />
+                <Tag width={"70%"} color={data.colorId} detail={data.scName} />
               </ScheduleContainer>
             ))}
           </>
