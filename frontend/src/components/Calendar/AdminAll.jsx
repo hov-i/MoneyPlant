@@ -16,12 +16,10 @@ const AdminAll = ({ setValue, isBasic }) => {
   const [modalOpenWk, setModalOpenWk] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
-
   const openModalSc = (data) => {
     setSelectedData(data);
     setModalOpenSc(true);
   };
-
 
   const openModalWk = () => {
     setModalOpenWk(true);
@@ -107,9 +105,9 @@ const AdminAll = ({ setValue, isBasic }) => {
         ) : (
           <>
             {selectTodaySc.map((data) => (
-                <ScheduleContainer onClick={() => openModalSc(data)}>
-                  <Tag width={"15%"} color={data.colorId} detail={data.scName} />
-                </ScheduleContainer>
+              <ScheduleContainer onClick={() => openModalSc(data)}>
+                <Tag width={"100%"} color={data.colorId} detail={data.scName} />
+              </ScheduleContainer>
             ))}
           </>
         )}
@@ -181,11 +179,10 @@ const AdminAll = ({ setValue, isBasic }) => {
       </div>
       {/* 모달 */}
       {modalOpenSc && (
-          <Modal open={modalOpenSc} close={closeModalSc} width={"300px"}>
-            <ScAdd isUpdate={true} data={selectedData} />
-          </Modal>
+        <Modal open={modalOpenSc} close={closeModalSc} width={"300px"}>
+          <ScAdd isUpdate={true} data={selectedData} />
+        </Modal>
       )}
-
 
       {modalOpenWk && (
         <Modal open={modalOpenWk} close={closeModalWk} width={"300px"}>
@@ -236,7 +233,10 @@ const AdminAllContainer = styled.div`
   }
 `;
 
-const ScheduleContainer = styled.div``;
+const ScheduleContainer = styled.div`
+  display: flex;
+  width: 20%;
+`;
 
 const WorkContainer = styled.div`
   display: flex;
