@@ -141,8 +141,27 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
       console.log("에러:", error);
     }
   };
-
-  const onUpdateWork = async () => {};
+  const onUpdateWork = async () => {
+    // try {
+    //   const updateWork = await CalendarAxiosApi.updateWork( {
+    //     workId,
+    //     scDate,
+    //     scName,
+    //     scBudget,
+    //     colorId: contentId,
+    //   });
+    //
+    //   if (createSc.data === "일정을 성공적으로 수정했습니다.") {
+    //     console.log("입력 성공");
+    //     window.location.reload();
+    //   } else {
+    //     console.log("입력 실패");
+    //     window.location.reload();
+    //   }
+    // } catch (error) {
+    //   console.log("에러:", error);
+    // }
+  };
 
   return (
     <>

@@ -295,17 +295,22 @@ public class CalendarService {
 
                         scheduleRepository.save(schedule);
 
-                        Expense expense = new Expense();
-                        Category category = categoryRepository.findByCategoryId((long) 14);
+                        Expense expense = expenseRepository.findBySchedule(schedule);
 
-                        expense.setUser(user);
-                        expense.setSchedule(schedule);
-                        expense.setCategory(category);
-                        expense.setExpenseAmount(schedule.getScBudget());
-                        expense.setExpenseDate(schedule.getScDate());
-                        expense.setExpenseContent(schedule.getScName());
+                        if (expense==null) {
+                            expense = new Expense();
+                            Category category = categoryRepository.findByCategoryId((long) 14);
+                            expense.setUser(user);
+                            expense.setSchedule(schedule);
+                            expense.setCategory(category);
+                            expense.setExpenseAmount(schedule.getScBudget());
+                            expense.setExpenseDate(schedule.getScDate());
+                            expense.setExpenseContent(schedule.getScName());
 
-                        expenseRepository.save(expense);
+                            expenseRepository.save(expense);
+                        }
+
+
 
                     }
                 }
