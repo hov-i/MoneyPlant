@@ -402,6 +402,10 @@ const CalendarContainer = styled.div`
       color: #fff;
       font-size: 0.6em;
       padding-bottom: 1px;
+
+      white-space: nowrap; /* Prevent line breaks */
+      overflow: hidden; /* Hide overflowing content */
+      text-overflow: ellipsis; /* Display ellipsis (...) for overflowing content */
     }
   }
 
