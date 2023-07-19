@@ -368,18 +368,14 @@ public class LedgerService {
 
         // 월간 수입 합계 계산
         Map<String, Integer> monthlyIncome = getMonthlyIncome(userDetails);
-        if (monthlyIncome == null) {
-            monthlyIncome = new HashMap<>();
-        }
-
-        // 월간 지출 합계 계산
         Map<String, Integer> monthlyExpense = getMonthlyExpense(userDetails);
-        if (monthlyExpense == null) {
-            monthlyExpense = new HashMap<>();
-        }
 
-        // 월별 합계 계산 및 합산
-        for (String month : monthlyExpense.keySet()) {
+        // 월별 데이터가 있는 모든 달의 리스트 구하기
+        Set<String> allMonths = new HashSet<>();
+        allMonths.addAll(monthlyIncome.keySet());
+        allMonths.addAll(monthlyExpense.keySet());
+
+        for (String month : allMonths) {
             int incomeTotal = monthlyIncome.getOrDefault(month, 0);
             int expenseTotal = monthlyExpense.getOrDefault(month, 0);
             int total = incomeTotal - expenseTotal;

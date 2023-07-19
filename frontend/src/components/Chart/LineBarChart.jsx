@@ -12,12 +12,6 @@ const lineColor = "#ffa947";
 // `v` and `v1` are used for bars
 // `l` is used for line
 
-// 내가 처리해야하는 undefined의 문제점...
-// 지출 값'만' 들어오는 경우 -> 강제로 수입 값을 0으로 만들어줘야 함
-// 수입도 마찬가지
-// 이걸 어떻게 함...?
-// 그러면 애초에 undefined 값을 전부 0으로 처리하면 될 거 같기도 하고...?
-
 const LineBarChart = ({ data }) => {
   const Line = ({ bars, xScale, yScale, innerWidth, innerHeight }) => {
     // scale 최댓값 입력
@@ -190,11 +184,19 @@ const LineBarChart = ({ data }) => {
   };
 
   const transformedData = data.map((item) => ({
-    x: item.x,
-    수입: item.v,
-    지출: item.v1,
-    l: item.l,
+    x: item.x || "0",
+    수입: item.v || "0",
+    지출: -item.v1 || "0",
+    l: item.l || "0",
   }));
+
+  // transformedData 배열을 월(month) 기준으로 정렬
+  transformedData.sort((a, b) => {
+    const aMonth = parseInt(a.x.split("-")[1]);
+    const bMonth = parseInt(b.x.split("-")[1]);
+    return aMonth - bMonth;
+  });
+
 
   // scale 최댓값 입력
   const maxValue = Math.max(...data.map((item) => Math.max(item.v, item.v1)));
@@ -206,7 +208,7 @@ const LineBarChart = ({ data }) => {
     return (
       <>
         <NotUseContainer>
-          <NotUse>현재 수입, 지출 내역이 존재하지 않습니다.😢</NotUse>
+          <NotUse>현재 수입, 지출 내역이 존재하지 않습니다.</NotUse>
         </NotUseContainer>
       </>
     );
@@ -288,15 +290,17 @@ const LineBarChartContainer = styled.div`
 
 const NotUseContainer = styled.div`
   display: flex;
-  justify-items: center;
+  justify-content: center;
   align-items: center;
+  width: 1000px;
   height: 100%;
-  padding-bottom: 10%;
+  background: linear-gradient(137deg, rgba(167, 255, 201, 0.13) 1.63%, rgba(70, 137, 175, 0.17) 100%, rgba(0, 255, 133, 0.51) 100%);
 `;
 
 const NotUse = styled.div`
   display: flex;
   justify-items: center;
   align-items: center;
+  color: white;
   font-size: 20px;
 `;

@@ -15,11 +15,16 @@ import ListAxiosAPI from "../api/ListAxiosAPI";
 
 const Chart = () => {
   const [chartData, setChartData] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // 초기값은 현재 연도로 설정
 
   const handleYearChange = (year) => {
     // 연도 변경 시 데이터 업데이트
-    fetchData(year);
+    setSelectedYear(year);
   };
+
+  useEffect(() => {
+    fetchData(selectedYear); // 선택한 연도로 초기 데이터 가져오기
+  }, [selectedYear]);
 
   const fetchData = async (year) => {
     try {
@@ -27,6 +32,7 @@ const Chart = () => {
       const transformedLineChartData = lineChartData
         .map((item) => {
           const itemYear = item.x.split("-")[0]; // yyyy-MM에서 yyyy 부분 추출
+
           if (itemYear === year.toString()) {
             // 년도 비교
             return {
@@ -38,9 +44,9 @@ const Chart = () => {
         })
         .filter(Boolean); // null인 요소 제거
 
+
       const barIncomeChartData = await ListAxiosAPI.getBarIncomeChart();
       console.log("받아온 수입 막대 차트 데이터:", barIncomeChartData);
-
       const transformedBarIncomeChartData = barIncomeChartData.map((item) => ({
         x: item.x,
         v: item.v || 0,
@@ -64,55 +70,26 @@ const Chart = () => {
 
       // 데이터 결합
       const combinedChartData = transformedLineChartData.map((lineItem) => {
-        console.log(
-          "transformedBarIncomeChartData:",
-          transformedBarIncomeChartData
-        );
-        console.log(
-          "transformedBarExpenseChartData:",
-          transformedBarExpenseChartData
-        );
-
         const barIncomeItem = transformedBarIncomeChartData.find(
           (barItem) => barItem.x === lineItem.x
         );
+
         const barExpenseItem = transformedBarExpenseChartData.find(
           (barItem) => barItem.x === lineItem.x
         );
 
-        console.log(
-          "transformedBarIncomeChartData2:",
-          transformedBarIncomeChartData
-        );
-        console.log(
-          "transformedBarExpenseChartData2:",
-          transformedBarExpenseChartData
-        );
-
-        console.log("바뀐 barIncomeItem 값:", barIncomeItem);
-        console.log("바뀐 barExpenseItem 값:", barExpenseItem);
+        // x 값이 없거나 비어있을 때 0으로 값 채우기
+        const xValue = lineItem? lineItem.x : 0;
+        const lValue = lineItem? lineItem.l : 0;
+        const barIncomeValue = barIncomeItem ? barIncomeItem.v : "0";
+        const barExpenseValue = barExpenseItem ? barExpenseItem.v1 : "0";
 
         return {
-          x: lineItem.x,
-          l: lineItem.l,
-          v: barIncomeItem ? barIncomeItem.v : "0",
-          v1: barExpenseItem ? -barExpenseItem.v1 : "0",
+          x: xValue,
+          l: lValue,
+          v: barIncomeValue,
+          v1: barExpenseValue,
         };
-      });
-
-      // barIncomeItem 값만 있을 때 결합 데이터 생성
-      transformedBarIncomeChartData.forEach((barIncomeItem) => {
-        const existingChartData = combinedChartData.find(
-          (item) => item.x === barIncomeItem.x
-        );
-        if (!existingChartData) {
-          combinedChartData.push({
-            x: barIncomeItem.x,
-            l: barIncomeItem.v,
-            v: barIncomeItem.v,
-            v1: "0",
-          });
-        }
       });
 
       console.log("결합된 차트 데이터:", combinedChartData);
@@ -198,7 +175,16 @@ const InBox = styled.div`
   overflow-y: hidden;
   scroll-behavior: smooth;
 
+  /* 스크롤바는 안 보이고 역할은 하게 만듦 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
   @media (max-width: 768px) {
-    height: 100%;
+    height: 90%;
+    padding: 20px;
   }
 `;
