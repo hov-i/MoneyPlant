@@ -2,6 +2,7 @@ package com.MoneyPlant.repository;
 
 import com.MoneyPlant.dto.CategoryDto;
 import com.MoneyPlant.entity.Expense;
+import com.MoneyPlant.entity.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,10 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     List<Expense> findByUserId(Long userId);
 
     List<Expense> findByUserIdAndExpenseDate(Long userId, String expenseDate);
+
+    Expense findBySchedule(Schedule schedule);
+
+    Expense deleteBySchedule(Schedule schedule);
 
     @Query(value = "SELECT c.category_id AS categoryId, c.category_name AS categoryName " +
             "FROM expense e " +

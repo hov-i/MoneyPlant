@@ -20,6 +20,10 @@ public class Expense {
     @JoinColumn(name = "id")
     private User user;
 
+    @OneToOne
+    @JoinColumn(name = "sc_id", referencedColumnName = "sc_id")
+    private Schedule schedule;
+
     @Column(name= "expense_amount")
     private int expenseAmount;
 

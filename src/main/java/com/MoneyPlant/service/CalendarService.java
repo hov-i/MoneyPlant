@@ -69,6 +69,7 @@ public class CalendarService {
                     .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다"));
             Schedule schedule = new Schedule();
             Expense expense = new Expense();
+            expense.setSchedule(schedule);
 
             // If Google Calendar is linked, proceed with Google API
             if (calendarId != null) {
@@ -143,6 +144,7 @@ public class CalendarService {
                     .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다."));
 
             Schedule schedule = scheduleRepository.findByScId(scId);
+            Expense expense = expenseRepository.findBySchedule(schedule);
 
             if (schedule == null) {
                 throw new RuntimeException("존재하지 않는 일정입니다");
@@ -179,8 +181,14 @@ public class CalendarService {
             schedule.setScName(scheduleDto.getScName());
             schedule.setScBudget(scheduleDto.getScBudget());
             schedule.setScDate(scheduleDto.getScDate());
-
             scheduleRepository.save(schedule);
+
+            expense.setSchedule(schedule);
+            expense.setExpenseAmount(schedule.getScBudget());
+            expense.setExpenseDate(schedule.getScDate());
+            expense.setExpenseContent(schedule.getScName());
+
+            expenseRepository.save(expense);
 
             return true;
         } catch (Exception e) {
@@ -222,6 +230,7 @@ public class CalendarService {
 
             // Delete the schedule from the database
             scheduleRepository.deleteByScId(scId);
+            expenseRepository.deleteBySchedule(schedule);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -243,7 +252,7 @@ public class CalendarService {
                     .orElseThrow(() -> new RuntimeException("Token does not exist"));
             String accessToken = oAuthToken.getAccessToken();
 
-            if (accessToken != null) {
+            if (accessToken == null) {
                 return;
             }
 
