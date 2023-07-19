@@ -239,6 +239,7 @@ public class CalendarService {
     }
 
     // GoogleCalendar events 조회후 DB에 추가 또는 업데이트
+    // expense DB에도 추가해줍니다
     public void getGoogleCalendarEvents(UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
         try {
@@ -293,6 +294,19 @@ public class CalendarService {
                         schedule.setScDate(startDateTime);
 
                         scheduleRepository.save(schedule);
+
+                        Expense expense = new Expense();
+                        Category category = categoryRepository.findByCategoryId((long) 14);
+
+                        expense.setUser(user);
+                        expense.setSchedule(schedule);
+                        expense.setCategory(category);
+                        expense.setExpenseAmount(schedule.getScBudget());
+                        expense.setExpenseDate(schedule.getScDate());
+                        expense.setExpenseContent(schedule.getScName());
+
+                        expenseRepository.save(expense);
+
                     }
                 }
             } catch (Exception e) {
