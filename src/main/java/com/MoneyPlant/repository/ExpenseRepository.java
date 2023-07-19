@@ -19,7 +19,7 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     Expense findBySchedule(Schedule schedule);
 
-    Expense deleteBySchedule(Schedule schedule);
+    void deleteBySchedule(Schedule schedule);
 
     @Query(value = "SELECT c.category_id AS categoryId, c.category_name AS categoryName " +
             "FROM expense e " +

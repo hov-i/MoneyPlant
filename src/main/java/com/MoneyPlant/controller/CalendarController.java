@@ -105,9 +105,32 @@ public class CalendarController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("근무 생성 중에 오류가 발생했습니다.");
         }
     }
+    // 근무 수정
+    @PostMapping("/update/work")
+    public ResponseEntity<String> updateWork(
+            @RequestBody WorkDto workDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        boolean isSuccess = calendarService.updateWork(workDto, userDetails);
+        if (isSuccess) {
+            return ResponseEntity.ok("근무 수정 완료");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("근무 수정 실패");
+        }
+    }
 
-    // 캘린더 가계부 추가, 삭제, 수정 ( )
-    
+    // 근무 삭제
+    @DeleteMapping("/delete/work/{workId}")
+    public ResponseEntity<String> deleteWork(
+            @PathVariable("workId") Long workId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        boolean isSuccess = calendarService.deleteWork(workId, userDetails);
+        if (isSuccess) {
+            return ResponseEntity.ok("근무 삭제 완료");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("근무 삭제 실패");
+        }
+    }
+
     // ===========================================================================
     // 캘린더 컨텐츠 전체 조회 (수입, 지출 추가 예정)
     @GetMapping("")

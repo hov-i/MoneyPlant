@@ -20,6 +20,10 @@ public class Income {
     @JoinColumn(name = "id")
     private User user;
 
+    @OneToOne
+    @JoinColumn(name = "work_id", referencedColumnName = "work_id")
+    private Work work;
+
     @Column(name = "income_amount")
     private int incomeAmount;
 

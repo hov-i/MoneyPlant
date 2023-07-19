@@ -372,6 +372,47 @@ public class CalendarService {
         }
     }
 
+    // 근무 수정
+    // 캘린더 일정 수정 (입력값 scheduleRequest)
+    public boolean updateWork(WorkDto workDto, UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+        Long workId = workDto.getWorkId();
+
+        try {
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다."));
+
+            Work work = workRepository.findByWorkId(workId);
+            Income income = incomeRepository.findByWork(work);
+
+            if (work == null) {
+                throw new RuntimeException("존재하지 않는 근무입니다");
+            }
+
+            work.setWorkName(workDto.getWorkName());
+            work.setColorId(workDto.getColorId());
+            work.setPayType(workDto.getPayType());
+            work.setWorkDate(workDto.getWorkDate());
+            work.setWorkStart(workDto.getWorkStart());
+            work.setWorkEnd(workDto.getWorkEnd());
+            work.setWorkPay(calMyHourlySalary(workDto));
+            work.setPayday(workDto.getPayday());
+            workRepository.save(work);
+
+            income.setWork(work);
+            income.setIncomeAmount(calMyHourlySalary(workDto));
+            income.setIncomeDate(workDto.getPayday());
+            income.setIncomeContent(workDto.getWorkName());
+
+            incomeRepository.save(income);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public int calMyHourlySalary(WorkDto workDto) {
         int type = workDto.getPayType();
         int money = workDto.getWorkMoney();
@@ -412,6 +453,7 @@ public class CalendarService {
 
             // Delete the work from the database
             workRepository.deleteByWorkId(workId);
+            incomeRepository.deleteByWork(work);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
