@@ -11,11 +11,20 @@ import SelColor from "./SelColor";
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
 const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
-  const [scId, setScId] = useState(data ? data.scId : 0);
-  const [contentId, setContentId] = useState(data ? data.colorId : 1);
-  const [scDate, setScDate] = useState(data ? data.scDate : "");
-  const [scName, setScName] = useState(data ? data.scName : "");
-  const [scBudget, setScBudget] = useState(data ? data.scBudget : "");
+  const [schedule, setSchedule] = useState({
+    scId: data ? data.scId : 0,
+    contentId: data ? data.colorId : 1,
+    scDate: data ? data.scDate : "",
+    scName: data ? data.scName : "",
+    scBudget: data ? data.scBudget : ""
+  });
+
+  const handleScheduleChange = (key, value) => {
+    setSchedule(prevState => ({
+      ...prevState,
+      [key]: value
+    }));
+  };
 
   // const setvalue = new Date(value);
   // setvalue.setDate(setvalue.getDate() + 1);
@@ -32,30 +41,24 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
   };
 
   const handleScDateChange = (event) => {
-    setScDate(event.target.value);
+    handleScheduleChange("scDate", event.target.value);
   };
 
   const handleScNameChange = (event) => {
-    setScName(event.target.value);
+    handleScheduleChange("scName", event.target.value);
   };
 
   const handleScBudgetChange = (event) => {
-    setScBudget(event.target.value);
+    handleScheduleChange("scBudget", event.target.value);
   };
 
   const handleContentIdChange = (event) => {
-    setContentId(event);
-    // setContentId(event.target.contentId);
+    handleScheduleChange("contentId", event.target.contentId);
   };
 
   const onCreateSc = async () => {
     try {
-      const createSc = await CalendarAxiosApi.createSchedule(isQuick, {
-        scDate,
-        scName,
-        scBudget,
-        colorId: contentId,
-      });
+      const createSc = await CalendarAxiosApi.createSchedule(isQuick, schedule);
 
       if (createSc.data === "일정을 성공적으로 생성했습니다.") {
         console.log("입력 성공");
@@ -71,13 +74,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
   const onUpdateSc = async () => {
     try {
-      const createSc = await CalendarAxiosApi.updateSchedule( {
-        scId,
-        scDate,
-        scName,
-        scBudget,
-        colorId: contentId,
-      });
+      const createSc = await CalendarAxiosApi.updateSchedule( schedule )
 
       if (createSc.data === "일정을 성공적으로 수정했습니다.") {
         console.log("입력 성공");
@@ -109,7 +106,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
                 <Input
                   type="date"
                   id="date"
-                  value={scDate}
+                  value={schedule.scDate}
                   onChange={handleScDateChange}
                 />
                 <p> ㅤ </p>
@@ -126,7 +123,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
                 <Input
                   type="date"
                   id="date"
-                  value={scDate}
+                  value={schedule.scDate}
                   onChange={handleScDateChange}
                 />
                 <p> ㅤ </p>
@@ -138,7 +135,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
           <div>
             <p className="label">일정</p>
-            <Input value={scName} onChange={handleScNameChange} />
+            <Input value={schedule.scName} onChange={handleScNameChange} />
             <p> ㅤ </p>
           </div>
 
@@ -146,15 +143,14 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
             <p className="label">예산</p>
             <Input
               className="budget-size"
-              value={scBudget}
+              value={schedule.scBudget}
               onChange={handleScBudgetChange}
             />
             <p className="text">원</p>
           </div>
 
           <SelColor
-            // value={myColor}
-            contentId={contentId}
+            contentId={schedule.contentId}
             onContentIdChange={handleContentIdChange}
             isBasic={true}
           />
@@ -180,7 +176,8 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          <QuickView isBasic={true} />
+          <QuickView isBasic={true} schedule={schedule} setSchedule={setSchedule}/>
+          {/*<QuickView isBasic={true} data={data} changeData={changeData}/>*/}
         </Modal>
       )}
     </>
