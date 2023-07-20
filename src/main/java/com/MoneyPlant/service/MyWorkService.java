@@ -1,7 +1,6 @@
 package com.MoneyPlant.service;
 
 import com.MoneyPlant.dto.WorkDto;
-import com.MoneyPlant.dto.MyWorkDto;
 import com.MoneyPlant.entity.*;
 import com.MoneyPlant.repository.*;
 import com.MoneyPlant.service.CalendarService;
@@ -41,8 +40,12 @@ public class MyWorkService {
             myWork.setUser(user);
             myWork.setMyWkName(workDto.getWorkName());
             myWork.setMyPayType(workDto.getPayType());
+            myWork.setMyWkMoney(workDto.getWorkMoney());
             myWork.setMyWkStart(workDto.getWorkStart());
             myWork.setMyWkEnd(workDto.getWorkEnd());
+            myWork.setMyWkRest(workDto.getWorkRest());
+            myWork.setMyWkCase(workDto.getWorkCase());
+            myWork.setMyWkTax(workDto.getWorkTax());
             myWork.setMyPayday(workDto.getPayday());
             myWork.setMyColor(workDto.getColorId());
             myWork.setMyWkPay(calendarService.calMyHourlySalary(workDto));
@@ -62,23 +65,28 @@ public class MyWorkService {
 
     // ===========================================================================
     // 마이페이지 전체 나의 근무 조회
-    public List<MyWorkDto> getWorkForMyPage(UserDetailsImpl userDetails) {
+    public List<WorkDto> getWorkForMyPage(UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
         List<MyWork> myWorkList = myWorkRepository.findByUserId(userId);
 
-        List<MyWorkDto> myWorkDtoList = new ArrayList<>();
+        List<WorkDto> myWorkDtoList = new ArrayList<>();
         for (MyWork myWork : myWorkList) {
-            MyWorkDto myWorkDto = new MyWorkDto();
+            WorkDto workDto = new WorkDto();
 
             // 조회 내용 : 근무 이름, 근무 색
-            myWorkDto.setMyWkName(myWork.getMyWkName());
-            myWorkDto.setMyWkStart(myWork.getMyWkStart());
-            myWorkDto.setMyWkEnd(myWork.getMyWkEnd());
-            myWorkDto.setMyPayday(myWork.getMyPayday());
-            myWorkDto.setMyColor(myWork.getMyColor());
-            myWorkDto.setMyWkPay(myWork.getMyWkPay());
+            workDto.setWorkName(myWork.getMyWkName());
+            workDto.setPayType(myWork.getMyPayType());
+            workDto.setWorkMoney(myWork.getMyWkMoney());
+            workDto.setWorkStart(myWork.getMyWkStart());
+            workDto.setWorkEnd(myWork.getMyWkEnd());
+            workDto.setWorkRest(myWork.getMyWkRest());
+            workDto.setWorkCase(myWork.getMyWkCase());
+            workDto.setWorkTax(myWork.getMyWkTax());
+            workDto.setPayday(myWork.getMyPayday());
+            workDto.setColorId(myWork.getMyColor());
+            workDto.setWorkPay(myWork.getMyWkPay());
 
-            myWorkDtoList.add(myWorkDto);
+            myWorkDtoList.add(workDto);
         }
         return myWorkDtoList;
     }

@@ -10,6 +10,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class MyPageDto {
-    private List<MyScheduleDto> myScheduleDtoList;
-    private List<MyWorkDto> myWorkDtoList;
+    private List<ScheduleDto> myScheduleDtoList;
+    private List<WorkDto> myWorkDtoList;
 }

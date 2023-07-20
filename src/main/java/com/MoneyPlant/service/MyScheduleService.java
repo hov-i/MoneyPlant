@@ -1,7 +1,6 @@
 package com.MoneyPlant.service;
 
 import com.MoneyPlant.dto.ScheduleDto;
-import com.MoneyPlant.dto.MyScheduleDto;
 import com.MoneyPlant.entity.*;
 import com.MoneyPlant.repository.*;
 import com.MoneyPlant.service.jwt.UserDetailsImpl;
@@ -55,20 +54,21 @@ public class MyScheduleService {
     // 마이페이지 나의 일정 삭제
     
     // ===========================================================================
-    // 마이페이지 전체 나의 일정 조회
-    public List<MyScheduleDto> getScheduleForMyPage(UserDetailsImpl userDetails) {
+    // 마이페이지 전체 나의 일정 조회 scheduleDto로 변환시켜서 보낸다.
+    public List<ScheduleDto> getScheduleForMyPage(UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
         List<MySchedule> myScheduleList = myScheduleRepository.findByUserId(userId);
 
-        List<MyScheduleDto> myScheduleDtoList = new ArrayList<>();
+        List<ScheduleDto> myScheduleDtoList = new ArrayList<>();
         for (MySchedule mySchedule : myScheduleList) {
-            MyScheduleDto myScheduleDto = new MyScheduleDto();
+            ScheduleDto scheduleDto = new ScheduleDto();
 
             // 조회 내용 : 일정 이름, 일정 색
-            myScheduleDto.setMyScName(mySchedule.getMyScName());
-            myScheduleDto.setMyColor(mySchedule.getMyColor());
+            scheduleDto.setScName(mySchedule.getMyScName());
+            scheduleDto.setScBudget(mySchedule.getMyScBudget());
+            scheduleDto.setColorId(mySchedule.getMyColor());
 
-            myScheduleDtoList.add(myScheduleDto);
+            myScheduleDtoList.add(scheduleDto);
         }
         return myScheduleDtoList;
     }
