@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import contentList from "../../styles/contentColor";
 
-const SelColor = ({ isBasic, onContentIdChange }) => {
+const SelColor = ({ isBasic, contentId, onContentIdChange }) => {
   const [scContentId, setScContentId] = useState(1); // 초기값 1 으로 설정
 
   const handleScColorClick = (contentId) => {

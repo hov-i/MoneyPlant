@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
@@ -11,7 +11,16 @@ import SelType from "./SelType";
 import { ReactComponent as Post } from "../../assets/Post.svg";
 import QuickView from "../MyPage/QuickView";
 
-const WorkAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
+const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   const [work, setWork] = useState({
     workId: data ? data.workId : null,
     workDate: data ? data.workDate : "",
@@ -45,19 +54,8 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
   const [isSalary, setIsSalary] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  // 카테고리 값 가져오기
-  const onChangePayType = (selectedItem) => {
-    handleWorkChange("payType", parseInt(selectedItem));
-
-    switch (parseInt(selectedItem)) {
+  useEffect(() => {
+    switch (work.payType) {
       case 1: // 시급
         setIsHourly(true);
         setIsCase(false);
@@ -84,6 +82,17 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
       default:
     }
+  },[work.payType])
+
+
+
+
+
+
+  // 카테고리 값 가져오기
+  const onChangePayType = (newValue) => {
+    handleWorkChange("payType", newValue);
+    console.log(newValue);
   };
 
   const onCreateWork = async () => {
@@ -102,25 +111,17 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
     }
   };
   const onUpdateWork = async () => {
-    // try {
-    //   const updateWork = await CalendarAxiosApi.updateWork( {
-    //     workId,
-    //     scDate,
-    //     scName,
-    //     scBudget,
-    //     colorId: contentId,
-    //   });
-    //
-    //   if (createSc.data === "일정을 성공적으로 수정했습니다.") {
-    //     console.log("입력 성공");
-    //     window.location.reload();
-    //   } else {
-    //     console.log("입력 실패");
-    //     window.location.reload();
-    //   }
-    // } catch (error) {
-    //   console.log("에러:", error);
-    // }
+    try {
+      const response = await CalendarAxiosApi.updateWork(work)
+
+      if (response.data === "근무를 성공적으로 수정했습니다.") {
+        window.location.reload();
+      } else {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("에러:", error);
+    }
   };
 
   return (
@@ -181,7 +182,6 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
             {/* <MyType value={myPayType.toString()} onChange={onChangeMyPayType} /> */}
             <SelType
               value={work.payType}
-              myPayType={work.payType}
               onChange={onChangePayType}
             />
             <Input
@@ -313,7 +313,7 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          <QuickView isBasic={false} />
+          <QuickView isBasic={false} data={work} setData={setWork} close={closeModal} />
         </Modal>
       )}
     </>

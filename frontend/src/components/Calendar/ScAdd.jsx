@@ -176,7 +176,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          <QuickView isBasic={true} schedule={schedule} setSchedule={setSchedule}/>
+          <QuickView isBasic={true} data={schedule} setData={setSchedule} close={closeModal}/>
           {/*<QuickView isBasic={true} data={data} changeData={changeData}/>*/}
         </Modal>
       )}

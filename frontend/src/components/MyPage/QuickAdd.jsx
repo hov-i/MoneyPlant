@@ -7,6 +7,7 @@ import QuickAxiosApi from "../../api/QuickAddAxiosAPI";
 
 const QuickAdd = ({ isBasic }) => {
   const [myPageList, setMyPageList] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const getMyPageList = async () => {
@@ -23,7 +24,9 @@ const QuickAdd = ({ isBasic }) => {
   }, []);
 
   // onClick 하면, 일정 이름과 색을 받아 줌 .
-  const onclickChangeScValue = () => {};
+  const onclickChangeScValue = () => {
+
+  };
 
   // onClick 하면, 근무 이름과 색 그 외 필요한 전부를 모두 받아 줌 .
   const onclickChangeWkValue = () => {};
@@ -36,8 +39,8 @@ const QuickAdd = ({ isBasic }) => {
             myPageList.myScheduleDtoList.map((data1) => (
               <Tag
                 width={"20%"}
-                color={data1.myColor}
-                detail={data1.myScName}
+                color={data1.colorId}
+                detail={data1.scName}
                 onclick={onclickChangeScValue}
               />
             ))}
@@ -48,8 +51,8 @@ const QuickAdd = ({ isBasic }) => {
             myPageList.myWorkDtoList.map((data2) => (
               <Tag
                 width={"20%"}
-                color={data2.myColor}
-                detail={data2.myWkName}
+                color={data2.colorId}
+                detail={data2.workName}
                 onclick={onclickChangeWkValue}
               />
             ))}

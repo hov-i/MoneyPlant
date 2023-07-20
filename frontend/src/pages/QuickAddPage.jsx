@@ -49,8 +49,8 @@ const Mypage = () => {
                 myPageList.myScheduleDtoList.map((data1) => (
                   <Tag
                     width={"20%"}
-                    color={data1.myColor}
-                    detail={data1.myScName}
+                    color={data1.colorId}
+                    detail={data1.scName}
                   />
                 ))}
             </TagBox>
@@ -60,8 +60,8 @@ const Mypage = () => {
                 myPageList.myWorkDtoList.map((data2) => (
                   <Tag
                     width={"20%"}
-                    color={data2.myColor}
-                    detail={data2.myWkName}
+                    color={data2.colorId}
+                    detail={data2.workName}
                   />
                 ))}
             </TagBox>
