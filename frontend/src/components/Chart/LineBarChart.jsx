@@ -184,9 +184,9 @@ const LineBarChart = ({ data }) => {
   };
 
   const transformedData = data.map((item) => ({
-    x: item.x || "0",
-    수입: item.v || "0",
-    지출: -item.v1 || "0",
+    x: item.x || "",
+    수입: item.v || "",
+    지출: -item.v1 || "",
     l: item.l || "0",
   }));
 
