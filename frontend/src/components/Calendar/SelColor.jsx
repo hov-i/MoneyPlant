@@ -2,29 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import contentList from "../../styles/contentColor";
 
-const SelColor = ({ isBasic, contentId, onContentIdChange }) => {
-  const [scContentId, setScContentId] = useState(1); // 초기값 1 으로 설정
-
-  const handleScColorClick = (contentId) => {
-    const content = contentList.schedule.find(
-      (item) => item.contentId === contentId
-    );
-    if (content) {
-      onContentIdChange(content.contentId);
-      setScContentId(content.contentId);
-    }
-  };
-
-  const [wkContentId, setWkContentId] = useState(5); // 초기값 5 으로 설정
-
-  const handleWkColorClick = (contentId) => {
-    const content = contentList.work.find(
-      (item) => item.contentId === contentId
-    );
-    if (content) {
-      onContentIdChange(content.contentId);
-      setWkContentId(content.contentId);
-    }
+const SelColor = ({ isBasic, value, onChange }) => {
+  const handleColorClick = (colorId) => {
+   const newValue = parseInt(colorId);
+   onChange(newValue);
   };
 
   return (
@@ -36,9 +17,9 @@ const SelColor = ({ isBasic, contentId, onContentIdChange }) => {
               className="color-box"
               key={index}
               color={content.Color}
-              active={content.contentId === scContentId}
+              active={content.contentId === value}
               style={{ backgroundColor: content.Color }}
-              onClick={() => handleScColorClick(content.contentId)}
+              onClick={() => handleColorClick(content.contentId)}
             />
           ))}
         </div>
@@ -49,9 +30,9 @@ const SelColor = ({ isBasic, contentId, onContentIdChange }) => {
               className="color-box"
               key={index}
               color={content.Color}
-              active={content.contentId === wkContentId}
+              active={content.contentId === value}
               style={{ backgroundColor: content.Color }}
-              onClick={() => handleWkColorClick(content.contentId)}
+              onClick={() => handleColorClick(content.contentId)}
             />
           ))}
         </div>

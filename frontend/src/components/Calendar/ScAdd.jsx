@@ -52,8 +52,8 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
     handleScheduleChange("scBudget", event.target.value);
   };
 
-  const handleColorIdChange = (event) => {
-    handleScheduleChange("colorId", event.target.contentId);
+  const handleColorIdChange = (newValue) => {
+    handleScheduleChange("colorId", newValue);
   };
 
   const onCreateSc = async () => {
@@ -150,8 +150,8 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
           </div>
 
           <SelColor
-            contentId={schedule.colorId}
-            onContentIdChange={handleColorIdChange}
+            value={schedule.colorId}
+            onChange={handleColorIdChange}
             isBasic={true}
           />
         </InputContainer>

@@ -285,9 +285,8 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
 
           {/* <p className="label">color</p> */}
           <SelColor
-            // value={myColor}
-            contentId={work.colorId}
-            onContentIdChange={(event) => handleWorkChange("colorId", event.target.value)}
+            value={work.colorId}
+            onChange={(newValue) => handleWorkChange("colorId", newValue)}
           />
         </InputContainer>
       </Container>
