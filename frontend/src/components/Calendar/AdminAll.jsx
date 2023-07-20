@@ -21,7 +21,8 @@ const AdminAll = ({ setValue, isBasic }) => {
     setModalOpenSc(true);
   };
 
-  const openModalWk = () => {
+  const openModalWk = (data) => {
+    setSelectedData(data);
     setModalOpenWk(true);
   };
 
@@ -124,12 +125,8 @@ const AdminAll = ({ setValue, isBasic }) => {
         ) : (
           <>
             {selectTodayWork.map((data) => (
-              <WorkContainer onClick={openModalWk}>
-                <Tag
-                  width={"70%"}
-                  color={data.colorId}
-                  detail={data.workName}
-                />
+              <WorkContainer onClick={() => openModalWk(data)}>
+                <Tag width={"70%"} color={data.colorId} detail={data.workName}/>
                 <p className="time">
                   {data.workStart} ~ {data.workEnd}
                 </p>
@@ -186,7 +183,7 @@ const AdminAll = ({ setValue, isBasic }) => {
 
       {modalOpenWk && (
         <Modal open={modalOpenWk} close={closeModalWk} width={"300px"}>
-          <WorkAdd isUpdate={true} />
+          <WorkAdd isUpdate={true} data={selectedData} />
         </Modal>
       )}
     </AdminAllContainer>

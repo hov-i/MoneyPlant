@@ -11,18 +11,30 @@ import SelType from "./SelType";
 import { ReactComponent as Post } from "../../assets/Post.svg";
 import QuickView from "../MyPage/QuickView";
 
-const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
-  const [contentId, setContentId] = useState(5);
-  const [workDate, setDate] = useState("");
-  const [workName, setWorkName] = useState("");
-  const [payType, setPayType] = useState(1);
-  const [workMoney, setWorkMoney] = useState("");
-  const [workStart, setWorkStart] = useState("");
-  const [workEnd, setWorkEnd] = useState("");
-  const [workRest, setWorkRest] = useState("");
-  const [workCase, setWorkCase] = useState("");
-  const [workTax, setWorkTax] = useState(0);
-  const [payday, setPayday] = useState("");
+const WorkAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
+  const [work, setWork] = useState({
+    workId: data ? data.workId : null,
+    workDate: data ? data.workDate : "",
+    workName: data ? data.workName : "",
+    payType: data ? data.payType : 1,
+    workMoney: data ? data.workMoney : 0,
+    workStart: data ? data.workStart : "",
+    workEnd: data ? data.workEnd : "",
+    workRest: data ? data.workRest : 0,
+    workCase: data ? data.workCase : 0,
+    workTax: data ? data.workTax : 0.0,
+    payday: data ? data.payday : "",
+    colorId: data ? data.colorId : 5,
+    workPay: data ? data.workPay : 0,
+  });
+
+  const handleWorkChange = (key, value) => {
+    setWork(prevState => ({
+      ...prevState,
+      [key]: value
+    }));
+  };
+
 
   // const setvalue = new Date(value);
   // setvalue.setDate(setvalue.getDate() + 1);
@@ -31,7 +43,6 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
   const [isHourly, setIsHourly] = useState(true);
   const [isCase, setIsCase] = useState(false);
   const [isSalary, setIsSalary] = useState(true);
-
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -42,17 +53,9 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
     setModalOpen(false);
   };
 
-  const handleWorkDateChange = (event) => {
-    setDate(event.target.value);
-  };
-
-  const handleWorkNameChange = (event) => {
-    setWorkName(event.target.value);
-  };
-
   // 카테고리 값 가져오기
   const onChangePayType = (selectedItem) => {
-    setPayType(parseInt(selectedItem));
+    handleWorkChange("payType", parseInt(selectedItem));
 
     switch (parseInt(selectedItem)) {
       case 1: // 시급
@@ -83,52 +86,9 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
     }
   };
 
-  const handleWorkMoneyChange = (event) => {
-    setWorkMoney(event.target.value);
-  };
-
-  const handleWorkStartChange = (event) => {
-    setWorkStart(event.target.value);
-  };
-
-  const handleWorkEndChange = (event) => {
-    setWorkEnd(event.target.value);
-  };
-
-  const handleWorkRestChange = (event) => {
-    setWorkRest(event.target.value);
-  };
-
-  const handleWorkCaseChange = (event) => {
-    setWorkCase(event.target.value);
-  };
-
-  const handleWorkTaxChange = (event) => {
-    setWorkTax(event.target.value);
-  };
-
-  const handlePaydayChange = (event) => {
-    setPayday(event.target.value);
-  };
-
-  const handleContentIdChange = (event) => {
-    setContentId(event);
-  };
-
   const onCreateWork = async () => {
     try {
-      const createWork = await CalendarAxiosApi.createWork(isQuick, {
-        workDate,
-        workName,
-        payType,
-        workMoney,
-        workStart,
-        workEnd,
-        workTax,
-        workCase,
-        payday,
-        colorId: contentId,
-      });
+      const createWork = await CalendarAxiosApi.createWork(isQuick, work);
 
       if (createWork.data === "근무를 성공적으로 생성했습니다.") {
         console.log("입력 성공");
@@ -182,8 +142,8 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
                   type="date"
                   id="date"
                   required
-                  value={workDate}
-                  onChange={handleWorkDateChange}
+                  value={work.workDate}
+                  onChange={(event) => handleWorkChange("workDate",event.target.value)}
                 />
               </div>
             </>
@@ -199,8 +159,8 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
                   type="date"
                   id="date"
                   required
-                  value={workDate}
-                  onChange={handleWorkDateChange}
+                  value={work.workDate}
+                  onChange={(event) => handleWorkChange("workDate", event.target.value)}
                 />
               </div>
             </>
@@ -210,21 +170,24 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
 
           <div>
             <p className="label">근무</p>
-            <Input value={workName} onChange={handleWorkNameChange} />
+            <Input
+                value={work.workName}
+                onChange={(event) => handleWorkChange("workName", event.target.value)}
+            />
           </div>
 
           <p className="label">급여</p>
           <div>
             {/* <MyType value={myPayType.toString()} onChange={onChangeMyPayType} /> */}
             <SelType
-              value={payType}
-              myPayType={payType}
+              value={work.payType}
+              myPayType={work.payType}
               onChange={onChangePayType}
             />
             <Input
               className="money"
-              value={workMoney}
-              onChange={handleWorkMoneyChange}
+              value={work.workMoney}
+              onChange={(event) => handleWorkChange("workMoney", event.target.value)}
             />
 
             <p className="text">원</p>
@@ -237,15 +200,15 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
                 <Input
                   className="time"
                   type="time"
-                  value={workStart}
-                  onChange={handleWorkStartChange}
+                  value={work.workStart}
+                  onChange={(event) => handleWorkChange("workStart", event.target.value)}
                 />
                 <p className="time-set"> - </p>
                 <Input
                   className="time"
                   type="time"
-                  value={workEnd}
-                  onChange={handleWorkEndChange}
+                  value={work.workEnd}
+                  onChange={(event) => handleWorkChange("workEnd", event.target.value)}
                 />
               </div>
 
@@ -260,8 +223,8 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
                   className="small"
                   type="number"
                   min="0"
-                  value={workRest}
-                  onChange={handleWorkRestChange}
+                  value={work.workRest}
+                  onChange={(event) => handleWorkChange("workRest", event.target.value)}
                 />
                 <p className="text">분</p>
               </div>
@@ -277,9 +240,9 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
                 className="small"
                 type="number"
                 min="0"
-                value={workCase}
+                value={work.workCase}
                 required
-                onChange={handleWorkCaseChange}
+                onChange={(event) => handleWorkChange("workCase", event.target.value)}
               />
               <p className="text">건</p>
             </div>
@@ -291,8 +254,8 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
             <p className="label">세 금</p>
             <Input
               className="small"
-              value={workTax}
-              onChange={handleWorkTaxChange}
+              value={work.workTax}
+              onChange={(event) => handleWorkChange("workTax", event.target.value)}
             />
             <p className="text">%</p>
           </div>
@@ -312,15 +275,19 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, value }) => {
                 <p className="text">일</p>
               </>
             ) : ( */}
-            <Input type="date" value={payday} onChange={handlePaydayChange} />
+            <Input
+                type="date"
+                value={work.payday}
+                onChange={(event) => handleWorkChange("payday", event.target.value)}
+            />
             {/* )} */}
           </div>
 
           {/* <p className="label">color</p> */}
           <SelColor
             // value={myColor}
-            contentId={contentId}
-            onContentIdChange={handleContentIdChange}
+            contentId={work.colorId}
+            onContentIdChange={(event) => handleWorkChange("colorId", event.target.value)}
           />
         </InputContainer>
       </Container>

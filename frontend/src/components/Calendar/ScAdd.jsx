@@ -12,11 +12,11 @@ import { ReactComponent as Post } from "../../assets/Post.svg";
 
 const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
   const [schedule, setSchedule] = useState({
-    scId: data ? data.scId : 0,
-    contentId: data ? data.colorId : 1,
+    scId: data ? data.scId : null,
     scDate: data ? data.scDate : "",
     scName: data ? data.scName : "",
-    scBudget: data ? data.scBudget : ""
+    scBudget: data ? data.scBudget : "",
+    colorId: data ? data.colorId : 1,
   });
 
   const handleScheduleChange = (key, value) => {
@@ -52,8 +52,8 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
     handleScheduleChange("scBudget", event.target.value);
   };
 
-  const handleContentIdChange = (event) => {
-    handleScheduleChange("contentId", event.target.contentId);
+  const handleColorIdChange = (event) => {
+    handleScheduleChange("colorId", event.target.contentId);
   };
 
   const onCreateSc = async () => {
@@ -150,8 +150,8 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
           </div>
 
           <SelColor
-            contentId={schedule.contentId}
-            onContentIdChange={handleContentIdChange}
+            contentId={schedule.colorId}
+            onContentIdChange={handleColorIdChange}
             isBasic={true}
           />
         </InputContainer>
