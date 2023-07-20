@@ -32,6 +32,7 @@ public class CalendarService {
     private final CategoryRepository categoryRepository;
     private final CategoryIncomeRepository categoryIncomeRepository;
     private final OAuthTokenRepository oAuthTokenRepository;
+    private final OAuthService oAuthService;
     private final ObjectMapper objectMapper;
 
     // event ID 생성기
@@ -78,6 +79,8 @@ public class CalendarService {
 
                 OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                         .orElseThrow(() -> new RuntimeException("토큰이 존재 하지 않습니다"));
+
+                oAuthToken = oAuthService.validOAuthToken(oAuthToken);
                 String accessToken = oAuthToken.getAccessToken();
                 System.out.println(accessToken);
                 RestTemplate restTemplate = new RestTemplate();
@@ -153,6 +156,8 @@ public class CalendarService {
             if (calendarId != null) {
                 OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                         .orElseThrow(() -> new RuntimeException("토큰을 찾을 수 없습니다."));
+
+                oAuthToken = oAuthService.validOAuthToken(oAuthToken);
                 String accessToken = oAuthToken.getAccessToken();
 
                 RestTemplate restTemplate = new RestTemplate();
@@ -212,6 +217,8 @@ public class CalendarService {
                 String calendarId = schedule.getGoogleCalendarId();
                 OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                         .orElseThrow(() -> new RuntimeException("토큰을 찾을 수 없습니다."));
+
+                oAuthToken = oAuthService.validOAuthToken(oAuthToken);
                 String accessToken = oAuthToken.getAccessToken();
 
                 RestTemplate restTemplate = new RestTemplate();
@@ -251,6 +258,8 @@ public class CalendarService {
             }
             OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                     .orElseThrow(() -> new RuntimeException("Token does not exist"));
+
+            oAuthToken = oAuthService.validOAuthToken(oAuthToken);
             String accessToken = oAuthToken.getAccessToken();
 
             if (accessToken == null) {
@@ -393,14 +402,10 @@ public class CalendarService {
 
     // 근무 수정
     // 캘린더 일정 수정 (입력값 scheduleRequest)
-    public boolean updateWork(WorkDto workDto, UserDetailsImpl userDetails) {
-        Long userId = userDetails.getId();
+    public boolean updateWork(WorkDto workDto) {
         Long workId = workDto.getWorkId();
 
         try {
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다."));
-
             Work work = workRepository.findByWorkId(workId);
             Income income = incomeRepository.findByWork(work);
 
@@ -462,12 +467,9 @@ public class CalendarService {
     }
 
     // 캘린더 근무 삭제
-    public boolean deleteWork(Long workId, UserDetailsImpl userDetails) {
-        Long userId = userDetails.getId();
+    public boolean deleteWork(Long workId) {
 
         try {
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다."));
             Work work = workRepository.findByWorkId(workId);
 
             // Delete the work from the database

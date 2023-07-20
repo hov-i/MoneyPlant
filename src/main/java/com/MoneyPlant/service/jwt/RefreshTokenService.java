@@ -8,7 +8,7 @@ import com.MoneyPlant.entity.RefreshToken;
 import com.MoneyPlant.repository.RefreshTokenRepository;
 import com.MoneyPlant.repository.UserRepository;
 import com.MoneyPlant.security.exception.TokenRefreshException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,15 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class RefreshTokenService {
     @Value("${app.jwtRefreshExpirationMs}")
     private Long refreshTokenDurationMs;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
 
-    @Autowired
-    private UserRepository userRepository;
 
 
     public Optional<RefreshToken> findByToken(String token) {
@@ -35,7 +35,7 @@ public class RefreshTokenService {
     public RefreshToken createRefreshToken(Long userId) {
         RefreshToken refreshToken = new RefreshToken();
 
-        refreshToken.setUser(userRepository.findById(userId).get());
+        refreshToken.setUser(userRepository.findByUserId(userId));
         refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
         refreshToken.setToken(UUID.randomUUID().toString());
 
@@ -57,6 +57,6 @@ public class RefreshTokenService {
     // userId로 refresh token 테이블에서 토큰 삭제하는 메소드
     @Transactional
     public int deleteByUserId(Long userId) {
-        return refreshTokenRepository.deleteByUser(userRepository.findById(userId).get());
+        return refreshTokenRepository.deleteByUser(userRepository.findByUserId(userId));
     }
 }

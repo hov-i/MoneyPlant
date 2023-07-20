@@ -12,6 +12,8 @@ public interface SocialOAuth {
 
     GoogleOAuthToken getAccessToken(ResponseEntity<String> accessToken) throws JsonProcessingException;
 
+    ResponseEntity<String> refreshAccessToken(GoogleOAuthToken googleOAuthToken);
+
     ResponseEntity<String> requestUserInfo(GoogleOAuthToken googleOAuthToken);
 
     GoogleUser getUserInfo(ResponseEntity<String> userInfoResponse) throws JsonProcessingException;

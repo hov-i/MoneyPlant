@@ -40,7 +40,7 @@ public class CalendarController {
             @PathVariable("type") String type,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
-            boolean isSuccess = false;
+            boolean isSuccess;
             if (type.equalsIgnoreCase("schedule")) {
                 isSuccess = calendarService.createSchedule(scheduleDto, userDetails);
             } else {
@@ -89,7 +89,7 @@ public class CalendarController {
             @PathVariable("type") String type,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
-            boolean isSuccess = false;
+            boolean isSuccess;
             if (type.equalsIgnoreCase("work")) {
                 isSuccess = calendarService.createWork(workDto, userDetails);
             } else {
@@ -110,7 +110,7 @@ public class CalendarController {
     public ResponseEntity<String> updateWork(
             @RequestBody WorkDto workDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        boolean isSuccess = calendarService.updateWork(workDto, userDetails);
+        boolean isSuccess = calendarService.updateWork(workDto);
         if (isSuccess) {
             return ResponseEntity.ok("근무 수정 완료");
         } else {
@@ -123,7 +123,7 @@ public class CalendarController {
     public ResponseEntity<String> deleteWork(
             @PathVariable("workId") Long workId,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        boolean isSuccess = calendarService.deleteWork(workId, userDetails);
+        boolean isSuccess = calendarService.deleteWork(workId);
         if (isSuccess) {
             return ResponseEntity.ok("근무 삭제 완료");
         } else {

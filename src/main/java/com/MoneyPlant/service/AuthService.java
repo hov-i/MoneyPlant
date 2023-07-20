@@ -48,7 +48,7 @@ public class AuthService {
     private final JwtUtils jwtUtils;
 
     private final RefreshTokenService refreshTokenService;
-    private final OAuthTokenService oAuthTokenService;
+    private final OAuthService oAuthService;
 
     // 회원가입
     public ResponseEntity<?> signup(SignupRequest signupRequest) {
@@ -125,7 +125,7 @@ public class AuthService {
         if (principle.toString().equals( "anonymousUser")) {
             Long userId = ((UserDetailsImpl) principle).getId();
             refreshTokenService.deleteByUserId(userId);
-            oAuthTokenService.deleteByUserId(userId);
+            oAuthService.deleteByUserId(userId);
 
         }
 
