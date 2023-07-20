@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import Modal from "../Common/Modal";
+import QuickView from "../MyPage/QuickView";
 import ClickButton from "../Common/ClickButton";
 import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 import SelColor from "./SelColor";
 import SelType from "./SelType";
 
+import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Post } from "../../assets/Post.svg";
-import QuickView from "../MyPage/QuickView";
 
-const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
-
+const WorkAdd = ({ isBasic, isUpdate, isQuick, data, workId }) => {
   const openModal = () => {
     setModalOpen(true);
   };
@@ -38,12 +38,11 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
   });
 
   const handleWorkChange = (key, value) => {
-    setWork(prevState => ({
+    setWork((prevState) => ({
       ...prevState,
-      [key]: value
+      [key]: value,
     }));
   };
-
 
   // const setvalue = new Date(value);
   // setvalue.setDate(setvalue.getDate() + 1);
@@ -82,12 +81,7 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
 
       default:
     }
-  },[work.payType])
-
-
-
-
-
+  }, [work.payType]);
 
   // 카테고리 값 가져오기
   const onChangePayType = (newValue) => {
@@ -112,7 +106,7 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
   };
   const onUpdateWork = async () => {
     try {
-      const response = await CalendarAxiosApi.updateWork(work)
+      const response = await CalendarAxiosApi.updateWork(work);
 
       if (response.data === "근무를 성공적으로 수정했습니다.") {
         window.location.reload();
@@ -124,8 +118,30 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
     }
   };
 
+  const onClickDelete = async () => {
+    try {
+      const deleteWork = await CalendarAxiosApi.deleteWork(workId);
+      if (deleteWork.data === "근무가 삭제되었습니다.") {
+        console.log("근무 삭제 성공");
+        window.location.reload();
+      } else {
+        console.log("근무 삭제 실패");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("에러:", error);
+    }
+  };
+
   return (
-    <>
+    <WorkAddContainer>
+      {isUpdate ? (
+        <div className="delete">
+          <Delete onClick={onClickDelete} />
+        </div>
+      ) : (
+        <></>
+      )}
       <Container>
         {isUpdate ? <Title>근무 수정</Title> : <Title>근무 등록</Title>}
         <BlockLine />
@@ -144,7 +160,9 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
                   id="date"
                   required
                   value={work.workDate}
-                  onChange={(event) => handleWorkChange("workDate",event.target.value)}
+                  onChange={(event) =>
+                    handleWorkChange("workDate", event.target.value)
+                  }
                 />
               </div>
             </>
@@ -161,7 +179,9 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
                   id="date"
                   required
                   value={work.workDate}
-                  onChange={(event) => handleWorkChange("workDate", event.target.value)}
+                  onChange={(event) =>
+                    handleWorkChange("workDate", event.target.value)
+                  }
                 />
               </div>
             </>
@@ -172,22 +192,23 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
           <div>
             <p className="label">근무</p>
             <Input
-                value={work.workName}
-                onChange={(event) => handleWorkChange("workName", event.target.value)}
+              value={work.workName}
+              onChange={(event) =>
+                handleWorkChange("workName", event.target.value)
+              }
             />
           </div>
 
           <p className="label">급여</p>
           <div>
             {/* <MyType value={myPayType.toString()} onChange={onChangeMyPayType} /> */}
-            <SelType
-              value={work.payType}
-              onChange={onChangePayType}
-            />
+            <SelType value={work.payType} onChange={onChangePayType} />
             <Input
               className="money"
               value={work.workMoney}
-              onChange={(event) => handleWorkChange("workMoney", event.target.value)}
+              onChange={(event) =>
+                handleWorkChange("workMoney", event.target.value)
+              }
             />
 
             <p className="text">원</p>
@@ -201,14 +222,18 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
                   className="time"
                   type="time"
                   value={work.workStart}
-                  onChange={(event) => handleWorkChange("workStart", event.target.value)}
+                  onChange={(event) =>
+                    handleWorkChange("workStart", event.target.value)
+                  }
                 />
                 <p className="time-set"> - </p>
                 <Input
                   className="time"
                   type="time"
                   value={work.workEnd}
-                  onChange={(event) => handleWorkChange("workEnd", event.target.value)}
+                  onChange={(event) =>
+                    handleWorkChange("workEnd", event.target.value)
+                  }
                 />
               </div>
 
@@ -224,7 +249,9 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
                   type="number"
                   min="0"
                   value={work.workRest}
-                  onChange={(event) => handleWorkChange("workRest", event.target.value)}
+                  onChange={(event) =>
+                    handleWorkChange("workRest", event.target.value)
+                  }
                 />
                 <p className="text">분</p>
               </div>
@@ -242,7 +269,9 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
                 min="0"
                 value={work.workCase}
                 required
-                onChange={(event) => handleWorkChange("workCase", event.target.value)}
+                onChange={(event) =>
+                  handleWorkChange("workCase", event.target.value)
+                }
               />
               <p className="text">건</p>
             </div>
@@ -255,7 +284,9 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
             <Input
               className="small"
               value={work.workTax}
-              onChange={(event) => handleWorkChange("workTax", event.target.value)}
+              onChange={(event) =>
+                handleWorkChange("workTax", event.target.value)
+              }
             />
             <p className="text">%</p>
           </div>
@@ -276,9 +307,11 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
               </>
             ) : ( */}
             <Input
-                type="date"
-                value={work.payday}
-                onChange={(event) => handleWorkChange("payday", event.target.value)}
+              type="date"
+              value={work.payday}
+              onChange={(event) =>
+                handleWorkChange("payday", event.target.value)
+              }
             />
             {/* )} */}
           </div>
@@ -290,9 +323,6 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
           />
         </InputContainer>
       </Container>
-      {/* <ButtonContainer>
-        <ClickButton onClick={onCreateWork}>근무 등록</ClickButton>
-      </ButtonContainer> */}
 
       {isUpdate ? (
         <>
@@ -312,14 +342,33 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data }) => {
 
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          <QuickView isBasic={false} data={work} setData={setWork} close={closeModal} />
+          <QuickView
+            isBasic={false}
+            data={work}
+            setData={setWork}
+            close={closeModal}
+          />
         </Modal>
       )}
-    </>
+    </WorkAddContainer>
   );
 };
 
 export default WorkAdd;
+
+const WorkAddContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  position: relative;
+  .delete {
+    position: absolute;
+    left: 1vw;
+    margin-top: 15px;
+  }
+`;
+
 const Title = styled.div`
   display: flex;
   align-items: center;

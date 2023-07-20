@@ -8,9 +8,10 @@ import QuickView from "../MyPage/QuickView";
 import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 import SelColor from "./SelColor";
 
+import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
+const ScAdd = ({ isBasic, isUpdate, isQuick, value, data, scId }) => {
   const [schedule, setSchedule] = useState({
     scId: data ? data.scId : null,
     scDate: data ? data.scDate : "",
@@ -20,9 +21,9 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
   });
 
   const handleScheduleChange = (key, value) => {
-    setSchedule(prevState => ({
+    setSchedule((prevState) => ({
       ...prevState,
-      [key]: value
+      [key]: value,
     }));
   };
 
@@ -74,7 +75,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
   const onUpdateSc = async () => {
     try {
-      const createSc = await CalendarAxiosApi.updateSchedule( schedule )
+      const createSc = await CalendarAxiosApi.updateSchedule(schedule);
 
       if (createSc.data === "일정을 성공적으로 수정했습니다.") {
         console.log("입력 성공");
@@ -88,8 +89,31 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
     }
   };
 
+  const onClickDelete = async () => {
+    try {
+      const deleteSchedule = await CalendarAxiosApi.deleteSchedule(scId);
+      if (deleteSchedule.data === "일정이 삭제되었습니다.") {
+        console.log("일정 삭제 성공");
+        window.location.reload();
+      } else {
+        console.log("일정 삭제 실패");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("에러:", error);
+    }
+  };
+
   return (
-    <>
+    <ScAddContainer>
+      {isUpdate ? (
+        <div className="delete">
+          <Delete onClick={onClickDelete} />
+        </div>
+      ) : (
+        <></>
+      )}
+
       <Container>
         {isUpdate ? <Title>일정 수정</Title> : <Title>일정 등록</Title>}
         <BlockLine />
@@ -156,9 +180,6 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
           />
         </InputContainer>
       </Container>
-      {/* <ButtonContainer>
-        <ClickButton onClick={onCreateSc}>일정 등록</ClickButton>
-      </ButtonContainer> */}
 
       {isUpdate ? (
         <>
@@ -176,15 +197,33 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          <QuickView isBasic={true} data={schedule} setData={setSchedule} close={closeModal}/>
+          <QuickView
+            isBasic={true}
+            data={schedule}
+            setData={setSchedule}
+            close={closeModal}
+          />
           {/*<QuickView isBasic={true} data={data} changeData={changeData}/>*/}
         </Modal>
       )}
-    </>
+    </ScAddContainer>
   );
 };
 
 export default ScAdd;
+
+const ScAddContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  position: relative;
+  .delete {
+    position: absolute;
+    left: 1vw;
+    margin-top: 15px;
+  }
+`;
 
 const Title = styled.div`
   display: flex;

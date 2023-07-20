@@ -86,6 +86,6 @@ const Title = styled.div`
 
 const QuickViewContainer = styled.div`
   width: "90%";
-  margin: 25px auto;
+  margin: 25px;
   margin-bottom: 20px;
 `;
