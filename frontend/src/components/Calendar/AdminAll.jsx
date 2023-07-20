@@ -126,9 +126,20 @@ const AdminAll = ({ setValue, isBasic }) => {
           <>
             {selectTodayWork.map((data) => (
               <WorkContainer onClick={() => openModalWk(data)}>
-                <Tag width={"70%"} color={data.colorId} detail={data.workName}/>
+                <Tag
+                  width={"70%"}
+                  color={data.colorId}
+                  detail={data.workName}
+                />
+
                 <p className="time">
-                  {data.workStart} ~ {data.workEnd}
+                  {data.workStart ? (
+                    <>
+                      {data.workStart} ~ {data.workEnd}{" "}
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </p>
                 <p className="money">{data.workPay}원</p>
               </WorkContainer>
