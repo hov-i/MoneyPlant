@@ -10,13 +10,8 @@ import pymysql
 
 
 def scrape_and_store_cards(url, category, num_iterations):
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument("--single-process")
-    chrome_options.add_argument("--disable-dev-shm-usage")
     chromedriver_autoinstaller.install()
-    driver = webdriver.Chrome("./chromedriver", options=chrome_options)
+    driver = webdriver.Chrome()
     driver.get(url)
 
     try:
