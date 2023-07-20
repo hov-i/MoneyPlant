@@ -114,8 +114,7 @@ const LineBarChart = ({ data }) => {
           x={innerWidth} // 오른쪽 끝에 위치
           y={yScale(maxValue) - 12} // yScale의 최댓값에 해당하는 y 좌표에서 약간 위로 이동
           textAnchor="start" // 시작 부분에 정렬
-          style={{ fontSize: "10px" }}
-        >
+          style={{ fontSize: "10px" }}>
           (원)
         </text>
         <path
@@ -155,8 +154,7 @@ const LineBarChart = ({ data }) => {
               }
               y={yScale(bar.data.data["수입"])} // v 값 텍스트의 y 좌표 수정
               textAnchor="middle"
-              style={{ fontSize: "12px" }}
-            >
+              style={{ fontSize: "12px" }}>
               {bar.data.data["수입"]}
             </text>
             <text
@@ -165,16 +163,14 @@ const LineBarChart = ({ data }) => {
               }
               y={yScale(bar.data.data["지출"])} // v1 값 텍스트의 y 좌표 수정
               textAnchor="middle"
-              style={{ fontSize: "12px" }}
-            >
+              style={{ fontSize: "12px" }}>
               {bar.data.data["지출"]}
             </text>
             <text
               x={xScale(bar.data.data.x) + xScale.bandwidth() / 2}
               y={yScale(bar.data.data.l) - 10}
               textAnchor="middle"
-              style={{ fontSize: "12px" }}
-            >
+              style={{ fontSize: "12px" }}>
               {bar.data.data.l}
             </text>
           </Fragment>
@@ -185,8 +181,8 @@ const LineBarChart = ({ data }) => {
 
   const transformedData = data.map((item) => ({
     x: item.x || "",
-    수입: item.v || "",
-    지출: -item.v1 || "",
+    수입: item.v || " ",
+    지출: -item.v1 || " ",
     l: item.l || "0",
   }));
 
@@ -197,22 +193,11 @@ const LineBarChart = ({ data }) => {
     return aMonth - bMonth;
   });
 
-
   // scale 최댓값 입력
   const maxValue = Math.max(...data.map((item) => Math.max(item.v, item.v1)));
   const minValue = Math.min(
     ...data.map((item) => Math.min(item.l, item.v, item.v1, 0))
   );
-
-  if (!data.length) {
-    return (
-      <>
-        <NotUseContainer>
-          <NotUse>현재 수입, 지출 내역이 존재하지 않습니다.</NotUse>
-        </NotUseContainer>
-      </>
-    );
-  }
 
   return (
     <LineBarChartContainer>
@@ -284,23 +269,13 @@ const LineBarChartContainer = styled.div`
   .lineBarChart {
     margin-top: 10px;
     width: 100%;
-    height: 90%;
+    height: 95%;
   }
-`;
 
-const NotUseContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 1000px;
-  height: 100%;
-  background: linear-gradient(137deg, rgba(167, 255, 201, 0.13) 1.63%, rgba(70, 137, 175, 0.17) 100%, rgba(0, 255, 133, 0.51) 100%);
-`;
-
-const NotUse = styled.div`
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  color: white;
-  font-size: 20px;
+  /* 모바일 환경에서 스타일 덮어씌우기 */
+  @media (max-width: 768px) {
+    .lineBarChart {
+      margin-top: -5px;
+    }
+  }
 `;
