@@ -40,8 +40,19 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
+
             String requestURI = request.getRequestURI();
-            if (requestURI.endsWith("/signup") || requestURI.endsWith("/google")) {
+            String[] permitUriEndPoint = {"/signup", "/signin","/google"};
+            boolean isPermittedEndpoint = false;
+
+            for (String permitEndpoint : permitUriEndPoint) {
+                if (requestURI.endsWith(permitEndpoint)) {
+                    isPermittedEndpoint = true;
+                    break;
+                }
+            }
+
+            if (isPermittedEndpoint) {
                 filterChain.doFilter(request, response);
                 return;
             }

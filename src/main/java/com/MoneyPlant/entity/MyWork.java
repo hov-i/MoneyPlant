@@ -27,11 +27,23 @@ public class MyWork {
     @Column(name = "my_pay_type", nullable = false)
     private int myPayType;
 
+    @Column(name = "my_work_money")
+    private int myWkMoney;
+
     @Column(name = "my_work_start")
     private String myWkStart; // 나의 근무 시작 시간
 
     @Column(name = "my_work_end")
     private String myWkEnd; // 나의 근무 종료 시간
+
+    @Column(name = "my_work_rest")
+    private int myWkRest;
+
+    @Column(name = "my_work_case")
+    private int myWkCase;
+
+    @Column(name = "my_work_tax")
+    private double myWkTax;
 
     @Column(name = "my_wk_payday", nullable = false)
     private String myPayday; // 나의 급여 지급일

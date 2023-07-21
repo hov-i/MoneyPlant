@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+
 public class WorkDto {
     private Long workId;
     private String workDate; // 근무 날짜

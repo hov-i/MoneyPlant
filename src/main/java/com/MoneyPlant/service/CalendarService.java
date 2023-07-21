@@ -32,6 +32,7 @@ public class CalendarService {
     private final CategoryRepository categoryRepository;
     private final CategoryIncomeRepository categoryIncomeRepository;
     private final OAuthTokenRepository oAuthTokenRepository;
+    private final OAuthService oAuthService;
     private final ObjectMapper objectMapper;
 
     // event ID 생성기
@@ -69,6 +70,7 @@ public class CalendarService {
                     .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다"));
             Schedule schedule = new Schedule();
             Expense expense = new Expense();
+            expense.setSchedule(schedule);
 
             // If Google Calendar is linked, proceed with Google API
             if (calendarId != null) {
@@ -77,6 +79,8 @@ public class CalendarService {
 
                 OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                         .orElseThrow(() -> new RuntimeException("토큰이 존재 하지 않습니다"));
+
+                oAuthToken = oAuthService.validOAuthToken(oAuthToken);
                 String accessToken = oAuthToken.getAccessToken();
                 System.out.println(accessToken);
                 RestTemplate restTemplate = new RestTemplate();
@@ -143,6 +147,7 @@ public class CalendarService {
                     .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다."));
 
             Schedule schedule = scheduleRepository.findByScId(scId);
+            Expense expense = expenseRepository.findBySchedule(schedule);
 
             if (schedule == null) {
                 throw new RuntimeException("존재하지 않는 일정입니다");
@@ -151,6 +156,8 @@ public class CalendarService {
             if (calendarId != null) {
                 OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                         .orElseThrow(() -> new RuntimeException("토큰을 찾을 수 없습니다."));
+
+                oAuthToken = oAuthService.validOAuthToken(oAuthToken);
                 String accessToken = oAuthToken.getAccessToken();
 
                 RestTemplate restTemplate = new RestTemplate();
@@ -179,8 +186,14 @@ public class CalendarService {
             schedule.setScName(scheduleDto.getScName());
             schedule.setScBudget(scheduleDto.getScBudget());
             schedule.setScDate(scheduleDto.getScDate());
-
             scheduleRepository.save(schedule);
+
+            expense.setSchedule(schedule);
+            expense.setExpenseAmount(schedule.getScBudget());
+            expense.setExpenseDate(schedule.getScDate());
+            expense.setExpenseContent(schedule.getScName());
+
+            expenseRepository.save(expense);
 
             return true;
         } catch (Exception e) {
@@ -204,6 +217,8 @@ public class CalendarService {
                 String calendarId = schedule.getGoogleCalendarId();
                 OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                         .orElseThrow(() -> new RuntimeException("토큰을 찾을 수 없습니다."));
+
+                oAuthToken = oAuthService.validOAuthToken(oAuthToken);
                 String accessToken = oAuthToken.getAccessToken();
 
                 RestTemplate restTemplate = new RestTemplate();
@@ -222,6 +237,7 @@ public class CalendarService {
 
             // Delete the schedule from the database
             scheduleRepository.deleteByScId(scId);
+            expenseRepository.deleteBySchedule(schedule);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -230,6 +246,7 @@ public class CalendarService {
     }
 
     // GoogleCalendar events 조회후 DB에 추가 또는 업데이트
+    // expense DB에도 추가해줍니다
     public void getGoogleCalendarEvents(UserDetailsImpl userDetails) {
         Long userId = userDetails.getId();
         try {
@@ -241,9 +258,11 @@ public class CalendarService {
             }
             OAuthToken oAuthToken = oAuthTokenRepository.findByUser(user)
                     .orElseThrow(() -> new RuntimeException("Token does not exist"));
+
+            oAuthToken = oAuthService.validOAuthToken(oAuthToken);
             String accessToken = oAuthToken.getAccessToken();
 
-            if (accessToken != null) {
+            if (accessToken == null) {
                 return;
             }
 
@@ -284,6 +303,24 @@ public class CalendarService {
                         schedule.setScDate(startDateTime);
 
                         scheduleRepository.save(schedule);
+
+                        Expense expense = expenseRepository.findBySchedule(schedule);
+
+                        if (expense==null) {
+                            expense = new Expense();
+                            Category category = categoryRepository.findByCategoryId((long) 14);
+                            expense.setUser(user);
+                            expense.setSchedule(schedule);
+                            expense.setCategory(category);
+                            expense.setExpenseAmount(schedule.getScBudget());
+                            expense.setExpenseDate(schedule.getScDate());
+                            expense.setExpenseContent(schedule.getScName());
+
+                            expenseRepository.save(expense);
+                        }
+
+
+
                     }
                 }
             } catch (Exception e) {
@@ -363,6 +400,43 @@ public class CalendarService {
         }
     }
 
+    // 근무 수정
+    // 캘린더 일정 수정 (입력값 scheduleRequest)
+    public boolean updateWork(WorkDto workDto) {
+        Long workId = workDto.getWorkId();
+
+        try {
+            Work work = workRepository.findByWorkId(workId);
+            Income income = incomeRepository.findByWork(work);
+
+            if (work == null) {
+                throw new RuntimeException("존재하지 않는 근무입니다");
+            }
+
+            work.setWorkName(workDto.getWorkName());
+            work.setColorId(workDto.getColorId());
+            work.setPayType(workDto.getPayType());
+            work.setWorkDate(workDto.getWorkDate());
+            work.setWorkStart(workDto.getWorkStart());
+            work.setWorkEnd(workDto.getWorkEnd());
+            work.setWorkPay(calMyHourlySalary(workDto));
+            work.setPayday(workDto.getPayday());
+            workRepository.save(work);
+
+            income.setWork(work);
+            income.setIncomeAmount(calMyHourlySalary(workDto));
+            income.setIncomeDate(workDto.getPayday());
+            income.setIncomeContent(workDto.getWorkName());
+
+            incomeRepository.save(income);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public int calMyHourlySalary(WorkDto workDto) {
         int type = workDto.getPayType();
         int money = workDto.getWorkMoney();
@@ -393,16 +467,14 @@ public class CalendarService {
     }
 
     // 캘린더 근무 삭제
-    public boolean deleteWork(Long workId, UserDetailsImpl userDetails) {
-        Long userId = userDetails.getId();
+    public boolean deleteWork(Long workId) {
 
         try {
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다."));
             Work work = workRepository.findByWorkId(workId);
 
             // Delete the work from the database
             workRepository.deleteByWorkId(workId);
+            incomeRepository.deleteByWork(work);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

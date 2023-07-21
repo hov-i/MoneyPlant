@@ -95,7 +95,7 @@ public class LedgerController {
             @RequestBody ExpenseDto updatedExpenseDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        boolean isUpdated = ledgerService.updateExpense(expenseId, updatedExpenseDto);
+        boolean isUpdated = ledgerService.updateExpense(expenseId, updatedExpenseDto, userDetails);
 
         if (isUpdated) {
             return ResponseEntity.ok("지출 정보가 성공적으로 수정되었습니다.");

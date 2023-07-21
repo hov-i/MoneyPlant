@@ -12,12 +12,6 @@ const lineColor = "#ffa947";
 // `v` and `v1` are used for bars
 // `l` is used for line
 
-// 내가 처리해야하는 undefined의 문제점...
-// 지출 값'만' 들어오는 경우 -> 강제로 수입 값을 0으로 만들어줘야 함
-// 수입도 마찬가지
-// 이걸 어떻게 함...?
-// 그러면 애초에 undefined 값을 전부 0으로 처리하면 될 거 같기도 하고...?
-
 const LineBarChart = ({ data }) => {
   const Line = ({ bars, xScale, yScale, innerWidth, innerHeight }) => {
     // scale 최댓값 입력
@@ -120,8 +114,7 @@ const LineBarChart = ({ data }) => {
           x={innerWidth} // 오른쪽 끝에 위치
           y={yScale(maxValue) - 12} // yScale의 최댓값에 해당하는 y 좌표에서 약간 위로 이동
           textAnchor="start" // 시작 부분에 정렬
-          style={{ fontSize: "10px" }}
-        >
+          style={{ fontSize: "10px" }}>
           (원)
         </text>
         <path
@@ -161,8 +154,7 @@ const LineBarChart = ({ data }) => {
               }
               y={yScale(bar.data.data["수입"])} // v 값 텍스트의 y 좌표 수정
               textAnchor="middle"
-              style={{ fontSize: "12px" }}
-            >
+              style={{ fontSize: "1.1rem", fill: "#2aac87" }}>
               {bar.data.data["수입"]}
             </text>
             <text
@@ -171,16 +163,14 @@ const LineBarChart = ({ data }) => {
               }
               y={yScale(bar.data.data["지출"])} // v1 값 텍스트의 y 좌표 수정
               textAnchor="middle"
-              style={{ fontSize: "12px" }}
-            >
+              style={{ fontSize: "1.1rem", fill: "#cb2f68" }}>
               {bar.data.data["지출"]}
             </text>
             <text
               x={xScale(bar.data.data.x) + xScale.bandwidth() / 2}
               y={yScale(bar.data.data.l) - 10}
               textAnchor="middle"
-              style={{ fontSize: "12px" }}
-            >
+              style={{ fontSize: "1.1rem", fill: "#eaab64" }}>
               {bar.data.data.l}
             </text>
           </Fragment>
@@ -190,27 +180,24 @@ const LineBarChart = ({ data }) => {
   };
 
   const transformedData = data.map((item) => ({
-    x: item.x,
-    수입: item.v,
-    지출: item.v1,
-    l: item.l,
+    x: item.x || "",
+    수입: item.v || " ",
+    지출: -item.v1 || " ",
+    l: item.l || " ",
   }));
+
+  // transformedData 배열을 월(month) 기준으로 정렬
+  transformedData.sort((a, b) => {
+    const aMonth = parseInt(a.x.split("-")[1]);
+    const bMonth = parseInt(b.x.split("-")[1]);
+    return aMonth - bMonth;
+  });
 
   // scale 최댓값 입력
   const maxValue = Math.max(...data.map((item) => Math.max(item.v, item.v1)));
   const minValue = Math.min(
     ...data.map((item) => Math.min(item.l, item.v, item.v1, 0))
   );
-
-  if (!data.length) {
-    return (
-      <>
-        <NotUseContainer>
-          <NotUse>현재 수입, 지출 내역이 존재하지 않습니다.😢</NotUse>
-        </NotUseContainer>
-      </>
-    );
-  }
 
   return (
     <LineBarChartContainer>
@@ -282,21 +269,13 @@ const LineBarChartContainer = styled.div`
   .lineBarChart {
     margin-top: 10px;
     width: 100%;
-    height: 90%;
+    height: 95%;
   }
-`;
 
-const NotUseContainer = styled.div`
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  height: 100%;
-  padding-bottom: 10%;
-`;
-
-const NotUse = styled.div`
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  font-size: 20px;
+  /* 모바일 환경에서 스타일 덮어씌우기 */
+  @media (max-width: 768px) {
+    .lineBarChart {
+      margin-top: -5px;
+    }
+  }
 `;

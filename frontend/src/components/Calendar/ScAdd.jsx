@@ -8,14 +8,24 @@ import QuickView from "../MyPage/QuickView";
 import CalendarAxiosApi from "../../api/CalendarAxiosAPI";
 import SelColor from "./SelColor";
 
+import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
-  const [scId, setScId] = useState(data ? data.scId : 0);
-  const [contentId, setContentId] = useState(data ? data.colorId : 1);
-  const [scDate, setScDate] = useState(data ? data.scDate : "");
-  const [scName, setScName] = useState(data ? data.scName : "");
-  const [scBudget, setScBudget] = useState(data ? data.scBudget : "");
+const ScAdd = ({ isBasic, isUpdate, isQuick, value, data, scId }) => {
+  const [schedule, setSchedule] = useState({
+    scId: data ? data.scId : null,
+    scDate: data ? data.scDate : "",
+    scName: data ? data.scName : "",
+    scBudget: data ? data.scBudget : "",
+    colorId: data ? data.colorId : 1,
+  });
+
+  const handleScheduleChange = (key, value) => {
+    setSchedule((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  };
 
   // const setvalue = new Date(value);
   // setvalue.setDate(setvalue.getDate() + 1);
@@ -32,30 +42,24 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
   };
 
   const handleScDateChange = (event) => {
-    setScDate(event.target.value);
+    handleScheduleChange("scDate", event.target.value);
   };
 
   const handleScNameChange = (event) => {
-    setScName(event.target.value);
+    handleScheduleChange("scName", event.target.value);
   };
 
   const handleScBudgetChange = (event) => {
-    setScBudget(event.target.value);
+    handleScheduleChange("scBudget", event.target.value);
   };
 
-  const handleContentIdChange = (event) => {
-    setContentId(event);
-    // setContentId(event.target.contentId);
+  const handleColorIdChange = (newValue) => {
+    handleScheduleChange("colorId", newValue);
   };
 
   const onCreateSc = async () => {
     try {
-      const createSc = await CalendarAxiosApi.createSchedule(isQuick, {
-        scDate,
-        scName,
-        scBudget,
-        colorId: contentId,
-      });
+      const createSc = await CalendarAxiosApi.createSchedule(isQuick, schedule);
 
       if (createSc.data === "일정을 성공적으로 생성했습니다.") {
         console.log("입력 성공");
@@ -71,13 +75,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
   const onUpdateSc = async () => {
     try {
-      const createSc = await CalendarAxiosApi.updateSchedule( {
-        scId,
-        scDate,
-        scName,
-        scBudget,
-        colorId: contentId,
-      });
+      const createSc = await CalendarAxiosApi.updateSchedule(schedule);
 
       if (createSc.data === "일정을 성공적으로 수정했습니다.") {
         console.log("입력 성공");
@@ -91,8 +89,31 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
     }
   };
 
+  const onDeleteSc = async () => {
+    try {
+      const deleteSchedule = await CalendarAxiosApi.deleteSchedule(data.scId);
+      if (deleteSchedule.data === "일정을 성공적으로 삭제헸습니다.") {
+        console.log("일정 삭제 성공");
+        window.location.reload();
+      } else {
+        console.log("일정 삭제 실패");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("에러:", error);
+    }
+  };
+
   return (
-    <>
+    <ScAddContainer>
+      {isUpdate ? (
+        <div className="delete">
+          <Delete onClick={onDeleteSc} />
+        </div>
+      ) : (
+        <></>
+      )}
+
       <Container>
         {isUpdate ? <Title>일정 수정</Title> : <Title>일정 등록</Title>}
         <BlockLine />
@@ -109,7 +130,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
                 <Input
                   type="date"
                   id="date"
-                  value={scDate}
+                  value={schedule.scDate}
                   onChange={handleScDateChange}
                 />
                 <p> ㅤ </p>
@@ -126,7 +147,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
                 <Input
                   type="date"
                   id="date"
-                  value={scDate}
+                  value={schedule.scDate}
                   onChange={handleScDateChange}
                 />
                 <p> ㅤ </p>
@@ -138,7 +159,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
           <div>
             <p className="label">일정</p>
-            <Input value={scName} onChange={handleScNameChange} />
+            <Input value={schedule.scName} onChange={handleScNameChange} />
             <p> ㅤ </p>
           </div>
 
@@ -146,23 +167,19 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
             <p className="label">예산</p>
             <Input
               className="budget-size"
-              value={scBudget}
+              value={schedule.scBudget}
               onChange={handleScBudgetChange}
             />
             <p className="text">원</p>
           </div>
 
           <SelColor
-            // value={myColor}
-            contentId={contentId}
-            onContentIdChange={handleContentIdChange}
+            value={schedule.colorId}
+            onChange={handleColorIdChange}
             isBasic={true}
           />
         </InputContainer>
       </Container>
-      {/* <ButtonContainer>
-        <ClickButton onClick={onCreateSc}>일정 등록</ClickButton>
-      </ButtonContainer> */}
 
       {isUpdate ? (
         <>
@@ -180,14 +197,35 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
 
       {modalOpen && (
         <Modal open={modalOpen} close={closeModal} width={"300px"}>
-          <QuickView isBasic={true} />
+          <QuickView
+            isBasic={true}
+            data={schedule}
+            setData={setSchedule}
+            close={closeModal}
+          />
+          {/*<QuickView isBasic={true} data={data} changeData={changeData}/>*/}
         </Modal>
       )}
-    </>
+    </ScAddContainer>
   );
 };
 
 export default ScAdd;
+
+const ScAddContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  position: relative;
+  .delete {
+    position: absolute;
+    left: 1vw;
+    margin-top: 15px;
+
+    cursor: pointer;
+  }
+`;
 
 const Title = styled.div`
   display: flex;

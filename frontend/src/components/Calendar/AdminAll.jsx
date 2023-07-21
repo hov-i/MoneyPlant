@@ -16,14 +16,13 @@ const AdminAll = ({ setValue, isBasic }) => {
   const [modalOpenWk, setModalOpenWk] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
-
   const openModalSc = (data) => {
     setSelectedData(data);
     setModalOpenSc(true);
   };
 
-
-  const openModalWk = () => {
+  const openModalWk = (data) => {
+    setSelectedData(data);
     setModalOpenWk(true);
   };
 
@@ -107,9 +106,9 @@ const AdminAll = ({ setValue, isBasic }) => {
         ) : (
           <>
             {selectTodaySc.map((data) => (
-                <ScheduleContainer onClick={() => openModalSc(data)}>
-                  <Tag width={"15%"} color={data.colorId} detail={data.scName} />
-                </ScheduleContainer>
+              <ScheduleContainer onClick={() => openModalSc(data)}>
+                <Tag width={"70%"} color={data.colorId} detail={data.scName} />
+              </ScheduleContainer>
             ))}
           </>
         )}
@@ -126,14 +125,21 @@ const AdminAll = ({ setValue, isBasic }) => {
         ) : (
           <>
             {selectTodayWork.map((data) => (
-              <WorkContainer onClick={openModalWk}>
+              <WorkContainer onClick={() => openModalWk(data)}>
                 <Tag
                   width={"70%"}
                   color={data.colorId}
                   detail={data.workName}
                 />
+
                 <p className="time">
-                  {data.workStart} ~ {data.workEnd}
+                  {data.workStart ? (
+                    <>
+                      {data.workStart} ~ {data.workEnd}{" "}
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </p>
                 <p className="money">{data.workPay}원</p>
               </WorkContainer>
@@ -161,6 +167,7 @@ const AdminAll = ({ setValue, isBasic }) => {
                 categoryName={data.categoryName}
                 setValue={setValue}
                 categoryId={data.categoryId}
+                Id={data.expenseId}
               />
             ))}
             {selectTodayIncome.map((data, index) => (
@@ -172,6 +179,7 @@ const AdminAll = ({ setValue, isBasic }) => {
                 categoryName={data.categoryIncomeName}
                 setValue={setValue}
                 categoryId={data.categoryIncomeId}
+                Id={data.incomeId}
               />
             ))}
           </>
@@ -179,15 +187,14 @@ const AdminAll = ({ setValue, isBasic }) => {
       </div>
       {/* 모달 */}
       {modalOpenSc && (
-          <Modal open={modalOpenSc} close={closeModalSc} width={"300px"}>
-            <ScAdd isUpdate={true} data={selectedData} />
-          </Modal>
+        <Modal open={modalOpenSc} close={closeModalSc} width={"300px"}>
+          <ScAdd isUpdate={true} data={selectedData} />
+        </Modal>
       )}
-
 
       {modalOpenWk && (
         <Modal open={modalOpenWk} close={closeModalWk} width={"300px"}>
-          <WorkAdd isUpdate={true} />
+          <WorkAdd isUpdate={true} data={selectedData} />
         </Modal>
       )}
     </AdminAllContainer>
@@ -234,7 +241,10 @@ const AdminAllContainer = styled.div`
   }
 `;
 
-const ScheduleContainer = styled.div``;
+const ScheduleContainer = styled.div`
+  display: flex;
+  width: 20%;
+`;
 
 const WorkContainer = styled.div`
   display: flex;

@@ -8,24 +8,19 @@ import com.MoneyPlant.entity.RefreshToken;
 import com.MoneyPlant.repository.RefreshTokenRepository;
 import com.MoneyPlant.repository.UserRepository;
 import com.MoneyPlant.security.exception.TokenRefreshException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class RefreshTokenService {
     @Value("${app.jwtRefreshExpirationMs}")
     private Long refreshTokenDurationMs;
-
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final UserRepository userRepository;
 
     public Optional<RefreshToken> findByToken(String token) {
         return refreshTokenRepository.findByToken(token);
@@ -33,9 +28,16 @@ public class RefreshTokenService {
 
     // userId를 받아서 refresh token 생성 후 DB에 저장하는 메소드
     public RefreshToken createRefreshToken(Long userId) {
-        RefreshToken refreshToken = new RefreshToken();
+        RefreshToken refreshToken;
+        Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByUserId(userId);
 
-        refreshToken.setUser(userRepository.findById(userId).get());
+        if (optionalRefreshToken.isEmpty()) {
+            refreshToken = new RefreshToken();
+            refreshToken.setUser(userRepository.findUserById(userId));
+        } else {
+            refreshToken = optionalRefreshToken.get();
+        }
+
         refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
         refreshToken.setToken(UUID.randomUUID().toString());
 
@@ -53,10 +55,9 @@ public class RefreshTokenService {
         return token;
     }
 
-
     // userId로 refresh token 테이블에서 토큰 삭제하는 메소드
     @Transactional
     public int deleteByUserId(Long userId) {
-        return refreshTokenRepository.deleteByUser(userRepository.findById(userId).get());
+        return refreshTokenRepository.deleteByUser(userRepository.findUserById(userId));
     }
 }

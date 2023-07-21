@@ -68,8 +68,8 @@ public class MyPageController {
     // 마이페이지 전체 조회
     @GetMapping("")
     public ResponseEntity<MyPageDto> myPageView(@AuthenticationPrincipal UserDetailsImpl userDetails) throws IllegalAccessException {
-        List<MyScheduleDto> myScheduleList = myScheduleService.getScheduleForMyPage(userDetails);
-        List<MyWorkDto> myWorkList = myWorkService.getWorkForMyPage(userDetails);
+        List<ScheduleDto> myScheduleList = myScheduleService.getScheduleForMyPage(userDetails);
+        List<WorkDto> myWorkList = myWorkService.getWorkForMyPage(userDetails);
 
         MyPageDto myPageDto = new MyPageDto(myScheduleList, myWorkList);
 

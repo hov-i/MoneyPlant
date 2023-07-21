@@ -19,7 +19,7 @@ const AxiosApi = {
   updateSchedule: async (data) => {
     try {
       const response = await axiosInstance.post(
-        "/calendar/update/schedule/",
+        "/calendar/update/schedule",
         data
       );
 
@@ -32,7 +32,9 @@ const AxiosApi = {
 
   deleteSchedule: async (scId) => {
     try {
-      const response = await axiosInstance.post(`/calendar/delete/${scId}`);
+      const response = await axiosInstance.delete(
+        `/calendar/schedule/delete/${scId}`
+      );
       return response.data;
     } catch (error) {
       console.error("Request Error : ", error);
@@ -50,6 +52,28 @@ const AxiosApi = {
       return response.data;
     } catch (error) {
       console.error("Request Error:", error);
+      throw error;
+    }
+  },
+  updateWork: async (data) => {
+    try {
+      const response = await axiosInstance.post("/calendar/update/work", data);
+
+      return response.data;
+    } catch (error) {
+      console.error("Request Error : ", error);
+      throw error;
+    }
+  },
+
+  deleteWork: async (workId) => {
+    try {
+      const response = await axiosInstance.delete(
+        `/calendar/work/delete/${workId}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Request Error : ", error);
       throw error;
     }
   },
@@ -82,7 +106,6 @@ const AxiosApi = {
         incomeAmounts,
         scheduleList: scheduleDtoList,
         workList: workDtoList,
-
       };
     } catch (error) {
       console.error(error);
@@ -101,6 +124,15 @@ const AxiosApi = {
   getTodayWork: async (workDate) => {
     try {
       return await axiosInstance.get(`calendar/today/work/${workDate}`);
+    } catch (error) {
+      throw error;
+    }
+  }, 
+  
+  // 마이페이지 전체 조회
+  getMyPageList: async () => {
+    try {
+      return await axiosInstance.get("/mypage");
     } catch (error) {
       throw error;
     }

@@ -71,8 +71,8 @@ const Header = () => {
 export default Header;
 
 const Logo = styled.img`
-    width: 213px;
-    height: 39px;
+    width: 200px;
+    max-height: 100%;
 `;
 
 const Container = styled.div`

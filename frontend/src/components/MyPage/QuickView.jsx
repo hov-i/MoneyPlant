@@ -4,19 +4,25 @@ import styled from "styled-components";
 import BlockLine from "../Common/BlockLine";
 import Box from "../Common/Box";
 import Tag from "./Tag";
-import ClickButton from "../Common/ClickButton";
+// import ClickButton from "../Common/ClickButton";
 
 import QuickAxiosApi from "../../api/QuickAddAxiosAPI";
+import CalendarAxiosAPI from "../../api/CalendarAxiosAPI";
 
-const QuickView = ({ isBasic }) => {
-  const onChangeValue = async () => {};
-
+const QuickView = ({ isBasic, data, setData, close }) => {
   const [myPageList, setMyPageList] = useState([]);
+
+  // mypage의 data를
+  const onClickQuickMenu = (data) => {
+    console.log(data);
+    setData(data);
+    close();
+  };
 
   useEffect(() => {
     const getMyPageList = async () => {
       try {
-        const rsp = await QuickAxiosApi.getMyPageList();
+        const rsp = await CalendarAxiosAPI.getMyPageList();
         if (rsp.status === 200) setMyPageList(rsp.data);
         setMyPageList(rsp.data);
         console.log("마이페이지 list 조회");
@@ -31,37 +37,41 @@ const QuickView = ({ isBasic }) => {
     <>
       <Title>간편 등록</Title>
       <BlockLine />
-      <Box height={"60%"}>
+      <QuickViewContainer>
         {isBasic ? (
           <>
             {myPageList.myScheduleDtoList &&
               myPageList.myScheduleDtoList.map((data1) => (
-                <Tag
-                  width={"20%"}
-                  color={data1.myColor}
-                  detail={data1.myScName}
-                />
+                <div onClick={() => onClickQuickMenu(data1)} key={data1.id}>
+                  <Tag
+                    width={"20%"}
+                    color={data1.colorId}
+                    detail={data1.scName}
+                  />
+                </div>
               ))}
           </>
         ) : (
           <>
             {myPageList.myWorkDtoList &&
               myPageList.myWorkDtoList.map((data2) => (
-                <Tag
-                  width={"20%"}
-                  color={data2.myColor}
-                  detail={data2.myWkName}
-                />
+                <div onClick={() => onClickQuickMenu(data2)} key={data2.id}>
+                  <Tag
+                    width={"20%"}
+                    color={data2.colorId}
+                    detail={data2.workName}
+                  />
+                </div>
               ))}
           </>
         )}
-      </Box>
+      </QuickViewContainer>
 
-      <ButtonContainer>
-        <ClickButton onClick={onChangeValue} width={"100px"} height={"35px"}>
-          선택하기
-        </ClickButton>
-      </ButtonContainer>
+      {/*<ButtonContainer>*/}
+      {/*    <ClickButton onClick={onChangeValue} width={"100px"} height={"35px"}>*/}
+      {/*        선택하기*/}
+      {/*    </ClickButton>*/}
+      {/*</ButtonContainer>*/}
     </>
   );
 };
@@ -75,9 +85,8 @@ const Title = styled.div`
   margin: 20px 10px;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+const QuickViewContainer = styled.div`
+  width: "90%";
+  margin: 25px;
+  margin-bottom: 20px;
 `;

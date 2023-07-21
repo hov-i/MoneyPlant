@@ -1,10 +1,10 @@
 import * as React from "react";
-
-import logo1 from "../assets/logo1.png";
-import styled from "styled-components";
+import logo from "../assets/Logo.png";
+import styled, { keyframes } from "styled-components";
 import { useState } from "react";
-import SignupForm from "./SignupForm";
-import LoginForm from "./LoginForm";
+import SignupForm from "../components/Common/SignupForm";
+import LoginForm from "../components/Common/LoginForm";
+import backGroundBubble from "../assets/backgroundBubble.png";
 
 const LoginAndRegister = () => {
   const [value, setValue] = useState("login");
@@ -13,63 +13,99 @@ const LoginAndRegister = () => {
   };
 
   return (
-    <LoginContainer>
-      <div className="loginbox">
-        {/* Temporary logo will be changed */}
-        <div className="loginbox-top">
-          <Img className="logo" src={logo1} alt="logo1" />
+    <BackGroundBox>
+      <FloatingBackGround />
+      <LoginContainer>
+        <div className="loginbox">
+          <div className="logo">
+            <Logo src={logo} alt="#" />
+            <div className="title">당신의 재산 지킴이가 되어 드릴게요!</div>
+          </div>
           <div className="tabs">
             <button
               onClick={() => handleButtonClick("login")}
-              className={value === "login" ? "button-active" : ""}>
+              className={value === "login" ? "button-active" : ""}
+            >
               로그인
             </button>
             <button
               onClick={() => handleButtonClick("signup")}
-              className={value === "signup" ? "button-active" : ""}>
+              className={value === "signup" ? "button-active" : ""}
+            >
               회원가입
             </button>
           </div>
+
+          {value === "login" && <LoginForm />}
+          {value === "signup" && (
+            <SignupForm value={value} setValue={setValue} />
+          )}
         </div>
-        {value === "login" && <LoginForm />}
-        {value === "signup" && <SignupForm value={value} setValue={setValue} />}
-      </div>
-    </LoginContainer>
+      </LoginContainer>
+    </BackGroundBox>
   );
 };
 
 export default LoginAndRegister;
+
+const floatAnimation = keyframes`
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+`;
 
 const LoginContainer = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  .logo {
+    align-items: left;
+    width: 350px;
+  }
 
   .loginbox {
-    background-color: ${({ theme }) => theme.bgColor};
     border-radius: 10px;
-    width: 450px;
-    height: 520px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    border: 1px solid #87eec5;
+    padding: 60px;
+    border-radius: 10px;
+    background: url(${backGroundBubble}),
+      lightgray 0px -3.768px / 100% 101.044% no-repeat,
+      rgba(255, 255, 255, 0.16);
+    box-shadow: 4px 4px 116px 0px rgba(97, 120, 201, 0.16),
+      2px 2px 16px 0px rgba(255, 255, 255, 0.08) inset;
+    backdrop-filter: blur(42px);
   }
 
   .tabs {
     margin-top: 10px;
     width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+
     > button {
-      background-color: ${({ theme }) => theme.bgColor};
       color: ${({ theme }) => theme.textColor};
       border: none;
       cursor: pointer;
       width: 50%;
       height: 40px;
-      font-size: 1.5rem;
+      background-color: rgba(255, 255, 255, 0);
+      font-size: 1.4rem;
     }
 
     .button-active {
@@ -101,14 +137,36 @@ const LoginContainer = styled.div`
       align-items: center;
     }
   }
+
+  .title {
+    font-size: 16px;
+    color: #575757;
+    margin: 14px;
+    margin-left: 0px;
+    font-weight: bolder;
+  }
+`;
+const BackGroundBox = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: ${(props) => (props.isMobile ? "block" : "flex")};
+  justify-content: space-between;
+  position: relative; /* Set the position to relative for the pseudo-element */
 `;
 
-const Img = styled.img`
-  max-width: 400px;
-  display: block;
-  margin: 0 auto;
+const Logo = styled.img`
+  width: 200px;
+  max-height: 100%;
+`;
 
-  @media (max-width: 768px) {
-    width: 80%;
-  }
+const FloatingBackGround = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${backGroundBubble});
+  background-size: cover;
+  animation: ${floatAnimation} 2s ease-in-out infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 `;

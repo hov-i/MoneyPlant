@@ -146,12 +146,13 @@ public class LedgerService {
     }
 
     // 지출 수정
-    public boolean updateExpense(Long expenseId, ExpenseDto updatedExpenseDto) {
+    public boolean updateExpense(Long expenseId, ExpenseDto updatedExpenseDto, UserDetailsImpl userDetails) {
         try {
+            Long userId = userDetails.getId();
             Expense expense = expenseRepository.findById(expenseId)
                     .orElseThrow(() -> new RuntimeException("지출 정보를 찾을 수 없습니다."));
 
-            User user = userRepository.findById(updatedExpenseDto.getUserId())
+            User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
             Category category = categoryRepository.findById(updatedExpenseDto.getCategoryId())
@@ -367,18 +368,14 @@ public class LedgerService {
 
         // 월간 수입 합계 계산
         Map<String, Integer> monthlyIncome = getMonthlyIncome(userDetails);
-        if (monthlyIncome == null) {
-            monthlyIncome = new HashMap<>();
-        }
-
-        // 월간 지출 합계 계산
         Map<String, Integer> monthlyExpense = getMonthlyExpense(userDetails);
-        if (monthlyExpense == null) {
-            monthlyExpense = new HashMap<>();
-        }
 
-        // 월별 합계 계산 및 합산
-        for (String month : monthlyExpense.keySet()) {
+        // 월별 데이터가 있는 모든 달의 리스트 구하기
+        Set<String> allMonths = new HashSet<>();
+        allMonths.addAll(monthlyIncome.keySet());
+        allMonths.addAll(monthlyExpense.keySet());
+
+        for (String month : allMonths) {
             int incomeTotal = monthlyIncome.getOrDefault(month, 0);
             int expenseTotal = monthlyExpense.getOrDefault(month, 0);
             int total = incomeTotal - expenseTotal;
@@ -401,10 +398,10 @@ public class LedgerService {
             expenseDto.setExpenseDate(expense.getExpenseDate());
             String categoryName = categoryRepository.findByCategoryId(expense.getCategory().getCategoryId()).getCategoryName();
             expenseDto.setCategoryName(categoryName);
+            expenseDto.setExpenseId(expense.getExpenseId());
             expenseDto.setCategoryId(expense.getCategory().getCategoryId());
             expenseDtoList.add(expenseDto);
         }
-
         return expenseDtoList;
     }
 
@@ -421,10 +418,10 @@ public class LedgerService {
             incomeDto.setIncomeDate(income.getIncomeDate());
             String categoryName = categoryIncomeRepository.findByCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId()).getCategoryIncomeName();
             incomeDto.setCategoryIncomeName(categoryName);
+            incomeDto.setIncomeId(income.getIncomeId());
             incomeDto.setCategoryIncomeId(income.getCategoryIncome().getCategoryIncomeId());
             IncomeDtoList.add(incomeDto);
         }
-
         return IncomeDtoList;
     }
 

@@ -9,11 +9,14 @@ import ClickButton from "../Common/ClickButton";
 import Modal from "../Common/Modal";
 import CardRecommend from "../Statistics/CardRecommend";
 
-//퍼센테이지 반환을 백에서 할지 프론트에서 할지 아직 모르겠음
 const formatData = (data) => {
-  const sortedData = data.sort((a, b) => b.value - a.value); // value 값을 기준으로 내림차순 정렬
+  const sortedData = data.sort((a, b) => b.value - a.value);
   const total = sortedData.reduce((sum, item) => sum + item.value, 0);
-  return sortedData.map((item) => ({
+
+  // 최대 5개의 항목만 유지
+  const slicedData = sortedData.slice(0, 5);
+
+  return slicedData.map((item) => ({
     ...item,
     value: `${((item.value / total) * 100).toFixed(2)}%`,
     originalValue: item.value,
@@ -35,19 +38,14 @@ const Legends = ({ data }) => {
     <>
       <LegendsContainer>
         <ul>
-          <ClickButton width={"90px"} onClick={openModal}>
-            카드 추천
-          </ClickButton>
-          <img
-            src={crown}
-            alt="Crown"
-            style={{
-              display: "block",
-              width: "20px",
-              height: "20px",
-              marginLeft: "2px",
-            }}
-          />
+          <div className="buttonBox">
+            <ClickButton width={"90px"} onClick={openModal}>
+              카드 추천
+            </ClickButton>
+          </div>
+          <div className="imageBox">
+            <Image src={crown} alt="Crown" />
+          </div>
           {formattedData.map((item) => (
             <li key={item.id} className="legendsList">
               <CategoryIcon name={item.category} className={"category-icon"} />
@@ -112,7 +110,9 @@ const PieChart = () => {
   if (!data.length) {
     return (
       <>
-        <NotUse>이번 달 지출 내역이 존재하지 않습니다.😢</NotUse>
+        <NotUseContainer>
+          <NotUse>이번 달 지출 내역이 존재하지 않습니다.</NotUse>
+        </NotUseContainer>
       </>
     );
   }
@@ -201,6 +201,17 @@ const LegendsContainer = styled.div`
     width: 200px;
   }
 
+  .buttonBox {
+    margin-bottom: 10px;
+  }
+
+  .imageBox {
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: -3px;
+  }
+
   @media (max-width: 768px) {
     width: 40%;
     font-weight: 700;
@@ -209,12 +220,37 @@ const LegendsContainer = styled.div`
     .valueList {
       width: 80px;
     }
+
+    .legendsList {
+      margin-bottom: -7px;
+    }
   }
+`;
+
+const NotUseContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(137deg, rgba(167, 255, 201, 0.13) 1.63%, rgba(70, 137, 175, 0.17) 100%, rgba(0, 255, 133, 0.51) 100%);
 `;
 
 const NotUse = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #92d4be;
   font-size: 20px;
+`;
+
+const Image = styled.img`
+  display: block;
+  width: 20px;
+  height: 20px;
+
+  @media (max-width: 768px) {
+    width: 17px;
+    height: 17px;
+  }
 `;
