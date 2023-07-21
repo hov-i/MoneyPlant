@@ -10,6 +10,7 @@ import TagBox from "../components/MyPage/TagBox";
 import useViewport from "../hooks/viewportHook";
 
 import QuickAxiosApi from "../api/QuickAddAxiosAPI";
+import CalendarAxiosAPI from "../api/CalendarAxiosAPI";
 
 const Mypage = () => {
   const { isMobile } = useViewport();
@@ -18,7 +19,7 @@ const Mypage = () => {
   useEffect(() => {
     const getMyPageList = async () => {
       try {
-        const rsp = await QuickAxiosApi.getMyPageList();
+        const rsp = await CalendarAxiosAPI.getMyPageList();
         if (rsp.status === 200) setMyPageList(rsp.data);
         setMyPageList(rsp.data);
         console.log("마이페이지 list 조회");

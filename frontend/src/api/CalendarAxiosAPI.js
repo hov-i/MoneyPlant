@@ -128,6 +128,15 @@ const AxiosApi = {
       throw error;
     }
   },
+
+  // 마이페이지 전체 조회
+  getMyPageList: async () => {
+    try {
+      return await axiosInstance.get("/mypage");
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default AxiosApi;
