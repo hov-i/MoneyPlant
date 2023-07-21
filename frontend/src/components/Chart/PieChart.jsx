@@ -89,6 +89,14 @@ const PieChart = () => {
         category: item.category,
       }));
 
+      // value 값이 0인 경우에 특별히 처리해줄 작업을 수행
+      transformedData.forEach((item) => {
+        if (item.value === 0) {
+          // value가 0인 경우에 대한 처리
+          item.label = "데이터 없음";
+        }
+      });
+
       const matchedColors = transformedData.map((item) => {
         const matchedCategory = categoryList.find(
           (category) => category.Name === item.category
@@ -107,7 +115,8 @@ const PieChart = () => {
     fetchData();
   }, []);
 
-  if (!data.length) {
+  // 데이터가 없거나 value가 0인 경우 메시지를 표시
+  if (!data.length || (data.length === 1 && data[0].value === 0)) {
     return (
       <>
         <NotUseContainer>
