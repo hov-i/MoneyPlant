@@ -1,6 +1,5 @@
 import styled, { keyframes } from 'styled-components';
 
-// 로딩 스피너
 const LoadingSpinner = ({ width, height, children}) => {
   return (
     <LoaderStyled
