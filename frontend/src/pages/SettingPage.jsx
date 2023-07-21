@@ -18,15 +18,10 @@ const Setting = () => {
       <Navbar />
       <Container>
         <BoxContainer isMobile={isMobile}>
-          <Box titleMargin={"20px"} height={"300px"} width={"45%"}>
+          <Box titleMargin={"20px"} height={"300px"} width={"70%"}>
             <EditMyInfo />
           </Box>
-          {/* <Box titleMargin={"20px"} height={"300px"} width={"45%"}>
-            <CalChart />
-          </Box> */}
-          <LogoBox>
-            <Img className="logo" src={Logo} alt="logo" />
-          </LogoBox>
+
         </BoxContainer>
       </Container>
     </>
