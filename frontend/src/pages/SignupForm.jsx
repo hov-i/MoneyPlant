@@ -12,7 +12,7 @@ import ClickButton from '../components/Common/ClickButton';
 const SignupForm = ({ setValue }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [checkboxChecked, setCheckboxChecked] = useState(false);
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const closeModal = () => {
         setModalOpen(false);
     };
@@ -76,7 +76,12 @@ const SignupForm = ({ setValue }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (isSubmitting) {
+            return;
+        }
+
         try {
+            setIsSubmitting(true);
             const name = inputFirstName + ' ' + inputLastName;
             const response = await AuthAxiosAPI.signup(inputEmail, name, inputPwd);
             if (response.status === 200) {
@@ -91,6 +96,8 @@ const SignupForm = ({ setValue }) => {
             setInputLastName('');
             setInputFirstName('');
             setInputConPwd('');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 

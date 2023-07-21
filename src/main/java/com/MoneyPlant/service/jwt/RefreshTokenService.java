@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -23,9 +21,6 @@ public class RefreshTokenService {
     private Long refreshTokenDurationMs;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
-
-
-
 
     public Optional<RefreshToken> findByToken(String token) {
         return refreshTokenRepository.findByToken(token);
@@ -36,9 +31,13 @@ public class RefreshTokenService {
         RefreshToken refreshToken;
         Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByUserId(userId);
 
-        refreshToken = optionalRefreshToken.orElseGet(RefreshToken::new);
+        if (optionalRefreshToken.isEmpty()) {
+            refreshToken = new RefreshToken();
+            refreshToken.setUser(userRepository.findUserById(userId));
+        } else {
+            refreshToken = optionalRefreshToken.get();
+        }
 
-        refreshToken.setUser(userRepository.findUserById(userId));
         refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
         refreshToken.setToken(UUID.randomUUID().toString());
 
@@ -55,7 +54,6 @@ public class RefreshTokenService {
 
         return token;
     }
-
 
     // userId로 refresh token 테이블에서 토큰 삭제하는 메소드
     @Transactional

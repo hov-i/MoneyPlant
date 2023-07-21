@@ -16,6 +16,8 @@ import ClickButton from '../components/Common/ClickButton';
 
 const LoginForm = () => {
     const navigate = useNavigate();
+    // 중복 요청을 방지하기 위한 플래그
+    const [isSubmitting, setIsSubmitting] = useState(false);
     // 키보드 입력 받기
     const [inputEmail, setInputEmail] = useState('');
     const [inputPwd, setInputPwd] = useState('');
@@ -28,7 +30,12 @@ const LoginForm = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (isSubmitting) {
+            return;
+        }
         try {
+            setIsSubmitting(true);
             const response = await AuthAxiosAPI.login(inputEmail, inputPwd);
             const userInfo = JSON.stringify(response, null, 2);
             const userInfoParse = JSON.parse(userInfo);
@@ -44,6 +51,8 @@ const LoginForm = () => {
         } catch (error) {
             console.log('Login error:', error.message);
             alert('로그인 실패 : 아이디 비밀번호를 다시 확인해 주세요');
+        } finally {
+            setIsSubmitting(false);
         }
     };
     const OnClickGoogle = async () => {
