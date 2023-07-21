@@ -154,7 +154,7 @@ const LineBarChart = ({ data }) => {
               }
               y={yScale(bar.data.data["수입"])} // v 값 텍스트의 y 좌표 수정
               textAnchor="middle"
-              style={{ fontSize: "12px" }}>
+              style={{ fontSize: "1.1rem", fill: "#2aac87" }}>
               {bar.data.data["수입"]}
             </text>
             <text
@@ -163,14 +163,14 @@ const LineBarChart = ({ data }) => {
               }
               y={yScale(bar.data.data["지출"])} // v1 값 텍스트의 y 좌표 수정
               textAnchor="middle"
-              style={{ fontSize: "12px" }}>
+              style={{ fontSize: "1.1rem", fill: "#cb2f68" }}>
               {bar.data.data["지출"]}
             </text>
             <text
               x={xScale(bar.data.data.x) + xScale.bandwidth() / 2}
               y={yScale(bar.data.data.l) - 10}
               textAnchor="middle"
-              style={{ fontSize: "12px" }}>
+              style={{ fontSize: "1.1rem", fill: "#eaab64" }}>
               {bar.data.data.l}
             </text>
           </Fragment>
@@ -183,7 +183,7 @@ const LineBarChart = ({ data }) => {
     x: item.x || "",
     수입: item.v || " ",
     지출: -item.v1 || " ",
-    l: item.l || "0",
+    l: item.l || " ",
   }));
 
   // transformedData 배열을 월(month) 기준으로 정렬
