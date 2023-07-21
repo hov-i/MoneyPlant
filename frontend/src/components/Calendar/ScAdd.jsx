@@ -89,10 +89,10 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data, scId }) => {
     }
   };
 
-  const onClickDelete = async () => {
+  const onDeleteSc = async () => {
     try {
-      const deleteSchedule = await CalendarAxiosApi.deleteSchedule(scId);
-      if (deleteSchedule.data === "일정이 삭제되었습니다.") {
+      const deleteSchedule = await CalendarAxiosApi.deleteSchedule(data.scId);
+      if (deleteSchedule.data === "일정을 성공적으로 삭제헸습니다.") {
         console.log("일정 삭제 성공");
         window.location.reload();
       } else {
@@ -108,7 +108,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data, scId }) => {
     <ScAddContainer>
       {isUpdate ? (
         <div className="delete">
-          <Delete onClick={onClickDelete} />
+          <Delete onClick={onDeleteSc} />
         </div>
       ) : (
         <></>
@@ -222,6 +222,8 @@ const ScAddContainer = styled.div`
     position: absolute;
     left: 1vw;
     margin-top: 15px;
+
+    cursor: pointer;
   }
 `;
 

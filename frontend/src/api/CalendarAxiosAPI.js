@@ -32,7 +32,9 @@ const AxiosApi = {
 
   deleteSchedule: async (scId) => {
     try {
-      const response = await axiosInstance.delete(`/calendar/delete/${scId}`);
+      const response = await axiosInstance.delete(
+        `/calendar/schedule/delete/${scId}`
+      );
       return response.data;
     } catch (error) {
       console.error("Request Error : ", error);
@@ -55,10 +57,7 @@ const AxiosApi = {
   },
   updateWork: async (data) => {
     try {
-      const response = await axiosInstance.post(
-          "/calendar/update/work",
-          data
-      );
+      const response = await axiosInstance.post("/calendar/update/work", data);
 
       return response.data;
     } catch (error) {
@@ -69,7 +68,9 @@ const AxiosApi = {
 
   deleteWork: async (workId) => {
     try {
-      const response = await axiosInstance.delete(`/calendar/delete/${workId}`);
+      const response = await axiosInstance.delete(
+        `/calendar/work/delete/${workId}`
+      );
       return response.data;
     } catch (error) {
       console.error("Request Error : ", error);
@@ -105,7 +106,6 @@ const AxiosApi = {
         incomeAmounts,
         scheduleList: scheduleDtoList,
         workList: workDtoList,
-
       };
     } catch (error) {
       console.error(error);
@@ -127,8 +127,8 @@ const AxiosApi = {
     } catch (error) {
       throw error;
     }
-  },
-
+  }, 
+  
   // 마이페이지 전체 조회
   getMyPageList: async () => {
     try {
