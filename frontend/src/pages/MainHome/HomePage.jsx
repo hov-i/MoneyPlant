@@ -81,7 +81,7 @@ const CalendarContainer = styled.div`
   width: 100%;
 
   .header {
-    width: 85%;
+    width: 95%;
     margin: 0 auto;
     display: flex;
     flex-direction: row;

@@ -5,7 +5,7 @@ import useViewport from '../../hooks/viewportHook';
 
 const Modal = (props) => {
     const { isMobile } = useViewport();
-    const { open, close, name, width, height } = props;
+    const { open, close, name, width, height, border } = props;
 
     const closeModal = () => {
         close(name);
@@ -18,7 +18,7 @@ const Modal = (props) => {
     };
 
     return (
-        <ModalStyle width={width} height={height} isMobile={isMobile}>
+        <ModalStyle width={width} height={height} isMobile={isMobile} border={border}>
             <div className={open ? 'openModal modal' : 'modal'} onClick={handleOverlayClick}>
                 {open ? (
                     <section>
@@ -58,7 +58,7 @@ const ModalStyle = styled.div`
         width: ${(props) => (props.isMobile ? '100%' : props.width || '60%')};
         height: ${(props) => (props.isMobile ? '100%' : props.height || '500px')};
         margin: 0 auto;
-        border-radius: 10px;
+        border-radius: ${(props) => (props.isMobile ? '0px' : props.border || '10px')};
         background-color: ${({ theme }) => theme.bgColor};
         animation: modal-show 0.3s;
         overflow: scroll;
