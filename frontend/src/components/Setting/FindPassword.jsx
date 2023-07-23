@@ -2,18 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import logo1 from "../../assets/logo1.png";
 import Button from "@mui/material/Button";
-import {
-  TextField,
-  InputAdornment,
-  Box,
-  Grid,
-  CircularProgress,
-} from "@mui/material";
+import { TextField, InputAdornment, Box, Grid } from "@mui/material";
 import LoadingSpinner from "../Common/LoadingSpinner";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import UserAxiosAPI from "../../api/UserAxiosAPI";
 import Typography from "@mui/material/Typography";
-import { Block, Email } from "@mui/icons-material";
 
 const FindPassword = () => {
   const [inputEmail, setInputEmail] = useState("");

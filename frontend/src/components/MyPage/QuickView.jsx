@@ -7,6 +7,7 @@ import Tag from "./Tag";
 // import ClickButton from "../Common/ClickButton";
 
 import QuickAxiosApi from "../../api/QuickAddAxiosAPI";
+import CalendarAxiosAPI from "../../api/CalendarAxiosAPI";
 
 const QuickView = ({ isBasic, data, setData, close }) => {
   const [myPageList, setMyPageList] = useState([]);
@@ -21,7 +22,7 @@ const QuickView = ({ isBasic, data, setData, close }) => {
   useEffect(() => {
     const getMyPageList = async () => {
       try {
-        const rsp = await QuickAxiosApi.getMyPageList();
+        const rsp = await CalendarAxiosAPI.getMyPageList();
         if (rsp.status === 200) setMyPageList(rsp.data);
         setMyPageList(rsp.data);
         console.log("마이페이지 list 조회");

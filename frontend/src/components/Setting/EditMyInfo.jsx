@@ -123,6 +123,7 @@ const EditMyInfo = () => {
                       cursor: "pointer",
                       fontSize: "1.2rem",
                       color: "gray",
+                      whiteSpace: "nowrap",
                       "&:hover": {
                         color: "#8BD4D3",
                       },
@@ -199,6 +200,18 @@ const InfoBox = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-left: 50px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  margin-right: 10px;
+
+  /* 스크롤바는 안 보이고 역할은 하게 만듦 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 `;
 const Title = styled.div`
   display: flex;
@@ -210,15 +223,14 @@ const InfoLine = styled.div`
   height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center;
 `;
 const InfoText = styled.div`
-  display: flex;
   font-size: 2rem;
   font-weight: bold;
+  white-space: nowrap;
 `;
 const MyInfo = styled.div`
-  font-size: 19px;
+  font-size: 1.9rem;
   font-weight: bold;
   margin: 0px 10px;
 `;

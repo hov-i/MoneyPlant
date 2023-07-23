@@ -11,7 +11,7 @@ import SelColor from "./SelColor";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Post } from "../../assets/Post.svg";
 
-const ScAdd = ({ isBasic, isUpdate, isQuick, value, data, scId }) => {
+const ScAdd = ({ isBasic, isUpdate, isQuick, value, data }) => {
   const [schedule, setSchedule] = useState({
     scId: data ? data.scId : null,
     scDate: data ? data.scDate : "",
@@ -19,6 +19,8 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data, scId }) => {
     scBudget: data ? data.scBudget : "",
     colorId: data ? data.colorId : 1,
   });
+  
+  
 
   const handleScheduleChange = (key, value) => {
     setSchedule((prevState) => ({
@@ -78,10 +80,10 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data, scId }) => {
       const createSc = await CalendarAxiosApi.updateSchedule(schedule);
 
       if (createSc.data === "일정을 성공적으로 수정했습니다.") {
-        console.log("입력 성공");
+        console.log("일정 삭제 성공");
         window.location.reload();
       } else {
-        console.log("입력 실패");
+        console.log("일정 삭제 실패");
         window.location.reload();
       }
     } catch (error) {
@@ -89,10 +91,10 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data, scId }) => {
     }
   };
 
-  const onClickDelete = async () => {
+  const onDeleteSc = async () => {
     try {
-      const deleteSchedule = await CalendarAxiosApi.deleteSchedule(scId);
-      if (deleteSchedule.data === "일정이 삭제되었습니다.") {
+      const deleteSchedule = await CalendarAxiosApi.deleteSchedule(data.scId);
+      if (deleteSchedule.data === "일정을 성공적으로 삭제헸습니다.") {
         console.log("일정 삭제 성공");
         window.location.reload();
       } else {
@@ -108,7 +110,7 @@ const ScAdd = ({ isBasic, isUpdate, isQuick, value, data, scId }) => {
     <ScAddContainer>
       {isUpdate ? (
         <div className="delete">
-          <Delete onClick={onClickDelete} />
+          <Delete onClick={onDeleteSc} />
         </div>
       ) : (
         <></>
@@ -222,6 +224,8 @@ const ScAddContainer = styled.div`
     position: absolute;
     left: 1vw;
     margin-top: 15px;
+
+    cursor: pointer;
   }
 `;
 

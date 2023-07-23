@@ -94,10 +94,10 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data, workId }) => {
       const createWork = await CalendarAxiosApi.createWork(isQuick, work);
 
       if (createWork.data === "근무를 성공적으로 생성했습니다.") {
-        console.log("입력 성공");
+        console.log("근무 생성 성공");
         window.location.reload();
       } else {
-        console.log("입력 실패");
+        console.log("근무 생성 실패");
         window.location.reload();
       }
     } catch (error) {
@@ -120,7 +120,7 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data, workId }) => {
 
   const onClickDelete = async () => {
     try {
-      const deleteWork = await CalendarAxiosApi.deleteWork(workId);
+      const deleteWork = await CalendarAxiosApi.deleteWork(data.workId);
       if (deleteWork.data === "근무가 삭제되었습니다.") {
         console.log("근무 삭제 성공");
         window.location.reload();
@@ -366,6 +366,8 @@ const WorkAddContainer = styled.div`
     position: absolute;
     left: 1vw;
     margin-top: 15px;
+
+    cursor: pointer;
   }
 `;
 
