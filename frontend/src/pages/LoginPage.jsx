@@ -1,6 +1,6 @@
 import * as React from 'react';
 import logo from '../assets/Logo.png';
-import styled, { css, keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useState } from 'react';
 import SignupForm from './SignupForm';
 import LoginForm from './LoginForm';
@@ -45,18 +45,6 @@ const LoginAndRegister = () => {
 };
 
 export default LoginAndRegister;
-
-const floatAnimation = keyframes`
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(0);
-    }
-`;
 
 const LoginContainer = styled.div`
     height: 100vh;
@@ -160,7 +148,6 @@ const FloatingBackGround = styled.div`
     height: 100%;
     background-image: url(${backGroundBubble});
     background-size: cover;
-    animation: ${floatAnimation} 2s ease-in-out infinite;
     position: absolute;
     top: 0;
     left: 0;

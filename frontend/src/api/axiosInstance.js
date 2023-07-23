@@ -2,7 +2,6 @@ import axios from "axios";
 
 const DOMAIN = "http://localhost:8888/api";
 
-
 const axiosInstance = axios.create({
   baseURL: DOMAIN,
   withCredentials: true, // 쿠키 포함 설정
@@ -22,7 +21,13 @@ axiosInstance.interceptors.response.use(
         console.log("쿠키 업데이트 성공");
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        window.location.href = "/help";
+        const isMobile = window.innerWidth <= 768; // Replace this with your mobile detection logic
+        if (isMobile) {
+          window.location.href = "/login";
+        } else {
+          window.location.href = "/help";
+        }
+
         console.log("Failed to refresh token:", refreshError);
       }
     }
