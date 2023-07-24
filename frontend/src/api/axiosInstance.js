@@ -17,7 +17,7 @@ axiosInstance.interceptors.response.use(
 
     if (error.response.status === 401 && !originalRequest._retry) {
       try {
-        await axios.post(`${DOMAIN}/api/auth/refreshtoken`, null, {
+        await axios.post(`${DOMAIN}/auth/refreshtoken`, null, {
           withCredentials: true,
         });
         console.log("쿠키 업데이트 성공");
