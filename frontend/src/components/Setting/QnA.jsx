@@ -77,6 +77,7 @@ const Content = styled.div`
   display: ${(props) => (props.show ? "block" : "none")};
   padding: 10px;
   font-size: 1.2rem;
+  margin-bottom: 10px;
 `;
 
 const Span =styled.span`
