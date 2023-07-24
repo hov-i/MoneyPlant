@@ -7,7 +7,6 @@ import com.MoneyPlant.service.AuthService;
 
 import com.MoneyPlant.service.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -43,12 +42,12 @@ public class AuthController {
     }
 
     @PostMapping("/api/auth/refreshtoken")
-    public ResponseEntity<?> refreshtoken(HttpServletRequest request) {
+    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
         return authService.tokenRefresh(request);
     }
 
     // 비밀번호 업데이트
-    @PostMapping("auth/password/update")
+    @PostMapping("/auth/password/update")
     public ResponseEntity<?> updatePassword(@RequestBody Map<String, String> request) {
         ResponseEntity<?> response;
 

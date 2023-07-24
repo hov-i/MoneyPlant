@@ -1,10 +1,13 @@
 import axios from "axios";
-const DOMAIN = "http://localhost:8888";
+
+const isLocalEnv = window.location.hostname === 'localhost';
+
+const DOMAIN = isLocalEnv ? 'http://localhost:8888' : '';
 
 const UserAxiosAPI = {
   getUserInfo: async () => {
     try {
-      return await axios.get(DOMAIN + "/user/me", { withCredentials: true });
+      return await axios.get(DOMAIN + "/user/me", {withCredentials: true});
     } catch (e) {
       console.log("getUserInfo : " + e);
     }

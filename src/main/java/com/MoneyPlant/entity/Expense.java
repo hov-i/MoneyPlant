@@ -20,7 +20,7 @@ public class Expense {
     @JoinColumn(name = "id")
     private User user;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "sc_id", referencedColumnName = "sc_id")
     private Schedule schedule;
 

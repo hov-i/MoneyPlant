@@ -6,20 +6,24 @@ import com.MoneyPlant.repository.ExpenseRepository;
 import com.MoneyPlant.service.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class CardService {
 
     private boolean isFirstExecution = true;
@@ -40,18 +44,62 @@ public class CardService {
         executeCardCrawler();
     }
 
-    @Transactional
-    private void executeCardCrawler() {
+    public void executeCardCrawler() {
+        Logger logger = LoggerFactory.getLogger(AuthService.class);
         try {
-            cardRepository.deleteAll(); // card_list의 모든 데이터를 삭제합니다.
-            String pythonScriptPath = "../../src/main/resources/python/CardCrolling.py";
-            ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScriptPath);
+            cardRepository.deleteAll(); // Delete all data in card_list.
+
+            String pythonCommand;
+            String pythonScriptPath;
+
+            // Check the operating system and set the appropriate Python command
+            if (System.getProperty("os.name").toLowerCase(Locale.ENGLISH).contains("windows")) {
+                // For Windows
+                pythonCommand = "python";
+                pythonScriptPath = "/python/CardCrolling.py";
+            } else {
+                // For other systems (Assuming Python3 is available)
+                pythonCommand = "python3";
+                pythonScriptPath = "/python/CardCrolling.py";
+            }
+
+            // Use ClassLoader to get the Python script as a stream
+            InputStream pythonScriptStream = getClass().getResourceAsStream(pythonScriptPath);
+
+            // Create a temporary file and write the Python script content to it
+            File tempScriptFile = File.createTempFile("CardCrolling", ".py");
+            tempScriptFile.deleteOnExit();
+            try (OutputStream out = new FileOutputStream(tempScriptFile)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = pythonScriptStream.read(buffer)) != -1) {
+                    out.write(buffer, 0, bytesRead);
+                }
+            } catch (IOException e) {
+                logger.error("Failed to create a temporary script file.", e);
+                return;
+            } finally {
+                pythonScriptStream.close();
+            }
+
+            ProcessBuilder processBuilder = new ProcessBuilder(pythonCommand, tempScriptFile.getAbsolutePath());
             Process process = processBuilder.start();
+
+            // Read the error stream
+            InputStream errorStream = process.getErrorStream();
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(errorStream));
+            StringBuilder errorOutput = new StringBuilder();
+            String line;
+            while ((line = errorReader.readLine()) != null) {
+                errorOutput.append(line).append("\n");
+            }
+
             int exitCode = process.waitFor();
             if (exitCode == 0) {
-                log.info("CardCrolling.py 실행이 성공했습니다.");
+                logger.info("CardCrolling.py execution succeeded.");
             } else {
-                log.error("CardCrolling.py 실행이 실패했습니다. 종료 코드: " + exitCode);
+                logger.error("CardCrolling.py execution failed. Exit code: " + exitCode);
+                logger.error("Error output:\n" + errorOutput.toString());
             }
         } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);

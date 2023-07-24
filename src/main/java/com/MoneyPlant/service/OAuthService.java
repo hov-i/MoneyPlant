@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,9 @@ public class OAuthService {
     private final RefreshTokenService refreshTokenService;
 
     private static final String GOOGLE_CALENDAR_API_URL = "https://www.googleapis.com/calendar/v3";
+
+    @Value("${app.domain}")
+    private String domain;
 
     public String request() throws IOException {
         return socialOAuth.getOAuthRedirectURL();
@@ -115,7 +119,7 @@ public class OAuthService {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
-                .header(HttpHeaders.LOCATION, "http://localhost:8888")
+                .header(HttpHeaders.LOCATION, domain)
                 .build();
     }
 

@@ -12,7 +12,7 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("moneyplan.today"); // Update this to restrict allowed origins if needed
+        config.addAllowedOrigin("https://www.moneyplan.today"); // Update this to restrict allowed origins if needed
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 

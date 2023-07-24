@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const DOMAIN = "http://localhost:8888/api";
+const isLocalEnv = window.location.hostname === 'localhost';
+
+const DOMAIN = isLocalEnv ? 'http://localhost:8888/api' : '/api';
 
 const axiosInstance = axios.create({
   baseURL: DOMAIN,

@@ -70,7 +70,7 @@ public class CalendarController {
         }
     }
 
-    @DeleteMapping("/delete/schedule/{scId}")
+    @DeleteMapping("/schedule/delete/{scId}")
     public ResponseEntity<String> deleteSchedule(
             @PathVariable("scId") Long scId,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -119,7 +119,7 @@ public class CalendarController {
     }
 
     // 근무 삭제
-    @DeleteMapping("/delete/work/{workId}")
+    @DeleteMapping("/work/delete/{workId}")
     public ResponseEntity<String> deleteWork(
             @PathVariable("workId") Long workId,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
