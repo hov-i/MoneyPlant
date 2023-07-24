@@ -158,9 +158,9 @@ const EditMyInfo = () => {
                     placeholder="변경할 비밀번호를 입력해주세요."
                   />
                   <ClickButton
-                    width={"30px"}
+                    width={"70px"}
                     height={"30px"}
-                    onClick={changePassword}></ClickButton>
+                    onClick={changePassword}>변경</ClickButton>
                 </InfoLine>
                 {passwordError && <>{passwordError}</>}
               </div>
@@ -221,6 +221,7 @@ const Title = styled.div`
 `;
 const InfoLine = styled.div`
   height: 40px;
+  width: 90%;
   display: flex;
   align-items: center;
 `;
