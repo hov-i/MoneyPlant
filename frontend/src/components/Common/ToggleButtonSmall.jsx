@@ -89,7 +89,7 @@ const TextContainer = styled.div`
 
 const OffText = styled.span`
   font-weight: 500;
-  font-size: 2.2px;
+  font-size: 1.2rem;
   line-height: 19px;
   color: #ffffff;
   position: relative;
@@ -104,7 +104,7 @@ const OffText = styled.span`
 
 const OnText = styled.span`
   font-weight: 500;
-  font-size: 2.2px;
+  font-size: 1.2rem;
   line-height: 19px;
   color: rgba(192, 192, 192, 1);
   position: relative;
