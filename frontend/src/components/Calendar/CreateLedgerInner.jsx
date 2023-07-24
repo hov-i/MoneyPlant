@@ -10,7 +10,7 @@ import LedgerAxiosAPI from "../../api/LedgerAxiosAPI";
 
 const CreateScheduleInner = ({ isIncome, value }) => {
   const [categoryId, setCategoryId] = useState(1);
-  const [categoryIncomeId, setCategoryIncomeId] = useState(15);
+  const [categoryIncomeId, setCategoryIncomeId] = useState(1);
   const [amount, setAmount] = useState("");
   const [content, setContent] = useState("");
   const setvalue = new Date(value);

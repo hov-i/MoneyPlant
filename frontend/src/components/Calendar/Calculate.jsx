@@ -131,7 +131,7 @@ const BoxContainer = styled.div`
         margin-left: 10px;
     }
     .hr {
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid ${({ theme }) => theme.textColor};
         width: 97%;
         display: flex;
         align-items: center;
@@ -149,7 +149,7 @@ const BoxContainer = styled.div`
         justify-content: center;
     }
     .minus {
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid ${({ theme }) => theme.textColor};
         width: 10px;
         margin-left: 2%;
         padding-top: 10px;

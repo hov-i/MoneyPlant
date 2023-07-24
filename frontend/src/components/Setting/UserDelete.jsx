@@ -28,6 +28,11 @@ const UserDelete = () => {
                     }
                 } else {
                     console.log('회원 탈퇴 실패');
+                    if (isMobile) {
+                        navigate('/login');
+                    } else {
+                        navigate('/help');
+                    }
                 }
             }
         } catch (error) {

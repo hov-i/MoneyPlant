@@ -189,8 +189,11 @@ const CreateScheduleContainer = styled.div`
     position: absolute;
     left: 1vw;
     margin-top: 15px;
-    
+    width:10%;
     cursor: pointer;
+        > svg {
+            fill: ${({ theme }) => theme.menuColor};
+           }
   }
 `;
 

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -25,6 +27,9 @@ public class Role {
     public Role(ERole name) {
         this.name = name;
     }
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
+    private List<User> users = new ArrayList<>();
 
 
 

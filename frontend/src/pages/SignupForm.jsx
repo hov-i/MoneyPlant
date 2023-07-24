@@ -295,7 +295,7 @@ const SignupForm = ({ setValue }) => {
             </Box>
 
             {modalOpen && (
-                <Modal width={'100%'} height={'100%'} open={modalOpen} close={closeModal}>
+                <Modal width={'100%'} height={'100%'} border={'0px'} open={modalOpen} close={closeModal}>
                     <PrivacyTerms handleButtonClick={handleButtonClick} />
                 </Modal>
             )}

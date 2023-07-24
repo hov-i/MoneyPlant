@@ -35,8 +35,8 @@ public class User {
     @Column(name = "social_email", nullable = true)
     private String socialEmail;            // 소셜 아이디 ex) gmail
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "role_id")
+    @ManyToOne(fetch = FetchType.LAZY) // 단방향으로 변경
+    @JoinColumn(name = "role_id") // 외래 키 이름 지정
     private Role role;
 
     @Column(name = "calendar_id", unique = true, nullable = true)

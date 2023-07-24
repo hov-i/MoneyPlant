@@ -82,6 +82,7 @@ const ModalStyle = styled.div`
         font-weight: 700;
         text-align: center;
         color: #999;
+        margin: 10px;
         position: fixed;
         background-color: transparent;
         z-index: 1;

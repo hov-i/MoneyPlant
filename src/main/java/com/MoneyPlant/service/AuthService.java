@@ -188,6 +188,17 @@ public class AuthService {
             throw new IllegalArgumentException("유저 확인 불가");
         }
         User user = optionalUser.get(); // Optional에서 User 객체 추출
+        // User와 관련된 모든 연관 엔티티 삭제
+        user.getBudgets().clear();
+        user.getChecks().clear();
+        user.getExpenses().clear();
+        user.getIncomes().clear();
+        user.getMySchedules().clear();
+        user.getMyWorks().clear();
+        user.getSchedules().clear();
+        user.getWorks().clear();
+        // 삭제된 엔티티들이 저장소에서 제거되도록 flush
+        userRepository.flush();
         userRepository.delete(user);
     }
 

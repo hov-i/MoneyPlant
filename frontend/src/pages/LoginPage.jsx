@@ -5,8 +5,10 @@ import { useState } from 'react';
 import SignupForm from '../pages/SignupForm';
 import LoginForm from '../pages/LoginForm';
 import backGroundBubble from '../assets/backgroundBubble.png';
+import useViewport from '../hooks/viewportHook';
 
 const LoginAndRegister = () => {
+    const { isMobile } = useViewport();
     const [value, setValue] = useState('login');
     const handleButtonClick = (newValue) => {
         setValue(newValue);
@@ -14,8 +16,9 @@ const LoginAndRegister = () => {
 
     return (
         <BackGroundBox>
-            <FloatingBackGround />
-            <LoginContainer>
+            {!isMobile && <FloatingBackGround />}
+
+            <LoginContainer isMobile={isMobile}>
                 <div className="loginbox">
                     <div className="logo">
                         <Logo src={logo} alt="#" />
@@ -52,7 +55,7 @@ const LoginContainer = styled.div`
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-
+    width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -61,18 +64,19 @@ const LoginContainer = styled.div`
         align-items: left;
         width: 350px;
     }
-
     .loginbox {
         border-radius: 10px;
-        width: 80%;
+        width: 400px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 60px;
         border-radius: 10px;
-        background: url(${backGroundBubble}), lightgray 0px -3.768px / 100% 101.044% no-repeat,
-            rgba(255, 255, 255, 0.16);
+        background: ${(props) =>
+            props.isMobile
+                ? '#ffffff'
+                : `url(${backGroundBubble}), lightgray 0px -3.768px / 100% 101.044% no-repeat, rgba(255, 255, 255, 0.16)`};
         box-shadow: 4px 4px 116px 0px rgba(97, 120, 201, 0.16), 2px 2px 16px 0px rgba(255, 255, 255, 0.08) inset;
         backdrop-filter: blur(42px);
     }
@@ -112,10 +116,10 @@ const LoginContainer = styled.div`
 
     @media (max-width: 768px) {
         .signUpBox {
-            width: 80%;
+            width: 70%;
         }
         .loginbox {
-            width: 80%;
+            width: 100%;
             height: 100vh;
             border-radius: 0;
             align-items: center;
