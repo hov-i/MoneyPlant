@@ -76,7 +76,6 @@ const Legends = ({ data }) => {
 };
 
 const PieChart = () => {
-  const [colors, setColors] = useState([]);
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
@@ -95,17 +94,16 @@ const PieChart = () => {
           // value가 0인 경우에 대한 처리
           item.label = "데이터 없음";
         }
-      });
 
-      const matchedColors = transformedData.map((item) => {
+        // category와 매칭되는 색상을 가져와서 color 속성 추가
         const matchedCategory = categoryList.find(
           (category) => category.Name === item.category
         );
-        return matchedCategory ? matchedCategory.Color : "";
+        item.color = matchedCategory ? matchedCategory.Color : "";
       });
 
       setData(transformedData);
-      setColors(matchedColors);
+      // matchedColors 배열 대신에 color 속성을 포함한 transformedData를 사용합니다.
     } catch (error) {
       console.error("조회 실패", error);
     }
@@ -140,7 +138,7 @@ const PieChart = () => {
             from: "item.Color",
             modifiers: [["darker", 0.2]],
           }}
-          colors={colors}
+          colors={(datum) => datum.data.color}
           enableArcLabels={false}
           enableArcLinkLabels={false}
           arcLinkLabelsSkipAngle={10}
@@ -242,7 +240,12 @@ const NotUseContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  background: linear-gradient(137deg, rgba(167, 255, 201, 0.13) 1.63%, rgba(70, 137, 175, 0.17) 100%, rgba(0, 255, 133, 0.51) 100%);
+  background: linear-gradient(
+    137deg,
+    rgba(167, 255, 201, 0.13) 1.63%,
+    rgba(70, 137, 175, 0.17) 100%,
+    rgba(0, 255, 133, 0.51) 100%
+  );
 `;
 
 const NotUse = styled.div`
