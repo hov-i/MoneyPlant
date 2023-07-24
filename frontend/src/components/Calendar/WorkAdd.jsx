@@ -26,7 +26,7 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data, workId }) => {
     workDate: data ? data.workDate : "",
     workName: data ? data.workName : "",
     payType: data ? data.payType : 1,
-    workMoney: data ? data.workMoney : 0,
+    workMoney: data ? data.workMoney : null,
     workStart: data ? data.workStart : "",
     workEnd: data ? data.workEnd : "",
     workRest: data ? data.workRest : 0,
@@ -203,14 +203,25 @@ const WorkAdd = ({ isBasic, isUpdate, isQuick, data, workId }) => {
           <div>
             {/* <MyType value={myPayType.toString()} onChange={onChangeMyPayType} /> */}
             <SelType value={work.payType} onChange={onChangePayType} />
-            <Input
-              className="money"
-              value={work.workMoney}
-              onChange={(event) =>
-                handleWorkChange("workMoney", event.target.value)
-              }
-            />
-
+            {isHourly ? (
+              <Input
+                className="money"
+                value={work.workMoney}
+                placeholder={9620}
+                onChange={(event) =>
+                  handleWorkChange("workMoney", event.target.value)
+                }
+              />
+            ) : (
+              <Input
+                className="money"
+                value={work.workMoney}
+                placeholder={0}
+                onChange={(event) =>
+                  handleWorkChange("workMoney", event.target.value)
+                }
+              />
+            )}
             <p className="text">원</p>
           </div>
 

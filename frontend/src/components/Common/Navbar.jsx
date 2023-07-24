@@ -23,7 +23,7 @@ const Navbar = () => {
 
             <CustomLink to={'/MainList'} isMobile={isMobile}>
                 <List width="17" height="17" />
-                <p className="navText">소비 리스트</p>
+                <p className="navText">자산 리스트</p>
             </CustomLink>
 
             <CustomLink to={'/Chart'} isMobile={isMobile}>
