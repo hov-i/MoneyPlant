@@ -160,7 +160,9 @@ const EditMyInfo = () => {
                   <ClickButton
                     width={"70px"}
                     height={"30px"}
-                    onClick={changePassword}>변경</ClickButton>
+                    onClick={changePassword}>
+                    변경
+                  </ClickButton>
                 </InfoLine>
                 {passwordError && <>{passwordError}</>}
               </div>
@@ -200,18 +202,7 @@ const InfoBox = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-left: 50px;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
   margin-right: 10px;
-
-  /* 스크롤바는 안 보이고 역할은 하게 만듦 */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
 `;
 const Title = styled.div`
   display: flex;
@@ -221,19 +212,21 @@ const Title = styled.div`
 `;
 const InfoLine = styled.div`
   height: 40px;
-  width: 90%;
   display: flex;
   align-items: center;
 `;
 const InfoText = styled.div`
   font-size: 2rem;
   font-weight: bold;
-  white-space: nowrap;
+  white-space: nowrap; /* 한 줄로 텍스트를 표시합니다. */
 `;
 const MyInfo = styled.div`
   font-size: 1.9rem;
   font-weight: bold;
   margin: 0px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 생략 부호 (...) 표시 */
+  white-space: nowrap;
 `;
 
 const ChangeInput = styled.input`
