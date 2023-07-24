@@ -8,6 +8,7 @@ import Chart from "./pages/ChartPage";
 import GlobalStyle from "./styles/GlobalStyle";
 import QuickAdd from "./pages/QuickAddPage";
 import Setting from "./pages/SettingPage";
+import Privacy from './pages/PrivacyPage';
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Help from './pages/HelpPage';
 
@@ -27,6 +28,7 @@ function App() {
               <Route path="/mypage" element={<QuickAdd />} />
               <Route path="/setting" element={<Setting />} />
               <Route path="/help" element={<Help />} />
+              <Route path="/privacy" element={<Privacy />} />
             </Routes>
           </Router>
         </GoogleOAuthProvider>
