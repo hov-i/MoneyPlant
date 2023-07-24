@@ -15,6 +15,7 @@ const ListContainer = ({ listData }) => {
   const [selectedDate, setSelectedDate] = useState("");
 
   const handleDateChange = (date) => {
+    console.log("선택된 날짜:", date);
     setSelectedDate(date);
   };
 
@@ -24,11 +25,15 @@ const ListContainer = ({ listData }) => {
       return listData; // 선택된 날짜가 없으면 전체 데이터 반환
     }
 
+    const selectedYear = new Date(selectedDate).getFullYear(); // 선택된 년도
+    const selectedMonth = new Date(selectedDate).getMonth() + 1; // 선택된 월
+
     const filteredData = listData.filter((data) => {
       const dataDate = new Date(data.date);
-      const selectedMonth = new Date(selectedDate).getMonth() + 1;
+      const dataYear = dataDate.getFullYear();
+      const dataMonth = dataDate.getMonth() + 1;
 
-      return dataDate.getMonth() + 1 === selectedMonth; // 선택된 월의 데이터만 필터링
+      return dataYear === selectedYear && dataMonth === selectedMonth; // 선택된 년도와 월의 데이터만 필터링
     });
 
     return filteredData;
@@ -123,8 +128,7 @@ const ListRow = ({ show, index, listData }) => {
       <td
         className={
           listData.deal === "지출" ? "table-cell red" : "table-cell blue"
-        }
-      >
+        }>
         ￦{listData.money}
       </td>
     </StyledRow>
@@ -141,7 +145,6 @@ const ListContainerStyled = styled.div`
   width: 100%;
   margin-top: 30px;
   padding: 40px;
-  padding-top: 10px;
 
   .table {
     width: 100%;
