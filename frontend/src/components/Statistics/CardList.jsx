@@ -10,7 +10,7 @@ const CardList = ({ cardName, cardDesc, cardImg, cardLink }) => {
 
   return (
     <CardListContainer>
-      <div className="cardlist">
+      <div className="cardlist" onClick={isMobile ? handleClick : null}>
         <div className="product-title">
           <div className="product-img-div">
             <img className="product-img" src={cardImg} alt={cardName} />
@@ -28,9 +28,7 @@ const CardList = ({ cardName, cardDesc, cardImg, cardLink }) => {
           </p>
         </div>
       </div>
-      {isMobile ? (
-        <ButtonContainer></ButtonContainer>
-      ) : (
+      {isMobile ? null : (
         <ButtonContainer>
           <ClickButton onClick={handleClick} width={"100%"}>
             카드 정보 보기

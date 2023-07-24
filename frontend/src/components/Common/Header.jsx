@@ -8,13 +8,11 @@ import { ThemeContext } from '../themeProvider';
 import { ReactComponent as Logout } from '../../assets/Logout.svg';
 import { ReactComponent as Person } from '../../assets/Person.svg';
 import AuthAxiosAPI from '../../api/AuthAxiosAPI';
-import useViewport from '../../hooks/viewportHook';
 
 const Header = () => {
     const navigate = useNavigate();
     const { isDark, setIsDark } = useContext(ThemeContext);
     const [showLogoutButton, setShowLogoutButton] = useState(false);
-    const { isMobile } = useViewport();
 
     const onClickLogOut = async (e) => {
         e.preventDefault();

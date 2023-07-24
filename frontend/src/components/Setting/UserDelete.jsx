@@ -4,23 +4,31 @@ import ClickButton from '../Common/ClickButton';
 import { FormControlLabel, Checkbox } from '@mui/material';
 import AuthAxiosAPI from '../../api/AuthAxiosAPI';
 import { useNavigate } from 'react-router-dom';
+import useViewport from '../../hooks/viewportHook';
 
 const UserDelete = () => {
     const [isAllChecked, setIsAllChecked] = useState(false);
     const navigate = useNavigate();
+    const { isMobile } = useViewport();
     const handleCheckboxChange = (event) => {
         setIsAllChecked(event.target.checked);
     };
 
     const onDeleteUser = async () => {
         try {
-            const deleteUser = await AuthAxiosAPI.deleteUser();
-            if (deleteUser.data === '탈퇴가 완료되었습니다.') {
-                console.log('회원 탈퇴 성공');
-                navigate('/help');
-            } else {
-                console.log('회원 탈퇴 실패');
-                navigate('/help');
+            const confirmLogout = window.confirm('정말 탈퇴하시겠습니까?');
+            if (confirmLogout) {
+                const deleteUser = await AuthAxiosAPI.deleteUser();
+                if (deleteUser.data === '탈퇴가 완료되었습니다.') {
+                    console.log('회원 탈퇴 성공');
+                    if (isMobile) {
+                        navigate('/login');
+                    } else {
+                        navigate('/help');
+                    }
+                } else {
+                    console.log('회원 탈퇴 실패');
+                }
             }
         } catch (error) {
             console.log('에러:', error);

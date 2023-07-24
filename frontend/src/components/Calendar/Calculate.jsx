@@ -39,7 +39,7 @@ const Calculate = () => {
 
     return (
         <BoxContainer isMobile={isMobile}>
-            <Box titleMargin={'20px'} height={'200px'} width={'45%'}>
+            <Box titleMargin={'20px'} height={'200px'} width={'45%'} widthMobile={'95%'}>
                 <div className="container">
                     <div className="minus" />
                     <div className="detail">
@@ -75,7 +75,7 @@ const Calculate = () => {
                     </div>
                 </div>
             </Box>
-            <Box titleMargin={'20px'} height={'200px'} width={'45%'}>
+            <Box titleMargin={'20px'} height={'200px'} width={'45%'} widthMobile={'95%'}>
                 <div className="container">
                     <div className="minus" />
                     <div className="detail">
@@ -118,7 +118,7 @@ const BoxContainer = styled.div`
     display: ${(props) => (props.isMobile ? 'block' : 'flex')};
     align-items: center;
     justify-content: center;
-    width: ${(props) => (props.isMobile ? '95%' : '90%')};
+    width: ${(props) => (props.isMobile ? '100%' : '100%')};
     margin: 0 auto;
 
     .textContent {

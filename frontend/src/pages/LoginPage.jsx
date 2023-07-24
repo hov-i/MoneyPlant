@@ -48,18 +48,6 @@ const LoginAndRegister = () => {
 
 export default LoginAndRegister;
 
-const floatAnimation = keyframes`
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(0);
-    }
-`;
-
 const LoginContainer = styled.div`
   height: 100vh;
   display: flex;
@@ -164,7 +152,6 @@ const FloatingBackGround = styled.div`
   height: 100%;
   background-image: url(${backGroundBubble});
   background-size: cover;
-  animation: ${floatAnimation} 2s ease-in-out infinite;
   position: absolute;
   top: 0;
   left: 0;

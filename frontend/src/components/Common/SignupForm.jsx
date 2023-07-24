@@ -312,6 +312,7 @@ const SignupForm = ({ setValue }) => {
           height={"100%"}
           open={modalOpen}
           close={closeModal}
+          border={"0px"}
         >
           <PrivacyTerms handleButtonClick={handleButtonClick} />
         </Modal>
