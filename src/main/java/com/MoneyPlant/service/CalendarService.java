@@ -236,8 +236,9 @@ public class CalendarService {
             }
 
             // Delete the schedule from the database
-            scheduleRepository.deleteByScId(scId);
             expenseRepository.deleteBySchedule(schedule);
+            scheduleRepository.deleteByScId(scId);
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -353,7 +354,7 @@ public class CalendarService {
     private String getDateTimeValue(JsonNode itemJson, String field) {
         JsonNode node = itemJson.get(field);
         if (node.has("dateTime")) {
-            return node.get("dateTime").asText();
+            return node.get("dateTime").asText().substring(0,10); // datetime을 'YYYY-MM-DD'로 바꿔줌
         } else if (node.has("date")) {
             return node.get("date").asText();
         } else {

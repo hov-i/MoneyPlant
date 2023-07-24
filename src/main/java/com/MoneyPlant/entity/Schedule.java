@@ -24,6 +24,9 @@ public class Schedule { // 약어로 sc를 사용합니다.
     @Column(name = "google_cal_id")
     private String googleCalendarId;
 
+    @OneToOne(mappedBy = "schedule", cascade = CascadeType.REMOVE)
+    private Expense expense;
+
     @Column(name = "event_id", unique = true)
     private String eventId; // 구글 캘린더 event ID
 
