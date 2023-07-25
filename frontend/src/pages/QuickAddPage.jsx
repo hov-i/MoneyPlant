@@ -9,7 +9,6 @@ import Tag from "../components/MyPage/Tag";
 import TagBox from "../components/MyPage/TagBox";
 import useViewport from "../hooks/viewportHook";
 
-import QuickAxiosApi from "../api/QuickAddAxiosAPI";
 import CalendarAxiosAPI from "../api/CalendarAxiosAPI";
 
 const Mypage = () => {
@@ -29,12 +28,6 @@ const Mypage = () => {
     };
     getMyPageList();
   }, []);
-
-  // onClick 하면, 일정 이름과 색을 받아 줌 .
-  const onclickChangeScValue = () => {};
-
-  // onClick 하면, 근무 이름과 색 그 외 필요한 전부를 모두 받아 줌 .
-  const onclickChangeWkValue = () => {};
 
   return (
     <>
@@ -77,4 +70,5 @@ export default Mypage;
 
 const Display = styled.div`
   display: ${(props) => (props.isMobile ? "block" : "flex")};
+  flex-direction: row;
 `;

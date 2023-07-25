@@ -3,12 +3,10 @@ import React, { useState, useEffect } from "react";
 import Tag from "./Tag";
 // import TagBox from "./TagBox";
 
-import QuickAxiosApi from "../../api/QuickAddAxiosAPI";
 import CalendarAxiosAPI from "../../api/CalendarAxiosAPI";
 
 const QuickAdd = ({ isBasic }) => {
   const [myPageList, setMyPageList] = useState([]);
-  const [data, setData] = useState([]);
 
   useEffect(() => {
     const getMyPageList = async () => {
