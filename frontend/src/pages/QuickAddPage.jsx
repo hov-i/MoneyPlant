@@ -70,5 +70,5 @@ export default Mypage;
 
 const Display = styled.div`
   display: ${(props) => (props.isMobile ? "block" : "flex")};
-  flex-direction: row;
+  /* flex-direction: row; */
 `;

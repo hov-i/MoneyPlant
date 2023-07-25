@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import styled from 'styled-components';
 import BlockLine from '../Common/BlockLine';
-import Box from '../Common/Box';
 import Tag from './Tag';
 // import ClickButton from "../Common/ClickButton";
 
-import QuickAxiosApi from '../../api/QuickAddAxiosAPI';
 import CalendarAxiosAPI from '../../api/CalendarAxiosAPI';
 
 const QuickView = ({ isBasic, data, setData, close }) => {
